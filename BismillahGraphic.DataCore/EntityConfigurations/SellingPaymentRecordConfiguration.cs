@@ -30,6 +30,10 @@ namespace BismillahGraphic.DataCore
                 .WithMany(p => p.SellingPaymentRecord)
                 .HasForeignKey(d => d.RegistrationID);
 
+            entity.HasOne(d => d.SellingPaymentReceipt)
+                .WithMany(p => p.SellingPaymentRecord)
+                .HasForeignKey(d => d.ReceiptID);
+
         }
     }
 }

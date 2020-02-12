@@ -16,6 +16,7 @@ namespace BismillahGraphic.DataCore
         IExpanseRepository Expanses { get; }
         ISellingRepository Selling { get; }
         ISellingListRepository SellingLists { get; }
+        ISellingPaymentReceiptRepository SellingPaymentReceipts { get; }
         ISellingPaymentRecordRepository SellingPaymentRecords { get; }
         IInstitutionRepository Institutions { get; }
         int SaveChanges();

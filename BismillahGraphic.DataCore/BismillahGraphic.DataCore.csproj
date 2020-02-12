@@ -155,6 +155,7 @@
     <Compile Include="EntityConfigurations\RegistrationConfiguration.cs" />
     <Compile Include="EntityConfigurations\SellingConfiguration.cs" />
     <Compile Include="EntityConfigurations\SellingListConfiguration.cs" />
+    <Compile Include="EntityConfigurations\SellingPaymentReceiptConfiguration.cs" />
     <Compile Include="EntityConfigurations\SellingPaymentRecordConfiguration.cs" />
     <Compile Include="EntityConfigurations\SmsBalanceConfiguration.cs" />
     <Compile Include="EntityConfigurations\SmsRechargeRecordConfiguration.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Interfaces\Repositories\IProductRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRegistrationRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISellingListRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ISellingPaymentReceiptRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISellingPaymentRecordRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISellingRepository.cs" />
     <Compile Include="Interfaces\Repositories\IVendorRepository.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Models\Registration.cs" />
     <Compile Include="Models\Selling.cs" />
     <Compile Include="Models\SellingList.cs" />
+    <Compile Include="Models\SellingPaymentReceipt.cs" />
     <Compile Include="Models\SellingPaymentRecord.cs" />
     <Compile Include="Models\SmsBalance.cs" />
     <Compile Include="Models\SmsRechargeRecord.cs" />
@@ -210,6 +213,7 @@
     <Compile Include="Queries\Repositories\ProductRepository.cs" />
     <Compile Include="Queries\Repositories\RegistrationRepository.cs" />
     <Compile Include="Queries\Repositories\SellingListRepository.cs" />
+    <Compile Include="Queries\Repositories\SellingPaymentReceiptRepository.cs" />
     <Compile Include="Queries\Repositories\SellingPaymentRecordRepository.cs" />
     <Compile Include="Queries\Repositories\SellingRepository.cs" />
     <Compile Include="Queries\Repositories\VendorRepository.cs" />

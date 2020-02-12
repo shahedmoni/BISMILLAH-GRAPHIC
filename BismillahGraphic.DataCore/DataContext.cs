@@ -29,6 +29,7 @@ namespace BismillahGraphic.DataCore
         public virtual DbSet<Registration> Registration { get; set; }
         public virtual DbSet<Selling> Selling { get; set; }
         public virtual DbSet<SellingList> SellingList { get; set; }
+        public virtual DbSet<SellingPaymentReceipt> SellingPaymentReceipt { get; set; }
         public virtual DbSet<SellingPaymentRecord> SellingPaymentRecord { get; set; }
         public virtual DbSet<SmsBalance> SmsBalance { get; set; }
         public virtual DbSet<SmsRechargeRecord> SmsRechargeRecord { get; set; }
@@ -65,6 +66,7 @@ namespace BismillahGraphic.DataCore
             modelBuilder.ApplyConfiguration(new RegistrationConfiguration());
             modelBuilder.ApplyConfiguration(new SellingConfiguration());
             modelBuilder.ApplyConfiguration(new SellingListConfiguration());
+            modelBuilder.ApplyConfiguration(new SellingPaymentReceiptConfiguration());
             modelBuilder.ApplyConfiguration(new SellingPaymentRecordConfiguration());
             modelBuilder.ApplyConfiguration(new SmsBalanceConfiguration());
             modelBuilder.ApplyConfiguration(new SmsRechargeRecordConfiguration());

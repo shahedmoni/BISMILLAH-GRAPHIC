@@ -27,5 +27,6 @@ namespace BismillahGraphic.DataCore
         public string PS { get; set; }
         public virtual ICollection<PageLinkAssign> PageLinkAssign { get; set; }
         public virtual ICollection<SellingPaymentRecord> SellingPaymentRecord { get; set; }
+        public virtual ICollection<SellingPaymentReceipt> SellingPaymentReceipt { get; set; }
     }
 }

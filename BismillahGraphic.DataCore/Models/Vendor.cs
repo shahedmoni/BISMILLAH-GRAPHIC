@@ -20,7 +20,7 @@ namespace BismillahGraphic.DataCore
         public double TotalDiscount { get; set; }
         public double VendorPaid { get; set; }
         public double VendorDue { get; set; }
-
         public virtual ICollection<Selling> Selling { get; set; }
+        public virtual ICollection<SellingPaymentReceipt> SellingPaymentReceipt { get; set; }
     }
 }

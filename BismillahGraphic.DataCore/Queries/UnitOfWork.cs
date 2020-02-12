@@ -21,6 +21,7 @@ namespace BismillahGraphic.DataCore
             Expanses = new ExpanseRepository(_context);
             Selling = new SellingRepository(_context);
             SellingLists = new SellingListRepository(_context);
+            SellingPaymentReceipts = new SellingPaymentReceiptRepository(_context);
             SellingPaymentRecords = new SellingPaymentRecordRepository(_context);
             Institutions = new InstitutionRepository(_context);
         }
@@ -37,6 +38,7 @@ namespace BismillahGraphic.DataCore
         public IExpanseRepository Expanses { get; }
         public ISellingRepository Selling { get; }
         public ISellingListRepository SellingLists { get; }
+        public ISellingPaymentReceiptRepository SellingPaymentReceipts { get; }
         public ISellingPaymentRecordRepository SellingPaymentRecords { get; }
         public IInstitutionRepository Institutions { get; }
 
