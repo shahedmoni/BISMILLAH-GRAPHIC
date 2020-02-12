@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Vendor Report";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<div class="container-fluid mt-2">
+    <div class="card card-body">
+        <h3 class="h3-responsive mb-1">Receivable Statement Summery</h3>
+  
+        <table class="DataTable table table-bordered table-sm text-center">
+            <thead>
+            <tr>
+                <th class="text-left"><strong>Party Name</strong></th>
+                <th class="text-right"><strong>Sales</strong></th>
+                <th class="text-right"><strong>Received</strong></th>
+                <th class="text-right"><strong>Discount</strong></th>
+                <th class="text-right"><strong>Due</strong></th>
+            </tr>
+            </thead>
+            <tbody id="t-row"></tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script>
+        $(function() {
+            loadData();
+            $('.datepicker').pickadate();
+        });
+
+        function loadData() {
+            const url = "/Report/GetVendor";
+            $.get(url,function(data) {
+                    buildTable(data);
+                });
+        };
+
+
+        function buildTable(data) {
+            var html = '';
+            const row = $("#t-row");
+
+            if (row.children().length > 0) {
+                row.empty();
+            };
+
+
+            $.each(data,
+                function(i, item) {
+                    html += `<tr>
+                    <td class="text-left">${item.VendorCompanyName}</td>
+                    <td class="text-right">${item.TotalAmount}/-</td>
+                    <td class="text-right">${item.VendorPaid}/-</td>
+                    <td class="text-right">${item.TotalDiscount}/-</td>
+                    <td class="text-right">${item.VendorDue}/-</td>
+                </tr>`;
+                });
+
+            row.append(html);
+        };
+    </script>
+}

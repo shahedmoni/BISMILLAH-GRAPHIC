@@ -1,0 +1,145 @@
+﻿
+@{
+    ViewBag.Title = "Expense Report";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<div class="container-fluid mt-2">
+    <div class="card card-body">
+        <div class="row">
+            <div class="col-lg-5">
+                <h3 class="h3-responsive">Total Expense: ৳<span id="totalExpense"></span></h3>
+                <em class="d-block text-muted mb-3" id="showDate"></em>
+            </div>
+            <div class="col-md-7 d-print-none">
+                <div class="form-inline justify-content-end">
+                    <div class="md-form m-0 mr-3">
+                        <input id="formDate" class="form-control datepicker" placeholder="Form Date" type="text" />
+                    </div>
+                    <div class="md-form m-0">
+                        <input id="toDate" class="form-control datepicker" placeholder="To Date" type="text" />
+
+                        <button id="find" class="btn aqua-gradient btn-rounded btn-sm my-0" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <em class="mb-1">Category Wise Expense</em>
+        <table class="DataTable table table-bordered table-sm">
+            <thead>
+                <tr>
+                    <th><strong>Category</strong></th>
+                    <th class="text-right"><strong>Total Expanse</strong></th>
+                </tr>
+            </thead>
+            <tbody id="category-t-row"></tbody>
+        </table>
+
+        <em class="mb-1">Expense Details</em>
+        <table class="DataTable table table-bordered table-sm text-center">
+            <thead>
+                <tr>
+                    <th><strong>Category</strong></th>
+                    <th><strong>Expense For</strong></th>
+                    <th class="text-right"><strong>Amount</strong></th>
+                    <th><strong>Date</strong></th>
+                    <th><strong>P.Method</strong></th>
+                </tr>
+            </thead>
+            <tbody id="t-row"></tbody>
+        </table>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(function() {
+            loadData();
+
+            $('.datepicker').pickadate();
+        });
+
+        function loadData() {
+            const from = $("#formDate").val();
+            const to = $("#toDate").val();
+
+            if (from || to) {
+                const shoDate = showDate(from, to);
+                $("#showDate").text(shoDate);
+            }
+
+            $.ajax({
+                url: "/Report/GetExpense",
+                type: "POST",
+                data: JSON.stringify({ fromDate: from, toDate: to }),
+                dataType: "json",
+                contentType: "application/json",
+                success: function(data) {
+                    $("#totalExpense").text(data.TotalExpense);
+                    buildCategoryTable(data);
+                    buildExpenseTable(data);
+                },
+                error: function(err) { console.log(err) }
+            });
+        };
+
+        function buildCategoryTable(data) {
+            var html = '';
+            const categoryRow = $("#category-t-row");
+
+            if (categoryRow.children().length > 0) {
+                categoryRow.empty();
+            };
+
+            $.each(data.ExpanseCategoryWises, function(i, item) {
+                html += `<tr>
+                    <td>${item.CategoryName}</td>
+                    <td class="text-right">${item.TotalExpanse}/-</td>
+                </tr>`;
+            });
+
+            categoryRow.append(html);
+        };
+
+        function buildExpenseTable(data) {
+            var html = '';
+            const row = $("#t-row");
+
+            if (row.children().length > 0) {
+                row.empty();
+            };
+
+            $.each(data.Expenses, function(i, item) {
+                html += `<tr>
+                    <td>${item.CategoryName}</td>
+                    <td>${item.ExpanseFor}</td>
+                    <td class="text-right">${item.ExpanseAmount}/-</td>
+                    <td>${moment(item.ExpanseDate).format('D MMM YYYY')}</td>
+                    <td>${item.Expense_Payment_Method}</td>
+                </tr>`;
+            });
+
+            row.append(html);
+        };
+
+        $("#find").on("click", function() {
+            loadData();
+        });
+
+        function showDate(from, to) {
+            var label = "";
+            if (from && !to)
+                label = `from ${from}`;
+
+            if (to && !from)
+                label = `upto ${to}`;
+
+            if (from && to)
+                label = `from (${from}) upto (${to})`;
+
+            return label;
+        }
+    </script>
+}

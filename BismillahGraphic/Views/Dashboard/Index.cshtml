@@ -1,0 +1,187 @@
+﻿@model BismillahGraphic.DataCore.Dashboard
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<div class="m-0 m-sm-4">
+    <div class="container-fluid">
+        <section class="mb-5">
+            <div class="row">
+                <div class="col">
+                    <h3 class="mb-4" style="color: #777">Dashboard</h3>
+                </div>
+                <div class="col-md-4 text-right">
+                    @Html.DropDownList("selectYear", new SelectList(Model.Years,"value","label",Model.DefaultYear), new { @class = "mdb-select" })
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-5 pb-4">
+            <div class="row">
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                    <div class="card card-cascade cascading-admin-card">
+                        <div class="admin-up">
+                            <i class="far fa-money-bill-alt success-color mr-3 z-depth-2"></i>
+                            <div class="data">
+                                <p class="text-uppercase mt-3">Sales</p>
+                                <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.SaleYearly</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                    <div class="card card-cascade cascading-admin-card">
+                        <div class="admin-up">
+                            <i class="fas fa-chart-bar red accent-2 mr-3 z-depth-2"></i>
+                            <div class="data">
+                                <p class="text-uppercase mt-3">Expense</p>
+                                <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.ExpenseYearly</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-md-0 mb-4">
+                    <div class="card card-cascade cascading-admin-card">
+                        <div class="admin-up">
+                            <i class="fas fa-chart-pie light-blue lighten-1 mr-3 z-depth-2"></i>
+                            <div class="data">
+                                <p class="text-uppercase mt-3">Net</p>
+                                <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.NetYearly</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-6 mb-0">
+                    <div class="card card-cascade cascading-admin-card">
+                        <div class="admin-up">
+                            <i class="fas fa-chart-line warning-color mr-3 z-depth-2"></i>
+                            <div class="data">
+                                <p class="text-uppercase mt-3">Total Due</p>
+                                <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.TotalDue</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-5">
+            <div class="card card-cascade narrower">
+                <section>
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-12 mr-0 mb-5 pb-2">
+                            <div class="view view-cascade gradient-card-header blue-gradient">
+                                <h2 class="h2-responsive mb-0 font-weight-500">Vendor</h2>
+                            </div>
+
+                            <div class="card-body card-body-cascade pb-0">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="font-weight-bold dark-grey-text text-left"><strong>Vendor</strong></th>
+                                        <th class="font-weight-bold dark-grey-text text-right"><strong>Paid</strong></th>
+                                        <th class="font-weight-bold dark-grey-text text-right"><strong>Due</strong></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var item in Model.Vendors)
+                                    {
+                                        <tr>
+                                            <td>@item.VendorCompanyName</td>
+                                            <td class="text-right">৳@item.VendorPaid</td>
+                                            <td class="text-right">৳@item.VendorDue</td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                                <a href="/Vendors/Index" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold dark-grey-text btn-dash">View full report</a>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-7 col-lg-12 mb-4 pb-2">
+                            <div class="view view-cascade gradient-card-header blue-gradient">
+                                <canvas id="lineChart"></canvas>
+                                <input type="hidden" id="chartData" value=" @Model.JsonChartData" />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script>
+        // select Init
+        $(function() {
+            $('.mdb-select').materialSelect();
+        });
+
+        //year selected value
+        $("#selectYear").change(function() {
+            const year = $(this).children("option:selected").val();
+            location.href = `/Dashboard/Index/${year}`;
+        });
+
+        //initial chart value
+        var data = JSON.parse(document.getElementById("chartData").value);
+        var months = [];
+        var income = [];
+        var expense = [];
+
+        data.forEach(function(item, i) {
+            months.push(item.Month);
+            income.push(item.Income);
+            expense.push(item.Expense);
+        });
+
+        //line chart
+        var ctxL = document.getElementById("lineChart").getContext('2d');
+        var myLineChart = new Chart(ctxL, {
+            type: 'line',
+            data: {
+                labels: months,
+                datasets: [
+                    {
+                        label: "INCOME",
+                        fillColor: "#fff",
+                        borderColor: 'rgba(205, 220, 57, 0.7)',
+                        data: income,
+                        borderWidth: 3
+                    },
+                    {
+                        label: "EXPENSE",
+                        fillColor: "#fff",
+                        borderColor: 'rgba(244, 67, 54, 0.7)',
+                        data: expense,
+                        borderWidth: 3
+                    }
+                ]
+            },
+            options: {
+                legend: { labels: { fontColor: "#fff" } },
+                scales: {
+                    xAxes: [
+                        {
+                            gridLines: { display: true, color: "rgba(255,255,255,.25)" },
+                            ticks: { fontColor: "#fff" }
+                        }
+                    ],
+                    yAxes: [
+                        {
+                            display: true,
+                            gridLines: { display: true, color: "rgba(255,255,255,.25)" },
+                            ticks: { fontColor: "#fff" }
+                        }
+                    ]
+                }
+            }
+        });
+    </script>
+}

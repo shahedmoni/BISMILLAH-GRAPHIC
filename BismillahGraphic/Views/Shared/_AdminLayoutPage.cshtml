@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Bismillah Graphic</title>
+    <link rel="shortcut icon" href="/favic.ico?v=1" type="image/x-icon" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" />
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    @*<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/css/mdb.min.css" rel="stylesheet" />*@
+    <link href="~/MDB/css/mdb_core.css" rel="stylesheet" />
+    <!-- data-tables -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css" />
+    <!-- data-tables responsive -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap4.min.css" />
+    <!-- Sidebar -->
+    <link href="/CSS/SideNavbar.css" rel="stylesheet" />
+    <!-- Image crop-er -->
+    <link href="/CSS/Croper.css" rel="stylesheet" />
+    <!-- custom -->
+    <link href="/CSS/Custom.css?v=1" rel="stylesheet" />
+
+    @RenderSection("Styles", false)
+</head>
+<body>
+    <div id="sidedrawer" class="d-print-none z-depth-1 cloudy-knoxville-gradient">
+        @Html.Partial($"_LoginPartial")
+        <ul id="menuItem">
+            <li></li>
+        </ul>
+    </div>
+
+    <div id="header">
+        <nav class="m-0 navbar navbar-expand-lg navbar-dark aqua-gradient">
+            <div class="container-fluid">
+                <div>
+                    <a class="sidedrawer-toggle d-md-none js-show-sidedrawer d-print-none"><i class="fas fa-bars"></i></a>
+                    <a class="sidedrawer-toggle d-none d-md-inline-block js-hide-sidedrawer d-print-none"><i class="fas fa-bars"></i></a>
+
+                    <a class="navbar-brand" href="/Home/Index">
+                        <img src="~/CSS/images/logo.png" style="height: 40px;" />
+                        Bismillah Graphic
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <main id="content-wrapper" style="min-height:750px">
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer id="footer" class="page-footer mt-4 wow fadeIn p-0 d-print-none aqua-gradient">
+        <div class="footer-copyright text-center py-3">
+            © @DateTime.Now.Year Copyright: <a href="#">bismillahgraphic.com</a>
+        </div>
+    </footer>
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    @*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.2/js/mdb.min.js"></script>*@
+    <script type="text/javascript" src="/MDB/js/mdb_core.js"></script>
+    <!-- data-tables -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <!-- data-tables responsive -->
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <!-- Image crop-er -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.4/croppie.min.js"></script>
+    <!--notify js-->
+    <script src="/JS/notify.min.js"></script>
+    <!--moment js-->
+    <script src="/JS/Moment.js"></script>
+    <!--Sidebar-->
+    <script src="//cdn.muicss.com/mui-latest/js/mui.min.js"></script>
+    <script src="/JS/sideManuLink.js"></script>
+    <script src="/JS/Basic_Index.js"></script>
+    <!--scroll-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+
+
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        $(function () {
+            //User login Info
+            const url = "@Url.Action($"GetUserLoggedInInfo", $"Basic")";
+            $.get(url, response => {
+                const data = JSON.parse(response);
+                if (!data) return;
+
+                if (data.Image)
+                    $("#loginUserPhoto").attr("src", `data:image/png;base64,${data.Image}`);
+
+                $("#loginUserName").html(`<strong class="p-0"><i class="fas fa-user"></i> ${data.Name}</strong>`);
+            });
+
+
+            //Back to top
+            $('body').append('<div id="toTop" class="btn btn-primary d-print-none">TOP</div>');
+            $(window).scroll(function () {
+                if ($(this).scrollTop() != 0) {
+                    $('#toTop').fadeIn();
+                } else {
+                    $('#toTop').fadeOut();
+                }
+            });
+
+            $('#toTop').click(function () {
+                $("html, body").animate({ scrollTop: 0 }, 600);
+                return false;
+            });
+
+
+            // Animations initialization
+            new WOW().init();
+
+            //Nice Scroll
+            $("#sidedrawer").niceScroll({
+                cursorcolor: "#a4a4a4", // change cursor color in hex
+                cursorwidth: "7px", // cursor width in pixel (you can also write "5px")
+                cursorborder: "1px solid #a4a4a4", // css definition for cursor border
+                cursorborderradius: "3px", // border radius in pixel for cursor
+                emulatetouch: true // enable cursor-drag scrolling like touch devices in desktop computer
+            });
+
+            $("#sidedrawer").mouseover(function () {
+                $("#sidedrawer").getNiceScroll().resize();
+            });
+        });
+
+        //select-picker error
+        if ($.fn.selectpicker)
+            $.fn.selectpicker.Constructor.BootstrapVersion = '4';
+    </script>
+</body>
+</html>

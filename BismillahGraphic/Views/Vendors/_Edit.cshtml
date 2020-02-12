@@ -1,0 +1,47 @@
+﻿@model BismillahGraphic.DataCore.VendorVM
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog cascading-modal" role="document">
+    <div class="modal-content">
+        <div class="modal-header blue-gradient white-text">
+            <h4 class="m-0"><i class="fas fa-plus-circle"></i> Update Vendor</h4>
+            <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            @using (Ajax.BeginForm($"Edit", $"Vendors", null, new AjaxOptions { HttpMethod = "Post", OnSuccess = "OnUpdateSuccess" }, new { role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.VendorID)
+
+                <div class="form-group">
+                    <label>Company Name</label>
+                    @Html.EditorFor(model => model.VendorCompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VendorCompanyName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Name</label>
+                    @Html.EditorFor(model => model.VendorName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VendorName, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Address</label>
+                    @Html.EditorFor(model => model.VendorAddress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VendorAddress, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    @Html.EditorFor(model => model.VendorPhone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VendorPhone, "", new { @class = "text-danger" })
+                </div>
+                <div class="text-center mt-1-half">
+                    <button type="submit" class="btn blue-gradient mb-1 waves-effect waves-light">Save <i class="fas fa-check ml-1"></i></button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

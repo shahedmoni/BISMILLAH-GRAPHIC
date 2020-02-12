@@ -1,0 +1,31 @@
+﻿@model BismillahGraphic.DataCore.ProductCategoryVM
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog cascading-modal" role="document">
+    <div class="modal-content">
+        <div class="modal-header blue-gradient white-text">
+            <h4 class="m-0"><i class="fas fa-plus-circle"></i> Update Product Category</h4>
+            <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            @using (Ajax.BeginForm($"Edit", $"ProductCategories", null, new AjaxOptions {HttpMethod = "Post", OnSuccess = "OnUpdateSuccess"}, new {role = "form"}))
+            {
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                @Html.HiddenFor(model => model.ProductCategoryID)
+                <div class="form-group">
+                    <label>Category Name</label>
+                    @Html.EditorFor(model => model.ProductCategoryName, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.ProductCategoryName, "", new {@class = "text-danger"})
+                </div>
+                <div class="text-center mt-1-half">
+                    <button type="submit" class="btn blue-gradient mb-1 waves-effect waves-light">Save <i class="fas fa-check ml-1"></i></button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col justify-content-center align-self-center">
+            <h3>Products</h3>
+        </div>
+        <div class="col text-right">
+            <a id="CreateClick" data-url="@Url.Action("Create","Products")" class="btn-floating aqua-gradient" title="Add New" data-toggle="modal">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+
+    <div id="wrapper" class="card card-body"></div>
+
+
+    <!-- Insert Modal -->
+    <div class="modal fade" id="InsertModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+    <!-- Update Modal -->
+    <div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+</div>
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(function () {
+            indexData();
+        });
+
+        //get data
+        function indexData() {
+            const url = '/Products/IndexData';
+            const row = $("#wrapper");
+
+            $.get(url, function (response) {
+
+                if (!response.length) return;
+
+                row.children().remove();
+                row.append(tableData(response));
+            });
+        };
+
+        function tableData(data) {
+            var html = "";
+            $.each(data, function (index, category) {
+                html += `<h4 class="card-title font-weight-bold">${category.ProductCategoryName}</h4>`;
+                html += '<table class="table table-sm customTable"><tbody class="table-row">';
+
+                $.each(category.products, function (i, item) {
+                    html += `<tr>
+                        <td>${item.ProductName} - ৳${item.ProductPrice}</td>
+                        <td style="width:40px"><a class="edit fas fa-edit" href="/Products/Edit/${item.ProductID}"></a></td>
+                        <td style="width:40px"><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/${item.ProductID}"></a></td>
+                    </tr>`;
+                });
+                html += '</tbody></table>';
+            });
+
+            return html;
+        };
+
+        //Insert
+        $("#CreateClick").on("click", function () {
+            $.get($(this).data("url"), function (data) {
+                $('#InsertModal').html(data).modal('show');
+            });
+        });
+
+        function OnCreateSuccess(data) {
+            if (data !== "success") {
+                $('#InsertModal').html(data);
+                return;
+            }
+
+            $('#InsertModal').html(data).modal('hide');
+            indexData();
+        }
+
+        //Update click
+        $('#wrapper').on("click", ".edit", function (evt) {
+            evt.preventDefault();
+            const url = $(this).attr("href");
+
+            $.get(url, function (data) {
+                $('#UpdateModal').html(data).modal('show');
+            });
+        });
+
+        function OnUpdateSuccess(data) {
+            if (data !== "success") {
+                $('#UpdateModal').html(data);
+                return;
+            }
+
+            $('#UpdateModal').html(data).modal('hide');
+            indexData();
+        }
+
+        //Delete click
+        $('#wrapper').on("click", ".delete", function (evt) {
+            evt.preventDefault();
+
+            var row = $(this).closest("tr");
+            var btnDelete = $(this);
+            const url = $(this).attr('href');
+
+            $('.table-row em').remove();
+            $('.table-row tr').removeClass("error-color");
+
+            if (!url) return;
+
+            if (confirm("Are you sure you want to delete?")) {
+                $.post(url, function (response) {
+                    if (response === '-1') {
+                        row.addClass("error-color").after('<em class="used-error">This data already used in others place</em>');
+                        btnDelete.removeAttr("href");
+                        return;
+                    }
+                    row.hide();
+                });
+            }
+        });
+    </script>
+}
