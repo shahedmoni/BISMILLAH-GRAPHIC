@@ -24,9 +24,9 @@ namespace BismillahGraphic.Controllers
         }
 
         //Call from ajax
-        public JsonResult IndexData()
+        public JsonResult IndexData(DataRequest request)
         {
-            var data = _db.Vendors.ToListCustom();
+            var data = _db.Vendors.ToListCustom(request);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 

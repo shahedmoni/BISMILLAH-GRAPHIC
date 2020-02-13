@@ -12,7 +12,7 @@ namespace BismillahGraphic.DataCore
         {
         }
 
-        public ICollection<VendorVM> ToListCustom()
+        public DataResult<VendorVM> ToListCustom(DataRequest request)
         {
             var vendor = Context.Vendor.Select(v => new VendorVM
             {
@@ -23,9 +23,9 @@ namespace BismillahGraphic.DataCore
                 VendorPhone = v.VendorPhone,
                 Insert_Date = v.Insert_Date,
                 VendorDue = v.VendorDue
-            }).ToList();
+            });
 
-            return vendor;
+            return vendor.ToDataResult(request);
         }
 
         public async Task<ICollection<VendorVM>> ToListCustomAsync()
