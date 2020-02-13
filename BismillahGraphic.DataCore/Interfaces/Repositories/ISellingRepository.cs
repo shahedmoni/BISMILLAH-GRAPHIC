@@ -12,7 +12,7 @@ namespace BismillahGraphic.DataCore
         double SaleYearly(int year);
         ICollection<MonthlyAmount> MonthlyAmounts(int year);
         double TotalDue();
-        ICollection<SellingRecord> Records();
+        DataResult<SellingRecord> Records(DataRequest request);
         bool dueCollection(SellingDuePay model);
         ICollection<SellingRecord> SellDateToDate(DateTime? sDateTime, DateTime? eDateTime);
         ICollection<IncomeVM> IncomeDateToDate(DateTime? sDateTime, DateTime? eDateTime);
