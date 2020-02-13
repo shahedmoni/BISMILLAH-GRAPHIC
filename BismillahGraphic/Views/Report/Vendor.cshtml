@@ -7,7 +7,7 @@
     <div class="card card-body">
         <h3 class="h3-responsive mb-1">Receivable Statement Summery</h3>
   
-        <table class="DataTable table table-bordered table-sm text-center">
+        <table id="DataTable" class="DataTable table table-bordered table-sm text-center">
             <thead>
             <tr>
                 <th class="text-left"><strong>Party Name</strong></th>
@@ -51,7 +51,7 @@
                     columnDefs: [
                         { 'searchable': false, 'targets': [1, 2, 3, 4] },
                         { 'className': "text-right", "targets": [1,2, 3, 4] },
-                        { 'className': "text-left", "targets": [1] }
+                        { 'className': "text-left", "targets": [0] }
                     ]
                 });
             },
