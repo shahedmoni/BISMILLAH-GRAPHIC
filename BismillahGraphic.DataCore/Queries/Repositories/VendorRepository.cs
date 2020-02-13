@@ -139,7 +139,7 @@ namespace BismillahGraphic.DataCore
             }).ToList();
         }
 
-        public ICollection<VendorPaidDue> PaidDues()
+        public DataResult<VendorPaidDue> PaidDues(DataRequest request)
         {
             return Context.Vendor.OrderBy(v => v.VendorCompanyName).Select(v => new VendorPaidDue
             {
@@ -148,7 +148,7 @@ namespace BismillahGraphic.DataCore
                 TotalAmount = v.TotalAmount,
                 VendorDue = v.VendorDue,
                 VendorPaid = v.VendorPaid
-            }).ToList();
+            }).ToDataResult(request);
         }
 
         public Vendor Details(int id)
