@@ -6,7 +6,7 @@ namespace BismillahGraphic.DataCore
 {
     public interface IVendorRepository : IRepository<Vendor>
     {
-        ICollection<VendorVM> ToListCustom();
+        DataResult<VendorVM> ToListCustom(DataRequest request);
         Task<ICollection<VendorVM>> ToListCustomAsync();
         Task<ICollection<VendorVM>> SearchAsync(string key);
         Vendor AddCustom(VendorVM model);
