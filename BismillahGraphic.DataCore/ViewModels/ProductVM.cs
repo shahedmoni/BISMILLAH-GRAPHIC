@@ -44,4 +44,11 @@ namespace BismillahGraphic.DataCore
         public string ProductName { get; set; }
         public double ProductPrice { get; set; }
     }
+
+    public class ProductSold
+    {
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public double SquareInch { get; set; }
+    }
 }

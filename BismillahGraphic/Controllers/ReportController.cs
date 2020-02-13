@@ -77,8 +77,9 @@ namespace BismillahGraphic.Controllers
         }
 
         //Product Summery
-        public ActionResult ProductSummery()
+        public ActionResult ProductSummery(DateTime? fDateTime, DateTime tDateTime)
         {
+            _db.Products.SoldReport(fDateTime, tDateTime);
             return View();
         }
 
