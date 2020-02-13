@@ -27,7 +27,6 @@
                 <th style="width: 30px">Delete</th>
             </tr>
         </thead>
-        <tbody id="row-data"></tbody>
     </table>
 
     <!-- Insert Modal -->
@@ -42,40 +41,38 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
     <script>
         $(function() {
-            indexData();
+            dataTable.getData();
         });
 
         //get data
-        function indexData() {
-            const url = '/Expanses/IndexData';
-            const row = $("#row-data");
-            const emptyRow = "<tr><td colspan='5'>No data found!</td></tr>";
-
-            $.get(url, function (response) {
-                if (!response.length) {
-                    row.append(emptyRow);
-                    return;
-                }
-
-                row.children().remove();
-                row.append(tableData(response));
-            });
-        };
-
-        function tableData(data) {
-            var html = "";
-            $.each(data, function(i,item) {
-                html += `<tr>
-                    <td>${moment(item.ExpanseDate).format('DD MMM YYYY')}</td>
-                    <td>${item.ExpanseFor}</td>
-                    <td>${item.Expense_Payment_Method}</td>
-                    <td class="text-right">${item.ExpanseAmount}/-</td>
-                    <td><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Expanses/Delete/${item.ExpanseID}"></a></td>
-                </tr>`;
-            });
-            return html;
-        };
-
+        var dataTable = {
+            table: null,
+            init: function() {
+                dataTable.table = $("#DataTable").DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: "/Expanses/IndexData",
+                        type: "POST"
+                    },
+                    columns:
+                    [
+                        { data: "ExpanseDate" ,"render": function(data) { return moment(data).format('DD MMM YYYY')} },
+                        { data: "ExpanseFor" },
+                        { data: "Expense_Payment_Method" },
+                        { data: "ExpanseAmount" },
+                        { data: "ExpanseID", "render": function(data) { return `<a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Expanses/Delete/${data}"></a>`; } }
+                    ],
+                    columnDefs: [
+                        { 'searchable': false, 'targets': [0, 4] },
+                        { 'sortable': false, 'targets': [3, 4] }
+                    ]
+                });
+            },
+            getData: function() {
+                dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
+            }
+        }
 
         //Insert
         $("#CreateClick").on("click",function() {
