@@ -64,8 +64,8 @@
                         { data: "ExpanseID", "render": function(data) { return `<a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Expanses/Delete/${data}"></a>`; } }
                     ],
                     columnDefs: [
-                        { 'searchable': false, 'targets': [0, 4] },
-                        { 'sortable': false, 'targets': [3, 4] }
+                        { 'searchable': false, 'targets': [0,3,4] },
+                        { 'sortable': false, 'targets': [4] }
                     ]
                 });
             },
