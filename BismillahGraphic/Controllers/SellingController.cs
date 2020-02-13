@@ -66,15 +66,14 @@ namespace BismillahGraphic.Controllers
         [Authorize(Roles = "Admin, SellingRecord")]
         public ActionResult Record()
         {
-            var model = _db.Selling.Records();
-            return View(model);
+            return View();
         }
 
-        //public JsonResult GetTableData()
-        //{
-        //    var data = _db.Selling.Records();
-        //    return Json(data);
-        //}
+        public JsonResult IndexData(DataRequest request)
+        {
+            var data = _db.Selling.Records(request);
+            return Json(data);
+        }
 
         //GET: Due Collection
         public ActionResult DueCollection(int? id)

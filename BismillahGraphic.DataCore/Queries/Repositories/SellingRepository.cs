@@ -120,7 +120,7 @@ namespace BismillahGraphic.DataCore
             return ToList().Sum(s => s.SellingDueAmount.GetValueOrDefault());
         }
 
-        public ICollection<SellingRecord> Records()
+        public DataResult<SellingRecord> Records(DataRequest request)
         {
             var r = Context.Selling.Include(s => s.Vendor).Select(s => new SellingRecord
             {
@@ -133,9 +133,9 @@ namespace BismillahGraphic.DataCore
                 SellingDueAmount = s.SellingDueAmount.GetValueOrDefault(),
                 SellingDiscountAmount = s.SellingDiscountAmount.GetValueOrDefault(),
                 SellingDate = s.SellingDate
-            }).ToList();
+            });
 
-            return r ?? new List<SellingRecord>();
+            return r.ToDataResult(request);
         }
 
         public bool dueCollection(SellingDuePay model)

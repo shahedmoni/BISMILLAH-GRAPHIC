@@ -60,4 +60,9 @@ namespace BismillahGraphic.DataCore
         public double Income { get; set; }
         public double Expense { get; set; }
     }
+
+    public class MonthIncomeExpenseNet : MonthIncomeExpense
+    {
+        public double Net { get; set; }
+    }
 }

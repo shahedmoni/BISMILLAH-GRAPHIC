@@ -71,8 +71,10 @@ namespace BismillahGraphic.Controllers
 
 
         //Income Summery
-        public ActionResult SalesSummery()
+        public ActionResult SalesSummery(int? id)
         {
+            var year = id ?? DateTime.Now.Year;
+            var model = new NetReport(_db, year);
             return View();
         }
 
