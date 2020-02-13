@@ -71,7 +71,7 @@ namespace BismillahGraphic.Controllers
 
 
         //Income Summery
-        public ActionResult IncomeSummery()
+        public ActionResult SalesSummery()
         {
             return View();
         }

@@ -26,16 +26,17 @@
 
 @section scripts{
     <script>
-        $(function() {
+        $(function () {
+            startEndOfMonth("#formDate", "#toDate");
             loadData();
             $('.datepicker').pickadate();
         });
 
         function loadData() {
             const url = "/Report/GetVendor";
-            $.get(url,function(data) {
-                    buildTable(data);
-                });
+            $.get(url, function(data) {
+                buildTable(data);
+            });
         };
 
 

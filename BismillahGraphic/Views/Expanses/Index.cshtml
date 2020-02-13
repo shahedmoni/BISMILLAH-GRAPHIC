@@ -20,11 +20,11 @@
     <table id="DataTable" class="table table-sm table-bordered">
         <thead>
             <tr>
-                <th>Expanse Amount</th>
+                <th>Expanse Date</th>
                 <th>Expanse For</th>
                 <th>Payment Method</th>
-                <th>Expanse Date</th>
-                <th style="width:30px">Delete</th>
+                <th>Expanse Amount</th>
+                <th style="width: 30px">Delete</th>
             </tr>
         </thead>
         <tbody id="row-data"></tbody>
@@ -66,10 +66,10 @@
             var html = "";
             $.each(data, function(i,item) {
                 html += `<tr>
-                    <td>${item.ExpanseAmount}</td>
+                    <td>${moment(item.ExpanseDate).format('DD MMM YYYY')}</td>
                     <td>${item.ExpanseFor}</td>
                     <td>${item.Expense_Payment_Method}</td>
-                    <td>${moment(item.ExpanseDate).format('DD MMM YYYY')}</td>
+                    <td class="text-right">${item.ExpanseAmount}/-</td>
                     <td><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Expanses/Delete/${item.ExpanseID}"></a></td>
                 </tr>`;
             });

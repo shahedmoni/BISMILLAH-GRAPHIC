@@ -29,7 +29,6 @@
                     <input id="toDate" class="form-control datepicker" placeholder="To Date" type="text"/>
                     <button id="find" class="btn aqua-gradient btn-rounded btn-sm my-0" type="button">Search</button>
                 </div>
-                
             </div>
         </div>
 
@@ -91,8 +90,8 @@
                             <td>${moment(item.SellingDate).format('D MMM YYYY')}</td>
                             <td>${item.SellingSN}</td>
                             <td class="text-right">${item.SellingAmount}/-</td>
-                            <td class="text-right">${item.SellingPaidAmount}/-</td>
                             <td class="text-right">${item.SellingDiscountAmount}/-</td>
+                            <td class="text-right">${item.SellingPaidAmount}/-</td> 
                             <td class="text-right">${item.SellingDueAmount}/-</td>
                             <td class="d-print-none">${createLink(item)}</td>
                     </tr>`;

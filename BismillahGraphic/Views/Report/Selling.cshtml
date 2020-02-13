@@ -46,7 +46,8 @@
 
 @section scripts{
     <script>
-        $(function() {
+        $(function () {
+            startEndOfMonth("#formDate", "#toDate");
             loadData();
 
             $('.datepicker').pickadate();

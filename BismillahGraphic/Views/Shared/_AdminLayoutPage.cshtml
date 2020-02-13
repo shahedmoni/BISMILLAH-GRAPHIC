@@ -43,7 +43,7 @@
                     <a class="sidedrawer-toggle d-none d-md-inline-block js-hide-sidedrawer d-print-none"><i class="fas fa-bars"></i></a>
 
                     <a class="navbar-brand" href="/Home/Index">
-                        <img src="~/CSS/images/logo.png" style="height: 40px;" />
+                        <img src="~/CSS/images/logo.png" style="height: 40px;" alt="" />
                         Bismillah Graphic
                     </a>
                 </div>
@@ -59,7 +59,7 @@
 
     <footer id="footer" class="page-footer mt-4 wow fadeIn p-0 d-print-none aqua-gradient">
         <div class="footer-copyright text-center py-3">
-            © @DateTime.Now.Year Copyright: <a href="#">bismillahgraphic.com</a>
+            © @DateTime.Now.Year Copyright: <a>bismillahgraphic.com</a>
         </div>
     </footer>
 
@@ -88,7 +88,8 @@
     <script src="/JS/Basic_Index.js"></script>
     <!--scroll-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
-
+    <!--customDateFormat-->
+    <script src="~/JS/customDateFormat.js"></script>
 
     @RenderSection("scripts", required: false)
 
