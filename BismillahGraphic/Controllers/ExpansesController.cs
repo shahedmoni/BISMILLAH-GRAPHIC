@@ -20,9 +20,9 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
-        public JsonResult IndexData()
+        public JsonResult IndexData(DataRequest request)
         {
-            var data = _db.Expanses.ToListCustom();
+            var data = _db.Expanses.ToListCustom(request);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
