@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -101,6 +102,21 @@ namespace BismillahGraphic.DataCore
                     ProductCategoryName = p.ProductCategory.ProductCategoryName,
                     ProductPrice = p.ProductPrice
                 }).Take(5).ToListAsync();
+        }
+
+        public ICollection<ProductSold> SoldReport(DateTime? fDateTime, DateTime? tDateTime)
+        {
+
+            var fDate = fDateTime ?? new DateTime(DateTime.Now.Year, 1, 1);
+            var tDate = tDateTime ?? new DateTime(DateTime.Now.Year, 12, 31);
+
+            var report = Context.Product.Include(p => p.SellingList).Select(p => new ProductSold
+            {
+                ProductID = p.ProductID,
+                ProductName = p.ProductName,
+                SquareInch = p.SellingList.Where(l => l.Selling.SellingDate >= fDate && l.Selling.SellingDate <= tDate).Sum(l => l.SellingQuantity)
+            });
+            return report.ToList();
         }
     }
 }

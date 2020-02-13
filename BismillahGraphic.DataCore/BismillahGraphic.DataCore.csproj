@@ -139,6 +139,10 @@
     <Compile Include="BusinessLogic\SMS_Class.cs" />
     <Compile Include="BusinessLogic\VendorDetails.cs" />
     <Compile Include="DataContext.cs" />
+    <Compile Include="DataTable\DataRequest.cs" />
+    <Compile Include="DataTable\DataResult.cs" />
+    <Compile Include="DataTable\DatatableExtensions.cs" />
+    <Compile Include="DataTable\ExpressionBuilder.cs" />
     <Compile Include="EntityConfigurations\AspNetRolesConfiguration.cs" />
     <Compile Include="EntityConfigurations\AspNetUserClaimsConfiguration.cs" />
     <Compile Include="EntityConfigurations\AspNetUserLoginsConfiguration.cs" />

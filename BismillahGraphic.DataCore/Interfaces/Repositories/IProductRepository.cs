@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BismillahGraphic.DataCore
@@ -7,10 +8,11 @@ namespace BismillahGraphic.DataCore
     {
         ICollection<ProductListCategoryWise> ToListCustom();
         Task<ICollection<ProductListCategoryWise>> ToListCustomAsync();
-       // void AddCustom(ProductVM model);
+        // void AddCustom(ProductVM model);
         void UpdateCustom(ProductVM model);
         ProductVM FindCustom(int? id);
         bool RemoveCustom(int id);
         Task<ICollection<ProductVM>> SearchAsync(string key);
+        ICollection<ProductSold> SoldReport(DateTime? fDateTime, DateTime? tDateTime);
     }
 }
