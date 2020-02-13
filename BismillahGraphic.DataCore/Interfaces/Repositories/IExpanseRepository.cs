@@ -6,7 +6,7 @@ namespace BismillahGraphic.DataCore
 {
     public interface IExpanseRepository : IRepository<Expanse>, IAddCustom<ExpanseVM>
     {
-        ICollection<ExpanseVM> ToListCustom();
+        DataResult<ExpanseVM> ToListCustom(DataRequest request);
         Task<ICollection<ExpanseVM>> ToListCustomAsync();
         // void AddCustom(ExpanseVM model);
         void RemoveCustom(int id);

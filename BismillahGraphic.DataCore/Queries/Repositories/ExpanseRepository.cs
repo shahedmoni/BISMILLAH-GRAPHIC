@@ -12,7 +12,7 @@ namespace BismillahGraphic.DataCore
         {
         }
 
-        public ICollection<ExpanseVM> ToListCustom()
+        public DataResult<ExpanseVM> ToListCustom(DataRequest request)
         {
             var expanse = Context.Expanse.Include(e => e.ExpanseCategory).Select(e => new ExpanseVM
             {
@@ -24,9 +24,8 @@ namespace BismillahGraphic.DataCore
                 ExpanseFor = e.ExpanseFor,
                 Expense_Payment_Method = e.Expense_Payment_Method,
                 ExpanseDate = e.ExpanseDate
-            }).ToList();
-
-            return expanse;
+            });
+            return expanse.ToDataResult(request);
         }
 
         public async Task<ICollection<ExpanseVM>> ToListCustomAsync()
