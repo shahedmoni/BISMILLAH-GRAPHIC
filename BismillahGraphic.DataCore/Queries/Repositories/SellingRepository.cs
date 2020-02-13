@@ -158,10 +158,10 @@ namespace BismillahGraphic.DataCore
             return true;
         }
 
-        public ICollection<SellingRecord> SellDateToDate(DateTime? sDateTime, DateTime? eDateTime)
+        public DataResult<SellingRecord> SellDateToDate(DataRequest request, DateTime? sDateTime, DateTime? eDateTime)
         {
-            var sD = sDateTime ?? new DateTime(1000, 1, 1);
-            var eD = eDateTime ?? new DateTime(3000, 1, 1);
+            var sD = sDateTime ?? new DateTime(DateTime.Now.Year, 1, 1);
+            var eD = eDateTime ?? new DateTime(DateTime.Now.Year, 12, 31);
 
             var sell = Context.Selling.Include(s => s.Vendor).Select(s => new SellingRecord
             {
@@ -174,9 +174,9 @@ namespace BismillahGraphic.DataCore
                 SellingDueAmount = s.SellingDueAmount.GetValueOrDefault(),
                 SellingDiscountAmount = s.SellingDiscountAmount.GetValueOrDefault(),
                 SellingDate = s.SellingDate
-            }).Where(e => e.SellingDate <= eD && e.SellingDate >= sD).OrderBy(e => e.SellingDate).ToList();
+            }).Where(e => e.SellingDate <= eD && e.SellingDate >= sD).OrderBy(e => e.SellingDate);
 
-            return sell ?? new List<SellingRecord>();
+            return sell.ToDataResult(request);
         }
 
         public ICollection<IncomeVM> IncomeDateToDate(DateTime? sDateTime, DateTime? eDateTime)

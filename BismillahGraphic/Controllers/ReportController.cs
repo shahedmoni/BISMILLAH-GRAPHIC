@@ -49,9 +49,9 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
-        public JsonResult GetSelling(DateTime? fromDate, DateTime? toDate)
+        public JsonResult GetSelling(DataRequest request, DateTime? fromDate, DateTime? toDate)
         {
-            var model = _db.Selling.SellDateToDate(fromDate, toDate);
+            var model = _db.Selling.SellDateToDate(request, fromDate, toDate);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
