@@ -14,7 +14,7 @@ namespace BismillahGraphic.DataCore
         double TotalDue();
         DataResult<SellingRecord> Records(DataRequest request);
         bool dueCollection(SellingDuePay model);
-        ICollection<SellingRecord> SellDateToDate(DateTime? sDateTime, DateTime? eDateTime);
+        DataResult<SellingRecord> SellDateToDate(DataRequest request, DateTime? sDateTime, DateTime? eDateTime);
         ICollection<IncomeVM> IncomeDateToDate(DateTime? sDateTime, DateTime? eDateTime);
     }
 }
