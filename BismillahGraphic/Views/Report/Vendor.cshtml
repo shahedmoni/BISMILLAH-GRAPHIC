@@ -17,7 +17,6 @@
                 <th class="text-right"><strong>Due</strong></th>
             </tr>
             </thead>
-            <tbody id="t-row"></tbody>
         </table>
     </div>
 </div>
@@ -27,40 +26,38 @@
 @section scripts{
     <script>
         $(function () {
-            startEndOfMonth("#formDate", "#toDate");
-            loadData();
-            $('.datepicker').pickadate();
+            dataTable.getData();
         });
 
-        function loadData() {
-            const url = "/Report/GetVendor";
-            $.get(url, function(data) {
-                buildTable(data);
-            });
-        };
-
-
-        function buildTable(data) {
-            var html = '';
-            const row = $("#t-row");
-
-            if (row.children().length > 0) {
-                row.empty();
-            };
-
-
-            $.each(data,
-                function(i, item) {
-                    html += `<tr>
-                    <td class="text-left">${item.VendorCompanyName}</td>
-                    <td class="text-right">${item.TotalAmount}/-</td>
-                    <td class="text-right">${item.VendorPaid}/-</td>
-                    <td class="text-right">${item.TotalDiscount}/-</td>
-                    <td class="text-right">${item.VendorDue}/-</td>
-                </tr>`;
+        //get data
+        var dataTable = {
+            table: null,
+            init: function() {
+                dataTable.table = $("#DataTable").DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: "/Report/GetVendor",
+                        type: "POST"
+                    },
+                    columns:
+                    [
+                        { data: "VendorCompanyName" },
+                        { data: "TotalAmount" },
+                        { data: "VendorPaid" },
+                        { data: "TotalDiscount" },
+                        { data: "VendorDue" }
+                    ],
+                    columnDefs: [
+                        { 'searchable': false, 'targets': [1, 2, 3, 4] },
+                        { 'className': "text-right", "targets": [1,2, 3, 4] },
+                        { 'className': "text-left", "targets": [1] }
+                    ]
                 });
-
-            row.append(html);
-        };
+            },
+            getData: function() {
+                dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
+            }
+        }
     </script>
 }
