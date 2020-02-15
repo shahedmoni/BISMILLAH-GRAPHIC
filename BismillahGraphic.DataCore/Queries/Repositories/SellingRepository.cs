@@ -179,10 +179,11 @@ namespace BismillahGraphic.DataCore
             return sell.ToDataResult(request);
         }
 
-        public ICollection<IncomeVM> IncomeDateToDate(DateTime? sDateTime, DateTime? eDateTime)
+        public DataResult<IncomeVM> IncomeDateToDate(DataRequest request, DateTime? sDateTime, DateTime? eDateTime)
         {
-            var sD = sDateTime ?? new DateTime(1000, 1, 1);
-            var eD = eDateTime ?? new DateTime(3000, 1, 1);
+            var sD = sDateTime ?? new DateTime(DateTime.Now.Year, 1, 1);
+            var eD = eDateTime ?? new DateTime(DateTime.Now.Year, 12, 31);
+
             var income = Context.SellingPaymentRecord.Include(r => r.Selling).ThenInclude(s => s.Vendor).Include(r => r.Registration)
                 .Where(r => r.SellingPaid_Date <= eD && r.SellingPaid_Date >= sD).Select(r => new IncomeVM
                 {
@@ -194,8 +195,8 @@ namespace BismillahGraphic.DataCore
                     Payment_Situation = r.Payment_Situation,
                     SellingPaid_Date = r.SellingPaid_Date,
                     ReceivedBy = r.Registration.Name
-                }).ToList();
-            return income ?? new List<IncomeVM>();
+                });
+            return income.ToDataResult(request);
         }
     }
 }
