@@ -164,7 +164,7 @@ namespace BismillahGraphic.DataCore
             return true;
         }
 
-        public DataResult<SellingRecord> SellDateToDate(DataRequest request, DateTime? sDateTime, DateTime? eDateTime)
+        public CustomDataResult<SellingRecord> SellDateToDate(CustomDataRequest request, DateTime? sDateTime, DateTime? eDateTime)
         {
             var sD = sDateTime ?? new DateTime(DateTime.Now.Year, 1, 1);
             var eD = eDateTime ?? new DateTime(DateTime.Now.Year, 12, 31);
@@ -182,7 +182,7 @@ namespace BismillahGraphic.DataCore
                 SellingDate = s.SellingDate
             }).Where(e => e.SellingDate <= eD && e.SellingDate >= sD).OrderBy(e => e.SellingDate);
 
-            return sell.ToDataResult(request);
+            return sell.ToDataResultCustom(request);
         }
 
         public CustomDataResult<IncomeVM> IncomeDateToDate(CustomDataRequest request, DateTime? sDateTime,
@@ -204,8 +204,6 @@ namespace BismillahGraphic.DataCore
                     SellingPaid_Date = r.SellingPaid_Date,
                     ReceivedBy = r.Registration.Name
                 });
-
-            //request.GrandTotalProperty = "SellingPaidAmount";
             return income.ToDataResultCustom(request);
         }
     }
