@@ -229,6 +229,7 @@
     <Compile Include="ViewModels\InstitutionVM.cs" />
     <Compile Include="ViewModels\PageLinkVM.cs" />
     <Compile Include="ViewModels\ProductVM.cs" />
+    <Compile Include="ViewModels\ReceiptVM.cs" />
     <Compile Include="ViewModels\RegistrationVM.cs" />
     <Compile Include="ViewModels\SellingVM.cs" />
     <Compile Include="ViewModels\SideMenuBarVM.cs" />
