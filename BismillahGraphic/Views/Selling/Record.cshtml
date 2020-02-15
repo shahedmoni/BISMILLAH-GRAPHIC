@@ -1,16 +1,16 @@
 ﻿
 @{
-    ViewBag.Title = "Selling Record";
+    ViewBag.Title = "Selling Invoice";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
     <div class="card card-body m-md-3">
-        <h3 class="mb-3">Selling Record</h3>
+        <h3 class="mb-3">Selling Invoice</h3>
 
         <table id="DataTable" class="table table-sm table-bordered">
             <thead>
                 <tr>
-                    <th>#Receipt</th>
+                    <th>#Invoice</th>
                     <th>Vendor</th>
                     <th>Amount</th>
                     <th>Paid</th>
@@ -36,6 +36,8 @@
                 dataTable.table = $("#DataTable").DataTable({
                     processing: true,
                     serverSide: true,
+                    dom: '<"row"<"col-sm-6"Bl><"col-sm-6"f>><"row"<"col-sm-12"<tr>>><"row"<"col-sm-5"i><"col-sm-7"p>>',
+                    buttons: dataTable.button,
                     ajax: {
                         url: "/Selling/IndexData",
                         type: "POST"
@@ -62,7 +64,32 @@
             getData: function() {
                 dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
             },
-            addSign: function(data) {return `${data}/-`}
+            addSign: function (data) { return `${data}/-` },
+            button: {
+                buttons: [{
+                    extend: 'print',
+                    text: '<i class="fa fa-print"></i> Print',
+                    title: '',
+                    exportOptions: {
+                        //columns: [0,1] //Column value those print
+                    },
+                    customize: function(win) {
+                        $(win.document.body).prepend(`
+                        <nav class="mb-3 navbar aqua-gradient">
+                          <h4 class="white-text m-0">
+                            <img src="http://bismillahgraphic.com/CSS/images/logo.png" style="height: 40px;" alt="">Bismillah Graphic
+                          </h4>
+                        </nav>
+                        <h3 class="h3-responsive">${$('h3').text()}</h3>`);
+                    },
+                    autoPrint: true
+                }],
+                dom: {
+                    button: {
+                        className: 'btn purple-gradient btn-rounded btn-sm my-0'
+                    }
+                }
+            }
         }
     </script>
 }

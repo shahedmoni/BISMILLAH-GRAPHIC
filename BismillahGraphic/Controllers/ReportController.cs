@@ -75,19 +75,12 @@ namespace BismillahGraphic.Controllers
         }
 
 
-        //Income Summery
-        public ActionResult SalesSummery(int? id)
+        //Net Summery
+        public ActionResult NetSummery(int? id)
         {
             var year = id ?? DateTime.Now.Year;
             var model = new NetReport(_db, year);
-            return View();
-        }
-
-        //Product Summery
-        public ActionResult ProductSummery(DateTime? fDateTime, DateTime tDateTime)
-        {
-            _db.Products.SoldReport(fDateTime, tDateTime);
-            return View();
+            return View(model);
         }
 
 
@@ -96,6 +89,27 @@ namespace BismillahGraphic.Controllers
         {
             return View();
         }
+
+        //call from ajax
+        public JsonResult GetPaymentSummery(DataRequest request)
+        {
+            return Json(new { }, JsonRequestBehavior.AllowGet);
+        }
+
+        //Product Summery
+        public ActionResult ProductSummery()
+        {
+            return View();
+        }
+
+        //ajax call Product Summery
+        public JsonResult GetProductSummery(DateTime? formDate, DateTime toDate)
+        {
+            var model = _db.Products.SoldReport(formDate, toDate);
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         protected override void Dispose(bool disposing)
         {

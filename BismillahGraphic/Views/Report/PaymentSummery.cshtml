@@ -1,32 +1,30 @@
-﻿@{
-    ViewBag.Title = "Vendor Report";
+﻿
+@{
+    ViewBag.Title = "Payment Summery";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
-<div class="container-fluid mt-2">
-    <div class="card card-body">
-        <h3 class="h3-responsive mb-1">Receivable Statement Summery</h3>
-        <em class="mb-2">Total Due: ৳<span id="total"></span></em>
 
-        <table id="DataTable" class="DataTable table table-bordered table-sm text-center">
-            <thead>
+<div class="card card-body m-md-3">
+    <h3 class="mb-3">Payment Summery</h3>
+
+    <table id="DataTable" class="table table-sm table-bordered">
+        <thead>
             <tr>
-                <th><strong>Party Name</strong></th>
-                <th><strong>Sales</strong></th>
-                <th><strong>Received</strong></th>
-                <th><strong>Discount</strong></th>
-                <th><strong>Due</strong></th>
+                <th>Date</th>
+                <th>Vendor</th>
+                <th>#Receipt</th>
+                <th>Amount</th>
             </tr>
-            </thead>
-        </table>
-    </div>
+        </thead>
+    </table>
 </div>
 
 
-
-@section scripts{
+@section scripts
+{
     <script>
-        $(function () {
+        $(function() {
             dataTable.getData();
         });
 
@@ -40,35 +38,30 @@
                     dom: '<"row"<"col-sm-6"Bl><"col-sm-6"f>><"row"<"col-sm-12"<tr>>><"row"<"col-sm-5"i><"col-sm-7"p>>',
                     buttons: dataTable.button,
                     ajax: {
-                        url: "/Report/GetVendor",
-                        type: "POST",
-                        data: function(data) {
-                            data.GrandTotalProperty = "VendorDue";
-                        },
-                        dataSrc: function(data) {
-                            $("#total").text(data.GrandTotal);
-                            return data.data;
-                        }
+                        url: "/Report/GetPaymentSummery",
+                        type: "POST"
                     },
                     columns:
                     [
+                        { data: "SellingDate", "render": function(data) { return moment(data).format('DD MMM YYYY') } },
                         { data: "VendorCompanyName" },
-                        { data: "TotalAmount" ,"render": dataTable.addSign},
-                        { data: "VendorPaid" ,"render": dataTable.addSign},
-                        { data: "TotalDiscount" ,"render": dataTable.addSign},
-                        { data: "VendorDue" ,"render": dataTable.addSign},
+                        { data: "ReceiptSN", "render": function(data, type, row, meta) {
+                                return `<a class="blue-text" href="/Selling/Receipt/${row.SellingID}">${data}</a>`;
+                            }
+                        },
+                        { data: "SellingAmount", "render": dataTable.addSign },
                     ],
                     columnDefs: [
-                        { 'searchable': false, 'targets': [1, 2, 3, 4] },
-                        { 'className': "text-left", "targets": [0] },
-                        { 'className': "text-right", "targets": [1,2, 3, 4] }
+                        { 'searchable': false, 'targets': [0, 3] },
+                        { 'className': "text-left", "targets": [1] },
+                        { 'className': "text-right", "targets": [3] }
                     ]
                 });
             },
             getData: function() {
                 dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
             },
-            addSign: function (data) { return `${data}/-` },
+            addSign: function(data) { return `${data}/-` },
             button: {
                 buttons: [{
                     extend: 'print',
@@ -76,7 +69,7 @@
                     title: '',
                     exportOptions: {
                         //columns: [0,1] //Column value those print
-                    },
+                                        },
                     customize: function(win) {
                         $(win.document.body).prepend(`
                         <nav class="mb-3 navbar aqua-gradient">
@@ -84,8 +77,7 @@
                             <img src="http://bismillahgraphic.com/CSS/images/logo.png" style="height: 40px;" alt="">Bismillah Graphic
                           </h4>
                         </nav>
-                        <h3 class="h3-responsive">${$('h3').text()}</h3>
-                        <em class="mb-1">Total Due: ৳${$("#total").text()}</em>`);
+                        <h3 class="h3-responsive">${$('h3').text()}</h3>`);
                     },
                     autoPrint: true
                 }],
@@ -98,3 +90,5 @@
         }
     </script>
 }
+
+

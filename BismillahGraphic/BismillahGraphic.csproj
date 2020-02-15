@@ -401,7 +401,9 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
-    <Content Include="Views\Report\SalesSummery.cshtml" />
+    <Content Include="Views\Report\NetSummery.cshtml" />
+    <Content Include="Views\Report\ProductSummery.cshtml" />
+    <Content Include="Views\Report\PaymentSummery.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BismillahGraphic.DataCore\BismillahGraphic.DataCore.csproj">
