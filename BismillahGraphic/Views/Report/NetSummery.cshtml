@@ -1,0 +1,114 @@
+﻿@model BismillahGraphic.DataCore.NetReport
+@{
+    ViewBag.Title = "Net Summery";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+    <div class="m-0 m-sm-4">
+        <div class="container-fluid">
+            <section class="mb-5">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="mb-3" style="color: #777">Net Summery</h3>
+                    </div>
+                    <div class="col-md-4 text-right">
+                        @Html.DropDownList("selectYear", new SelectList(Model.Years, "value", "label", Model.DefaultYear), new { @class = "mdb-select" })
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-5 pb-4">
+                <div class="row">
+                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                        <div class="card card-cascade cascading-admin-card">
+                            <div class="admin-up">
+                                <i class="far fa-money-bill-alt success-color mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <p class="text-uppercase mt-3">Sales</p>
+                                    <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.SaleYearly</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                        <div class="card card-cascade cascading-admin-card">
+                            <div class="admin-up">
+                                <i class="fas fa-chart-bar red accent-2 mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <p class="text-uppercase mt-3">Expense</p>
+                                    <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.ExpenseYearly</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-md-0 mb-4">
+                        <div class="card card-cascade cascading-admin-card">
+                            <div class="admin-up">
+                                <i class="fas fa-chart-pie light-blue lighten-1 mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <p class="text-uppercase mt-3">Net</p>
+                                    <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.NetYearly</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 mb-0">
+                        <div class="card card-cascade cascading-admin-card">
+                            <div class="admin-up">
+                                <i class="fas fa-chart-line warning-color mr-3 z-depth-2"></i>
+                                <div class="data">
+                                    <p class="text-uppercase mt-3">Total Due</p>
+                                    <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.TotalDue</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-5">
+                <div class="card card-body card-cascade narrower">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th><strong>Month</strong></th>
+                                <th class="text-right"><strong>Income</strong></th>
+                                <th class="text-right"><strong>Expense</strong></th>
+                                <th class="text-right"><strong>Net</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.MonthlyReports)
+                            {
+                                <tr>
+                                    <td><strong>@item.Month</strong></td>
+                                    <td class="text-right">@item.Income/-</td>
+                                    <td class="text-right">@item.Expense/-</td>
+                                    <td class="text-right">@item.Net/-</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>   
+
+@section scripts
+{
+    <script>
+        // select Init
+        $(function() {
+            $('.mdb-select').materialSelect();
+        });
+
+        //year selected value
+        $("#selectYear").change(function() {
+            const year = $(this).children("option:selected").val();
+            location.href = `/Report/NetSummery/${year}`;
+        });
+    </script>
+}

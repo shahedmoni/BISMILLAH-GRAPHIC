@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Product Summery";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="card card-body">
+        <div class="row mb-3">
+            <div class="col-lg-5">
+                <h3 class="h3-responsive">ProductSummery</h3>
+                <em class="d-block text-muted mb-3" id="showDate"></em>
+            </div>
+
+            <div class="col-lg-7 d-print-none">
+                <div class="form-inline justify-content-end">
+                    <div class="md-form m-0 mr-3">
+                        <input id="formDate" class="form-control datepicker" placeholder="Form Date" type="text" />
+                    </div>
+                    <div class="md-form m-0">
+                        <input id="toDate" class="form-control datepicker" placeholder="To Date" type="text" />
+
+                        <button id="find" class="btn aqua-gradient btn-rounded btn-sm my-0" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <table class="DataTable table table-bordered table-sm text-center">
+            <thead>
+                <tr>
+                    <th><strong>Product Name</strong></th>
+                    <th><strong>Square Inch</strong></th>
+                </tr>
+            </thead>
+            <tbody id="table-row">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $(function() {
+            $('.datepicker').pickadate();
+            startEndOfMonth("#formDate", "#toDate");
+            getData();
+        });
+
+        function getData() {
+            const formDate = document.getElementById("formDate").value;
+            const toDate = document.getElementById("toDate").value;
+            const url = "/Report/GetProductSummery";
+            const from = $("#formDate").val();
+            const to = $("#toDate").val();
+
+            if (from || to) {
+                const shoDate = showDate(from, to);
+                $("#showDate").text(shoDate);
+            }
+
+            $.get(url, { formDate, toDate }, function(response) {
+                if (response.length) {
+                    buildTable(response)
+                    console.log(response);
+                }
+            });
+        }
+
+        function buildTable(data) {
+            const tableRow = $("#table-row");
+            tableRow.empty();
+
+            var html = "";
+            data.forEach(function(item) {
+                html += `<tr><td class="text-left">${item.ProductName}</td><td class="text-right"><strong>${item.SquareInch.toFixed(2)}</strong></td></tr>`;
+            });
+            tableRow.append(html);
+        }
+
+        function showDate(from, to) {
+            var label = "";
+            if (from && !to)
+                label = `from ${from}`;
+
+            if (to && !from)
+                label = `upto ${to}`;
+
+            if (from && to)
+                label = `from (${from}) upto (${to})`;
+
+            return label;
+
+        }
+
+        $("#find").click(function() {
+            getData();
+        });
+    </script>
+}

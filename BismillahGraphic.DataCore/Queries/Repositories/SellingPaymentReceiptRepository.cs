@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 
 namespace BismillahGraphic.DataCore
@@ -22,12 +23,54 @@ namespace BismillahGraphic.DataCore
 
         public PaymentReceiptPrint Print(int id)
         {
-            throw new NotImplementedException();
+            var receipt = Context.SellingPaymentReceipt.Where(r => r.ReceiptID == id).Select(r => new PaymentReceiptPrint
+            {
+                Invoices = r.SellingPaymentRecord.Select(p => new PaidInvoiceList
+                {
+                    SellingID = p.SellingID,
+                    SellingSN = p.Selling.SellingSN,
+                    SellingAmount = p.Selling.SellingTotalPrice,
+                    SellingPaidAmount = p.SellingPaidAmount,
+                    SellingDate = p.Selling.SellingDate
+                }).ToList(),
+
+                VendorInfo = new VendorVM
+                {
+                    VendorID = r.VendorID,
+                    VendorCompanyName = r.Vendor.VendorCompanyName,
+                    VendorName = r.Vendor.VendorName,
+                    VendorAddress = r.Vendor.VendorAddress,
+                    VendorPhone = r.Vendor.VendorPhone,
+                    Insert_Date = r.Vendor.Insert_Date,
+                    VendorDue = r.Vendor.VendorDue
+                },
+                ReceiptID = r.ReceiptID,
+                PaidDate = r.Paid_Date,
+                ReceiptSN = r.ReceiptSN,
+                PaidAmount = r.PaidAmount,
+                Payment_Situation = r.Payment_Situation,
+                CollectBy = r.Registration.Name
+            }).FirstOrDefault();
+
+            return receipt;
+
         }
 
         public CustomDataResult<PaymentReceiptList> DateToDate(CustomDataRequest request, DateTime? sDateTime, DateTime? eDateTime)
         {
-            throw new NotImplementedException();
+            var sD = sDateTime ?? new DateTime(DateTime.Now.Year, 1, 1);
+            var eD = eDateTime ?? new DateTime(DateTime.Now.Year, 12, 31);
+
+            var sell = Context.SellingPaymentReceipt.Include(s => s.Vendor).Select(s => new PaymentReceiptList
+            {
+                ReceiptID = s.ReceiptID,
+                Date = s.Paid_Date,
+                Vendor = s.Vendor.VendorCompanyName,
+                Receipt = s.ReceiptSN,
+                Amount = s.PaidAmount
+            }).Where(e => e.Date <= eD && e.Date >= sD).OrderBy(e => e.Date);
+
+            return sell.ToDataResultCustom(request);
         }
 
         public SellingPaymentReceipt AddCustom(PaymentReceipt model)

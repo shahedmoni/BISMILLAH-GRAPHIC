@@ -64,6 +64,16 @@ namespace BismillahGraphic.Controllers
             return View(data);
         }
 
+        public ActionResult PaidReceipt(int? id)
+        {
+            if (id == null) return RedirectToAction($"Selling");
+
+            var data = _db.SellingPaymentReceipts.Print(id.GetValueOrDefault());
+            data.InstitutionInfo = _db.Institutions.FindCustom();
+
+            return View(data);
+        }
+
         //GET: Record
         [Authorize(Roles = "Admin, SellingRecord")]
         public ActionResult Record()

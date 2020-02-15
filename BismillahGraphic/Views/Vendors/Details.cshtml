@@ -7,6 +7,7 @@
 
 <div class="container">
     <input id="Id" type="hidden" value="@ViewBag.id"/>
+    
     <div class="card card-body">
         <div class="d-flex justify-content-between mb-3">
             <div>
@@ -48,11 +49,20 @@
                 <th>Discount</th>
                 <th>Received</th>
                 <th>Due Balance</th>
-                <th class="d-print-none">Action</th>
+                <th>Paid</th>
             </tr>
             </thead>
             <tbody id="t-row"></tbody>
         </table>
+        
+        <div class="form-inline">
+            <div class="md-form">
+                <input id="inputPaid" type="number" class="form-control" placeholder="Total paid amount" />
+            </div>
+            <div class="md-form">
+                <input id="submitPaid" type="button" class="btn btn-brown" value="Paid" />
+            </div>
+        </div>
     </div>
 </div>
 
@@ -93,21 +103,12 @@
                             <td class="text-right">${item.SellingDiscountAmount}/-</td>
                             <td class="text-right">${item.SellingPaidAmount}/-</td> 
                             <td class="text-right">${item.SellingDueAmount}/-</td>
-                            <td class="d-print-none">${createLink(item)}</td>
+                            <td class="d-print-none"><label class="paidAmount">0</label></td>
                     </tr>`;
             });
 
             row.append(html);
         };
-
-        function createLink(item) {
-            var link = '';
-            if (item.SellingDueAmount)
-                link += `<a class="text-danger" href="/Selling/DueCollection/${item.SellingID}">Pay Due</a>`
-            else
-                link += `<a class="blue-text" href="/Selling/Receipt/${item.SellingID}">Receipt</a>`;
-            return link;
-        }
 
         function summeryInfo(data) {
             const info = data.VendorInfo;

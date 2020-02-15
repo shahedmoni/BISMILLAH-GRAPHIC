@@ -46,17 +46,39 @@ namespace BismillahGraphic.DataCore
 
     public class PaymentReceiptPrint
     {
+        public PaymentReceiptPrint()
+        {
+            this.Invoices = new HashSet<PaidInvoiceList>();
+        }
+        public ICollection<PaidInvoiceList> Invoices { get; set; }
         public InstitutionVM InstitutionInfo { get; set; }
         public VendorVM VendorInfo { get; set; }
+        public int ReceiptID { get; set; }
+        public DateTime PaidDate { get; set; }
+        public int ReceiptSN { get; set; }
+        public double PaidAmount { get; set; }
+        public string Payment_Situation { get; set; }
+        public string CollectBy { get; set; }
 
 
     }
 
+
+    public class PaidInvoiceList
+    {
+        public int SellingID { get; set; }
+        public int SellingSN { get; set; }
+        public double SellingAmount { get; set; }
+        public double SellingPaidAmount { get; set; }
+        public DateTime SellingDate { get; set; }
+    }
+
     public class PaymentReceiptList
     {
+        public int ReceiptID { get; set; }
         public DateTime Date { get; set; }
         public string Vendor { get; set; }
-        public string Receipt { get; set; }
+        public int Receipt { get; set; }
         public double Amount { get; set; }
     }
 

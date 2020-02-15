@@ -1,25 +1,24 @@
 ﻿
 @{
-    ViewBag.Title = "Selling Invoice";
+    ViewBag.Title = "Payment Summery";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
-    <div class="card card-body m-md-3">
-        <h3 class="mb-3">Selling Invoice</h3>
 
-        <table id="DataTable" class="table table-sm table-bordered">
-            <thead>
-                <tr>
-                    <th>#Invoice</th>
-                    <th>Vendor</th>
-                    <th>Amount</th>
-                    <th>Paid</th>
-                    <th>Due</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-        </table>
-    </div>  
+<div class="card card-body m-md-3">
+    <h3 class="mb-3">Payment Summery</h3>
+
+    <table id="DataTable" class="table table-sm table-bordered">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Vendor</th>
+                <th>#Receipt</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+    </table>
+</div>
 
 
 @section scripts
@@ -39,32 +38,30 @@
                     dom: '<"row"<"col-sm-6"Bl><"col-sm-6"f>><"row"<"col-sm-12"<tr>>><"row"<"col-sm-5"i><"col-sm-7"p>>',
                     buttons: dataTable.button,
                     ajax: {
-                        url: "/Selling/IndexData",
+                        url: "/Report/GetPaymentSummery",
                         type: "POST"
                     },
                     columns:
                     [
-                        { data: "SellingSN", "render": function(data, type, row, meta) {
-                                return `<a class="blue-text" href="/Selling/Receipt/${row.SellingID}">${data}</a>`;
+                        { data: "Date", "render": function(data) { return moment(data).format('DD MMM YYYY') } },
+                        { data: "Vendor" },
+                        { data: "Receipt", "render": function(data, type, row, meta) {
+                                return `<a class="blue-text" href="/Selling/Receipt/${row.ReceiptID}">${data}</a>`;
                             }
                         },
-                        { data: "VendorCompanyName" },
-                        { data: "SellingAmount","render": dataTable.addSign},
-                        { data: "SellingPaidAmount","render": dataTable.addSign},
-                        { data: "SellingDueAmount","render": dataTable.addSign},
-                        { data: "SellingDate", "render": function(data) { return moment(data).format('DD MMM YYYY') } }
+                        { data: "Amount", "render": dataTable.addSign },
                     ],
                     columnDefs: [
-                        { 'searchable': false, 'targets': [2, 4, 5] },
-                        { 'className': "text-right", "targets": [2, 3, 4] },
-                        { 'className': "text-left", "targets": [1] }
+                        { 'searchable': false, 'targets': [0, 3] },
+                        { 'className': "text-left", "targets": [1] },
+                        { 'className': "text-right", "targets": [3] }
                     ]
                 });
             },
             getData: function() {
                 dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
             },
-            addSign: function (data) { return `${data}/-` },
+            addSign: function(data) { return `${data}/-` },
             button: {
                 buttons: [{
                     extend: 'print',
@@ -72,7 +69,7 @@
                     title: '',
                     exportOptions: {
                         //columns: [0,1] //Column value those print
-                    },
+                                        },
                     customize: function(win) {
                         $(win.document.body).prepend(`
                         <nav class="mb-3 navbar aqua-gradient">
@@ -93,3 +90,5 @@
         }
     </script>
 }
+
+
