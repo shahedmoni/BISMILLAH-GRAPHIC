@@ -22,9 +22,11 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
-        public JsonResult GetIncome(DateTime? fromDate, DateTime? toDate)
+        public JsonResult GetIncome(DataRequest request, string sFromDate, string sToDate)
         {
-            var model = _db.Selling.IncomeDateToDate(fromDate, toDate);
+            DateTime.TryParse(sFromDate, out var fDate);
+            DateTime.TryParse(sToDate, out var tDate);
+            var model = _db.Selling.IncomeDateToDate(request, fDate, tDate);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
@@ -49,9 +51,12 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
-        public JsonResult GetSelling(DataRequest request, DateTime? fromDate, DateTime? toDate)
+        public JsonResult GetSelling(DataRequest request, string sFromDate, string sToDate)
         {
-            var model = _db.Selling.SellDateToDate(request, fromDate, toDate);
+            DateTime.TryParse(sFromDate, out var fDate);
+            DateTime.TryParse(sToDate, out var tDate);
+
+            var model = _db.Selling.SellDateToDate(request, fDate, tDate);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
