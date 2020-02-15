@@ -87,7 +87,7 @@ namespace BismillahGraphic.DataCore
             {
                 result.recordsTotal = result.recordsFiltered = query.Count();
 
-                if (string.IsNullOrEmpty(request.GrandTotalProperty))
+                if (!string.IsNullOrEmpty(request.GrandTotalProperty))
                 {
                     ParameterExpression param = Expression.Parameter(typeof(T), "t");
                     MemberExpression member = Expression.Property(param, request.GrandTotalProperty);
@@ -124,6 +124,19 @@ namespace BismillahGraphic.DataCore
                 if (!string.IsNullOrEmpty(request.search?.value) || request.filters.Any())
                 {
                     result.recordsFiltered = query.Count();
+
+                    if (!string.IsNullOrEmpty(request.GrandTotalProperty))
+                    {
+                        ParameterExpression param = Expression.Parameter(typeof(T), "t");
+                        MemberExpression member = Expression.Property(param, request.GrandTotalProperty);
+
+                        var typeParams = new ParameterExpression[] { Expression.Parameter(typeof(T), "") };
+                        var pi = typeof(T).GetProperty(request.GrandTotalProperty);
+
+                        var d = Expression.Lambda<Func<T, double>>(Expression.Property(typeParams[0], pi), typeParams);
+
+                        result.GrandTotal = query.Sum(d);
+                    }
                 }
 
                 if (request.draw > 0)

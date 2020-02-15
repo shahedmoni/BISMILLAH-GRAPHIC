@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <em class="mb-1">Total Received: ৳<span id="total"></span></em>
+        <em class="mb-2">Total Received: ৳<span id="total"></span></em>
         <table id="DataTable" class="DataTable table table-bordered table-sm text-center">
             <thead>
                 <tr>
@@ -95,9 +95,10 @@
                         data: function(data) {
                             data.sFromDate = dataTable.fromDate;
                             data.sToDate = dataTable.toDate;
+                            data.GrandTotalProperty = "SellingPaidAmount";
                         },
                         dataSrc: function(data) {
-                            console.log(data)
+                            $("#total").text(data.GrandTotal);
                             return data.data;
                         }
                     },
@@ -152,8 +153,6 @@
 
         $("#find").on("click", function() {
             loadData();
-
-            //$("#total").text(total);
         });
 
     </script>

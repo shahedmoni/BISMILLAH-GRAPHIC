@@ -32,16 +32,19 @@ namespace BismillahGraphic.DataCore
                     Length = c.Length,
                     Width = c.Width
                 }).ToList(),
-                SellingPaymentRecord = model.SellingPaidAmount == 0 ? null : new List<SellingPaymentRecord>
-                {
-                    new SellingPaymentRecord{
-                        RegistrationID = model.RegistrationID,
-                    SellingPaidAmount = model.SellingPaidAmount,
-                    Payment_Situation = model.Payment_Situation,
-                    SellingPaid_Date = model.SellingDate
+                SellingPaymentRecord = model.SellingPaidAmount == 0
+                    ? null
+                    : new List<SellingPaymentRecord>
+                    {
+                        new SellingPaymentRecord
+                        {
+                            RegistrationID = model.RegistrationID,
+                            SellingPaidAmount = model.SellingPaidAmount,
+                            Payment_Situation = model.Payment_Situation,
+                            SellingPaid_Date = model.SellingDate
 
+                        }
                     }
-                }
             };
             Add(sell);
             return sell;
@@ -56,17 +59,18 @@ namespace BismillahGraphic.DataCore
                     .Include(s => s.SellingPaymentRecord).FirstOrDefault(s => s.SellingID == id)
             };
 
-            receipt.VendorInfo = Context.Vendor.Where(v => v.VendorID == receipt.SellingInfo.VendorID).Select(vendor => new VendorVM
-            {
-                VendorID = vendor.VendorID,
-                VendorCompanyName = vendor.VendorCompanyName,
-                VendorName = vendor.VendorName,
-                VendorAddress = vendor.VendorAddress,
-                VendorPhone = vendor.VendorPhone,
-                Insert_Date = vendor.Insert_Date,
-                VendorDue = vendor.VendorDue
+            receipt.VendorInfo = Context.Vendor.Where(v => v.VendorID == receipt.SellingInfo.VendorID).Select(vendor =>
+                new VendorVM
+                {
+                    VendorID = vendor.VendorID,
+                    VendorCompanyName = vendor.VendorCompanyName,
+                    VendorName = vendor.VendorName,
+                    VendorAddress = vendor.VendorAddress,
+                    VendorPhone = vendor.VendorPhone,
+                    Insert_Date = vendor.Insert_Date,
+                    VendorDue = vendor.VendorDue
 
-            }).FirstOrDefault();
+                }).FirstOrDefault();
             if (receipt.SellingInfo != null)
                 receipt.SoildBy = Context.Registration.Find(receipt.SellingInfo.RegistrationID).Name;
             return receipt;
@@ -85,7 +89,8 @@ namespace BismillahGraphic.DataCore
 
         public ICollection<int> Years()
         {
-            var years = Context.Selling.GroupBy(e => new { Year = e.SellingDate.Year }).Select(g => g.Key.Year).OrderBy(o => o).ToList();
+            var years = Context.Selling.GroupBy(e => new { Year = e.SellingDate.Year }).Select(g => g.Key.Year)
+                .OrderBy(o => o).ToList();
 
             var currentYear = DateTime.Now.Year;
             if (!years.Contains(currentYear)) years.Add(currentYear);
@@ -95,7 +100,8 @@ namespace BismillahGraphic.DataCore
 
         public double SaleYearly(int year)
         {
-            return ToList().Where(s => s.SellingDate.Year == year).Sum(s => s.SellingTotalPrice - s.SellingDiscountAmount.GetValueOrDefault());
+            return ToList().Where(s => s.SellingDate.Year == year)
+                .Sum(s => s.SellingTotalPrice - s.SellingDiscountAmount.GetValueOrDefault());
         }
 
         public ICollection<MonthlyAmount> MonthlyAmounts(int year)
@@ -179,12 +185,14 @@ namespace BismillahGraphic.DataCore
             return sell.ToDataResult(request);
         }
 
-        public CustomDataResult<IncomeVM> IncomeDateToDate(CustomDataRequest request, DateTime? sDateTime, DateTime? eDateTime)
+        public CustomDataResult<IncomeVM> IncomeDateToDate(CustomDataRequest request, DateTime? sDateTime,
+            DateTime? eDateTime)
         {
             var sD = sDateTime ?? new DateTime(DateTime.Now.Year, 1, 1);
             var eD = eDateTime ?? new DateTime(DateTime.Now.Year, 12, 31);
 
-            var income = Context.SellingPaymentRecord.Include(r => r.Selling).ThenInclude(s => s.Vendor).Include(r => r.Registration)
+            var income = Context.SellingPaymentRecord.Include(r => r.Selling).ThenInclude(s => s.Vendor)
+                .Include(r => r.Registration)
                 .Where(r => r.SellingPaid_Date <= eD && r.SellingPaid_Date >= sD).Select(r => new IncomeVM
                 {
                     SellingID = r.SellingID,
@@ -197,6 +205,7 @@ namespace BismillahGraphic.DataCore
                     ReceivedBy = r.Registration.Name
                 });
 
+            //request.GrandTotalProperty = "SellingPaidAmount";
             return income.ToDataResultCustom(request);
         }
     }
