@@ -68,7 +68,7 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
-        public JsonResult GetVendor(DataRequest request)
+        public JsonResult GetVendor(CustomDataRequest request)
         {
             var model = _db.Vendors.PaidDues(request);
             return Json(model, JsonRequestBehavior.AllowGet);
