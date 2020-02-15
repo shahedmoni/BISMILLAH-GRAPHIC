@@ -18,7 +18,7 @@ namespace BismillahGraphic.DataCore
         bool RemoveCustom(int id);
 
         ICollection<VendorPaidDue> TopDue();
-        DataResult<VendorPaidDue> PaidDues(DataRequest request);
+        CustomDataResult<VendorPaidDue> PaidDues(CustomDataRequest request);
         Vendor Details(int id);
         ICollection<SellingRecord> SellDateToDate(int id, DateTime? sDateTime, DateTime? eDateTime);
     }
