@@ -22,7 +22,7 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
-        public JsonResult GetIncome(DataRequest request, string sFromDate, string sToDate)
+        public JsonResult GetIncome(CustomDataRequest request, string sFromDate, string sToDate)
         {
             DateTime.TryParse(sFromDate, out var fDate);
             DateTime.TryParse(sToDate, out var tDate);

@@ -179,7 +179,7 @@ namespace BismillahGraphic.DataCore
             return sell.ToDataResult(request);
         }
 
-        public DataResult<IncomeVM> IncomeDateToDate(DataRequest request, DateTime? sDateTime, DateTime? eDateTime)
+        public CustomDataResult<IncomeVM> IncomeDateToDate(CustomDataRequest request, DateTime? sDateTime, DateTime? eDateTime)
         {
             var sD = sDateTime ?? new DateTime(DateTime.Now.Year, 1, 1);
             var eD = eDateTime ?? new DateTime(DateTime.Now.Year, 12, 31);
@@ -196,7 +196,8 @@ namespace BismillahGraphic.DataCore
                     SellingPaid_Date = r.SellingPaid_Date,
                     ReceivedBy = r.Registration.Name
                 });
-            return income.ToDataResult(request);
+
+            return income.ToDataResultCustom(request);
         }
     }
 }
