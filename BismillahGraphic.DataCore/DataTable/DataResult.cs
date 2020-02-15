@@ -10,4 +10,9 @@ namespace BismillahGraphic.DataCore
         public long recordsFiltered { get; set; }
         public List<T> data { get; set; }
     }
+
+    public class CustomDataResult<T> : DataResult<T> where T : class
+    {
+        public double GrandTotal { get; set; }
+    }
 }

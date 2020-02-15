@@ -46,4 +46,9 @@ namespace BismillahGraphic.DataCore
         public string value { get; set; }
         public bool regex { get; set; }
     }
+
+    public class CustomDataRequest : DataRequest
+    {
+        public string GrandTotalProperty { get; set; }
+    }
 }
