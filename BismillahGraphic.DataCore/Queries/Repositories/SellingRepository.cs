@@ -37,12 +37,19 @@ namespace BismillahGraphic.DataCore
                     : new List<SellingPaymentRecord>
                     {
                         new SellingPaymentRecord
-                        {
+                        { SellingPaymentReceipt = new SellingPaymentReceipt
+                                {
+                                    RegistrationID = model.RegistrationID,
+                                    VendorID = model.VendorID,
+                                    ReceiptSN = model.ReceiptSN,
+                                    PaidAmount = model.SellingPaidAmount,
+                                    Payment_Situation = model.Payment_Situation,
+                                    Paid_Date = model.SellingDate,
+                                },
                             RegistrationID = model.RegistrationID,
                             SellingPaidAmount = model.SellingPaidAmount,
                             Payment_Situation = model.Payment_Situation,
                             SellingPaid_Date = model.SellingDate
-
                         }
                     }
             };
@@ -144,20 +151,37 @@ namespace BismillahGraphic.DataCore
             return r.ToDataResult(request);
         }
 
-        public bool dueCollection(SellingDuePay model)
+        public bool dueCollection(InvoicePaySingle model)
         {
+
             var sell = Find(model.SellingID);
             if (sell.SellingDueAmount < model.SellingPaidAmount) return false;
 
-            var pay = new SellingPaymentRecord
+
+            var receipt = new SellingPaymentReceipt
             {
-                SellingID = model.SellingID,
                 RegistrationID = model.RegistrationID,
-                SellingPaidAmount = model.SellingPaidAmount,
+                VendorID = model.VendorID,
+                ReceiptSN = model.ReceiptSN,
+                PaidAmount = model.SellingPaidAmount,
                 Payment_Situation = model.Payment_Situation,
-                SellingPaid_Date = model.SellingPaid_Date
+                Paid_Date = model.SellingPaid_Date,
+                SellingPaymentRecord = new List<SellingPaymentRecord>
+                {
+                    new SellingPaymentRecord
+                    {
+                        SellingID = model.SellingID,
+                        RegistrationID = model.RegistrationID,
+                        SellingPaidAmount = model.SellingPaidAmount,
+                        Payment_Situation = model.Payment_Situation,
+                        SellingPaid_Date = model.SellingPaid_Date
+                    }
+
+                }
             };
-            Context.SellingPaymentRecord.Add(pay);
+
+            Context.SellingPaymentReceipt.Add(receipt);
+
             sell.SellingPaidAmount += model.SellingPaidAmount;
             Update(sell);
 

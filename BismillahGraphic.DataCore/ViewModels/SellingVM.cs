@@ -16,6 +16,7 @@ namespace BismillahGraphic.DataCore
         }
         public int RegistrationID { get; set; }
         public int VendorID { get; set; }
+        public int ReceiptSN { get; set; }
         public int SellingSN { get; set; }
         public double SellingTotalPrice { get; set; }
         public double? SellingDiscountAmount { get; set; }
@@ -42,16 +43,51 @@ namespace BismillahGraphic.DataCore
         public string SoildBy { get; set; }
     }
 
-    public class SellingDuePay
+
+    public class PaymentReceiptPrint
+    {
+        public InstitutionVM InstitutionInfo { get; set; }
+        public VendorVM VendorInfo { get; set; }
+
+
+    }
+
+    public class PaymentReceiptList
+    {
+        public DateTime Date { get; set; }
+        public string Vendor { get; set; }
+        public string Receipt { get; set; }
+        public double Amount { get; set; }
+    }
+
+    public class PaymentReceipt
+    {
+        public PaymentReceipt()
+        {
+            this.Invoices = new HashSet<InvoicePay>();
+        }
+        public int ReceiptID { get; set; }
+        public int RegistrationID { get; set; }
+        public int VendorID { get; set; }
+        public int ReceiptSN { get; set; }
+        public double PaidAmount { get; set; }
+        public string Payment_Situation { get; set; }
+        public DateTime Paid_Date { get; set; }
+        public ICollection<InvoicePay> Invoices { get; set; }
+    }
+    public class InvoicePay
     {
         public int SellingID { get; set; }
-        public int VendorID { get; set; }
         public int RegistrationID { get; set; }
         public double SellingPaidAmount { get; set; }
         public string Payment_Situation { get; set; }
         public DateTime SellingPaid_Date { get; set; }
+    }
 
-
+    public class InvoicePaySingle : InvoicePay
+    {
+        public int VendorID { get; set; }
+        public int ReceiptSN { get; set; }
     }
     public class IncomeVM
     {

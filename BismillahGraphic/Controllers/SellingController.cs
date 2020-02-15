@@ -36,12 +36,14 @@ namespace BismillahGraphic.Controllers
         // POST: Selling
         public async Task<int> PostSelling(SellingVM model)
         {
+
+
+            if (model.SellingTotalPrice <= 0) return 0;
+
+            model.RegistrationID = _db.Registrations.GetRegID_ByUserName(User.Identity.Name);
+            model.SellingSN = _db.Selling.GetSellingSN();
+            model.ReceiptSN = _db.SellingPaymentReceipts.GetReceiptSN();
             var selling = _db.Selling.Selling(model);
-
-            if (selling.SellingTotalPrice <= 0) return 0;
-
-            selling.RegistrationID = _db.Registrations.GetRegID_ByUserName(User.Identity.Name);
-            selling.SellingSN = _db.Selling.GetSellingSN();
 
             await _db.SaveChangesAsync();
 
@@ -85,10 +87,12 @@ namespace BismillahGraphic.Controllers
         }
 
         [HttpPost]
-        public ActionResult DueCollection(SellingDuePay model)
+        public ActionResult DueCollection(InvoicePaySingle model)
         {
             model.RegistrationID = _db.Registrations.GetRegID_ByUserName(User.Identity.Name);
             if (!ModelState.IsValid) return RedirectToAction($"DueCollection");
+
+            model.ReceiptSN = _db.SellingPaymentReceipts.GetReceiptSN();
 
             if (!_db.Selling.dueCollection(model)) return RedirectToAction($"DueCollection");
 
