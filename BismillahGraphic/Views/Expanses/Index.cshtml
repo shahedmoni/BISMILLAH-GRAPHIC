@@ -60,12 +60,14 @@
                         { data: "ExpanseDate", "render": function(data) { return moment(data).format('DD MMM YYYY') } },
                         { data: "ExpanseFor" },
                         { data: "Expense_Payment_Method" },
-                        { data: "ExpanseAmount" },
+                        { data: "ExpanseAmount" ,"render": function(data) { return `${data}/-` }},
                         { data: "ExpanseID", "render": function(data) { return `<a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Expanses/Delete/${data}"></a>`; } }
                     ],
                     columnDefs: [
                         { 'searchable': false, 'targets': [0, 3, 4] },
-                        { 'sortable': false, 'targets': [4] }
+                        { 'sortable': false, 'targets': [4] },
+                        { 'className': "text-left", "targets": [1] },
+                        { 'className': "text-right", "targets": [3] }
                     ]
                 });
             },

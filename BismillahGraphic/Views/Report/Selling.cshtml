@@ -30,12 +30,12 @@
             <thead>
                 <tr>
                     <th><strong>Date</strong></th>
-                    <th class="text-left"><strong>Party Name</strong></th>
+                    <th><strong>Party Name</strong></th>
                     <th><strong>Bill No</strong></th>
-                    <th class="text-right"><strong>Sales</strong></th>
-                    <th class="text-right"><strong>Received</strong></th>
-                    <th class="text-right"><strong>Discount</strong></th>
-                    <th class="text-right"><strong>Balance</strong></th>
+                    <th><strong>Sales</strong></th>
+                    <th><strong>Received</strong></th>
+                    <th><strong>Discount</strong></th>
+                    <th><strong>Balance</strong></th>
                 </tr>
             </thead>
         </table>
@@ -45,7 +45,7 @@
 
 @section scripts{
     <script>
-        $(function () {
+        $(function() {
             startEndOfMonth("#formDate", "#toDate");
             loadData();
 
@@ -93,28 +93,31 @@
                         url: "/Report/GetSelling",
                         type: "POST",
                         data: function(data) {
-                            data.fromDate = dataTable.fromDate;
-                            data.toDate = dataTable.toDate;
+                            data.sFromDate = dataTable.fromDate;
+                            data.sToDate = dataTable.toDate;
                         }
                     },
                     columns:
                     [
-                        { data: "SellingDate", "render": function(data) { return moment(data).format('D MMM YYYY')} },
+                        { data: "SellingDate", "render": function(data) { return moment(data).format('D MMM YYYY') } },
                         { data: "VendorCompanyName" },
                         { data: "SellingSN" },
-                        { data: "SellingAmount" },
-                        { data: "SellingPaidAmount" },
-                        { data: "SellingDiscountAmount" },
-                        { data: "SellingDueAmount" }
+                        { data: "SellingAmount","render": dataTable.addSign},
+                        { data: "SellingPaidAmount" ,"render": dataTable.addSign},
+                        { data: "SellingDiscountAmount" ,"render": dataTable.addSign},
+                        { data: "SellingDueAmount" ,"render": dataTable.addSign}
                     ],
                     columnDefs: [
-                        { 'searchable': false, 'targets': [0, 2,3,4,5,6] }
+                        { 'searchable': false, 'targets': [0, 2, 3, 4, 5, 6] },
+                        { 'className': "text-left", "targets": [1] },
+                        { 'className': "text-right", "targets": [3, 4, 5, 6] }
                     ]
                 });
             },
             getData: function() {
                 dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
-            }
+            },
+            addSign: function(data) {return `${data}/-`}
         }
 
         $("#find").on("click", function() {

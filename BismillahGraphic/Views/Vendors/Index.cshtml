@@ -68,13 +68,15 @@
                         { data: "VendorName" },
                         { data: "VendorAddress" },
                         { data: "VendorPhone" },
-                        { data: "VendorDue" },
+                        { data: "VendorDue","render": function(data) { return `${data}/-` }},
                         { data: "VendorID", "render": function(data) { return `<a class="edit fas fa-edit" href="/Vendors/Edit/${data}"></a>`; } },
                         { data: "VendorID", "render": function(data) { return `<a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Vendors/Delete/${data}"></a>`; } }
                     ],
                     columnDefs: [
                         { 'searchable': false, 'targets': [4,5,6] },
-                        { 'sortable': false, 'targets': [5,6] }
+                        { 'sortable': false, 'targets': [5,6] },
+                        { 'className': "text-left", "targets": [0,1,2,3] },
+                        { 'className': "text-right", "targets": [4] }
                     ]
                 });
             },

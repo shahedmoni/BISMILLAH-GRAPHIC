@@ -10,11 +10,11 @@
         <table id="DataTable" class="DataTable table table-bordered table-sm text-center">
             <thead>
             <tr>
-                <th class="text-left"><strong>Party Name</strong></th>
-                <th class="text-right"><strong>Sales</strong></th>
-                <th class="text-right"><strong>Received</strong></th>
-                <th class="text-right"><strong>Discount</strong></th>
-                <th class="text-right"><strong>Due</strong></th>
+                <th><strong>Party Name</strong></th>
+                <th><strong>Sales</strong></th>
+                <th><strong>Received</strong></th>
+                <th><strong>Discount</strong></th>
+                <th><strong>Due</strong></th>
             </tr>
             </thead>
         </table>
@@ -43,21 +43,22 @@
                     columns:
                     [
                         { data: "VendorCompanyName" },
-                        { data: "TotalAmount" },
-                        { data: "VendorPaid" },
-                        { data: "TotalDiscount" },
-                        { data: "VendorDue" }
+                        { data: "TotalAmount" ,"render": dataTable.addSign},
+                        { data: "VendorPaid" ,"render": dataTable.addSign},
+                        { data: "TotalDiscount" ,"render": dataTable.addSign},
+                        { data: "VendorDue" ,"render": dataTable.addSign},
                     ],
                     columnDefs: [
                         { 'searchable': false, 'targets': [1, 2, 3, 4] },
-                        { 'className': "text-right", "targets": [1,2, 3, 4] },
-                        { 'className': "text-left", "targets": [0] }
+                        { 'className': "text-left", "targets": [0] },
+                        { 'className': "text-right", "targets": [1,2, 3, 4] }
                     ]
                 });
             },
             getData: function() {
                 dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
-            }
+            },
+            addSign: function(data) {return `${data}/-`}
         }
     </script>
 }

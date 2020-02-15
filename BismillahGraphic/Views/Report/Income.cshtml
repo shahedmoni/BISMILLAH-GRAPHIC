@@ -26,18 +26,17 @@
         </div>
 
         <em class="mb-1">Total Received: ৳<span id="total"></span></em>
-        <table class="DataTable table table-bordered table-sm text-center">
+        <table id="DataTable" class="DataTable table table-bordered table-sm text-center">
             <thead>
                 <tr>
                     <th><strong>Date</strong></th>
                     <th><strong>Bill No</strong></th>
-                    <th class="text-left"><strong>Vendor</strong></th>
-                    <th class="text-right"><strong>Received</strong></th>
+                    <th><strong>Vendor</strong></th>
+                    <th><strong>Received</strong></th>
                     <th><strong>P.Method</strong></th>
                     <th><strong>Received By</strong></th>
                 </tr>
             </thead>
-            <tbody id="t-row"></tbody>
         </table>
     </div>
 </div>
@@ -45,7 +44,7 @@
 
 @section scripts{
     <script>
-        $(function () {
+        $(function() {
             startEndOfMonth("#formDate", "#toDate");
             loadData();
 
@@ -88,34 +87,66 @@
                 dataTable.table = $("#DataTable").DataTable({
                     processing: true,
                     serverSide: true,
+                    dom: '<"row"<"col-sm-6"Bl><"col-sm-6"f>><"row"<"col-sm-12"<tr>>><"row"<"col-sm-5"i><"col-sm-7"p>>',
+                    buttons: dataTable.button,
                     ajax: {
                         url: "/Report/GetIncome",
                         type: "POST",
                         data: function(data) {
-                            data.fromDate = dataTable.fromDate;
-                            data.toDate = dataTable.toDate;
+                            data.sFromDate = dataTable.fromDate;
+                            data.sToDate = dataTable.toDate;
+                        },
+                        dataSrc: function(data) {
+                            console.log(data)
+                            return data.data;
                         }
                     },
-                    //drawCallback: function () {
-                    //    var sum = $('#example2').DataTable().column(4).data().sum();
-                    //    $('#total').html(sum);
-                    //}, 
                     columns:
                     [
-                        { data: "SellingPaid_Date", "render": function(data) { return moment(data).format('D MMM YYYY')} },
+                        { data: "SellingPaid_Date", "render": function(data) { return moment(data).format('D MMM YYYY') } },
                         { data: "SellingSN" },
                         { data: "VendorCompanyName" },
-                        { data: "SellingPaidAmount" },
+                        { data: "SellingPaidAmount", "render": function(data) { return `${data}/-` } },
                         { data: "Payment_Situation" },
                         { data: "ReceivedBy" }
                     ],
-                    columnDefs: [
-                        { 'searchable': false, 'targets': [0, 2,3,4,5,6] }
+                    columnDefs:
+                    [
+                        { 'searchable': false, 'targets': [0, 3] },
+                        { 'className': "text-left", "targets": [2, 5] },
+                        { 'className': "text-right", "targets": [3] }
                     ]
                 });
             },
             getData: function() {
                 dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
+            },
+            button: {
+                buttons: [{
+                    extend: 'print',
+                    text: '<i class="fa fa-print"></i> Print',
+                    title: '',
+                    exportOptions: {
+                        //columns: [0,1] //Column value those print
+                    },
+                    customize: function(win) {
+                        $(win.document.body).prepend(`
+                        <nav class="mb-3 navbar aqua-gradient">
+                          <h4 class="white-text m-0">
+                            <img src="http://bismillahgraphic.com/CSS/images/logo.png" style="height: 40px;" alt="">Bismillah Graphic
+                          </h4>
+                        </nav>
+                        <h3 class="h3-responsive">${$('h3').text()}</h3>
+                        <em class="d-block text-muted mb-3">${$("#showDate").text()}</em>
+                        <em class="mb-1">Total Received: ৳${$("#total").text()}</em>`);
+                    },
+                    autoPrint: true
+                }],
+                dom: {
+                    button: {
+                        className: 'btn purple-gradient btn-rounded btn-sm my-0'
+                    }
+                }
             }
         }
 
