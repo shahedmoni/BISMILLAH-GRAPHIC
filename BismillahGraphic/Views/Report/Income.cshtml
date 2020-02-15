@@ -61,41 +61,10 @@
                 $("#showDate").text(shoDate);
             }
 
-            const url = "/Report/GetIncome";
-            $.get(url, { fromDate: from, toDate: to }, function(data) {
-                buildTable(data);
-            });
+            dataTable.fromDate = from;
+            dataTable.toDate = to;
+            dataTable.getData();
         };
-
-
-        function buildTable(data) {
-            var html = '';
-            const row = $("#t-row");
-
-            if (row.children().length > 0) {
-                row.empty();
-            };
-
-            var total = 0;
-            $.each(data, function (i, item) {
-                total += item.SellingPaidAmount;
-                html += `<tr>
-                    <td>${moment(item.SellingPaid_Date).format('D MMM YYYY')}</td>
-                    <td>${item.SellingSN}</td>
-                    <td class="text-left">${item.VendorCompanyName}</td>
-                    <td class="text-right">${item.SellingPaidAmount}/-</td>
-                    <td>${item.Payment_Situation}</td>
-                    <td>${item.ReceivedBy}</td>
-                </tr>`;
-            });
-
-            $("#total").text(total);
-            row.append(html);
-        };
-
-        $("#find").on("click", function() {
-            loadData();
-        });
 
         function showDate(from, to) {
             var label = "";
@@ -110,5 +79,51 @@
 
             return label;
         }
+
+        var dataTable = {
+            table: null,
+            fromDate: "",
+            toDate: "",
+            init: function() {
+                dataTable.table = $("#DataTable").DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: "/Report/GetIncome",
+                        type: "POST",
+                        data: function(data) {
+                            data.fromDate = dataTable.fromDate;
+                            data.toDate = dataTable.toDate;
+                        }
+                    },
+                    //drawCallback: function () {
+                    //    var sum = $('#example2').DataTable().column(4).data().sum();
+                    //    $('#total').html(sum);
+                    //}, 
+                    columns:
+                    [
+                        { data: "SellingPaid_Date", "render": function(data) { return moment(data).format('D MMM YYYY')} },
+                        { data: "SellingSN" },
+                        { data: "VendorCompanyName" },
+                        { data: "SellingPaidAmount" },
+                        { data: "Payment_Situation" },
+                        { data: "ReceivedBy" }
+                    ],
+                    columnDefs: [
+                        { 'searchable': false, 'targets': [0, 2,3,4,5,6] }
+                    ]
+                });
+            },
+            getData: function() {
+                dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
+            }
+        }
+
+        $("#find").on("click", function() {
+            loadData();
+
+            //$("#total").text(total);
+        });
+
     </script>
 }
