@@ -51,7 +51,7 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
-        public JsonResult GetSelling(DataRequest request, string sFromDate, string sToDate)
+        public JsonResult GetSelling(CustomDataRequest request, string sFromDate, string sToDate)
         {
             DateTime.TryParse(sFromDate, out var fDate);
             DateTime.TryParse(sToDate, out var tDate);

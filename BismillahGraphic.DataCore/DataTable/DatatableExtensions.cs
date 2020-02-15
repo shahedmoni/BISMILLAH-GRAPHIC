@@ -87,19 +87,6 @@ namespace BismillahGraphic.DataCore
             {
                 result.recordsTotal = result.recordsFiltered = query.Count();
 
-                if (!string.IsNullOrEmpty(request.GrandTotalProperty))
-                {
-                    ParameterExpression param = Expression.Parameter(typeof(T), "t");
-                    MemberExpression member = Expression.Property(param, request.GrandTotalProperty);
-
-                    var typeParams = new ParameterExpression[] { Expression.Parameter(typeof(T), "") };
-                    var pi = typeof(T).GetProperty(request.GrandTotalProperty);
-
-                    var d = Expression.Lambda<Func<T, double>>(Expression.Property(typeParams[0], pi), typeParams);
-
-                    result.GrandTotal = query.Sum(d);
-                }
-
                 foreach (var item in request.filters)
                 {
                     var exp = GetExpression<T>((Operand)item.Operand, item.Field, item.Value);
@@ -124,19 +111,12 @@ namespace BismillahGraphic.DataCore
                 if (!string.IsNullOrEmpty(request.search?.value) || request.filters.Any())
                 {
                     result.recordsFiltered = query.Count();
+                }
 
-                    if (!string.IsNullOrEmpty(request.GrandTotalProperty))
-                    {
-                        ParameterExpression param = Expression.Parameter(typeof(T), "t");
-                        MemberExpression member = Expression.Property(param, request.GrandTotalProperty);
-
-                        var typeParams = new ParameterExpression[] { Expression.Parameter(typeof(T), "") };
-                        var pi = typeof(T).GetProperty(request.GrandTotalProperty);
-
-                        var d = Expression.Lambda<Func<T, double>>(Expression.Property(typeParams[0], pi), typeParams);
-
-                        result.GrandTotal = query.Sum(d);
-                    }
+                //------GrandTotal of request column---------------------------------------
+                if (!string.IsNullOrEmpty(request.GrandTotalProperty))
+                {
+                    result.GrandTotal = query.SumCreate(request.GrandTotalProperty);
                 }
 
                 if (request.draw > 0)
@@ -204,6 +184,17 @@ namespace BismillahGraphic.DataCore
                     query.Expression,
                     Expression.Lambda(Expression.Property(typeParams[0], pi), typeParams))
             );
+        }
+
+
+        private static double SumCreate<T>(this IQueryable<T> query, string memberName)
+        {
+            var typeParams = new ParameterExpression[] { Expression.Parameter(typeof(T), "") };
+            var pi = typeof(T).GetProperty(memberName);
+
+            var sumProperty = Expression.Lambda<Func<T, double>>(Expression.Property(typeParams[0], pi), typeParams);
+
+            return query.Sum(sumProperty);
         }
     }
 }
