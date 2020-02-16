@@ -21,5 +21,6 @@ namespace BismillahGraphic.DataCore
         CustomDataResult<VendorPaidDue> PaidDues(CustomDataRequest request);
         Vendor Details(int id);
         ICollection<SellingRecord> SellDateToDate(int id, DateTime? sDateTime, DateTime? eDateTime);
+        ICollection<SellingRecord> DueDateToDate(int id, DateTime? sDateTime, DateTime? eDateTime);
     }
 }
