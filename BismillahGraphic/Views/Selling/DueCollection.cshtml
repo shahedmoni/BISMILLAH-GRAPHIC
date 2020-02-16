@@ -152,7 +152,7 @@
                         <form id="submitForm">
                             <div class="md-form">
                                 <label for="inputPaid">Paid Amount</label>
-                                <input required="" id="inputPaid" type="text" class="form-control" />
+                                <input required="" id="inputPaid" type="number" class="form-control" />
                             </div>
                             <div class="md-form mt-0">
                                 <label for="inputPaidDate">Paid Date</label>
@@ -183,7 +183,7 @@
 
             $('.mdb-select').materialSelect();
 
-            $('.datepicker').pickadate();
+            $('.datepicker').pickadate().val(moment(new Date()).format('DD MMMM, YYYY'));;
         });
 
         //number in word
@@ -260,9 +260,9 @@
         //submit
         document.getElementById("submitForm").addEventListener("submit", submitValue);
 
-        function submitValue() {
+        function submitValue(e) {
             const isValid = validation();
-            const that = $(this);
+            const that = $("#btnPaid");
 
             const sellingId = $("#sellingId").val();
             const vendorId = $("#vendorId").val();
@@ -299,6 +299,8 @@
                     complete: function() { that.prop('disabled', false).val('Submit') }
                 });
             }
+
+            e.preventDefault();
         };
 
         function validation() {
