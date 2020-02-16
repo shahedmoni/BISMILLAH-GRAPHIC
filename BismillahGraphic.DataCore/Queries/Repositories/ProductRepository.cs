@@ -116,7 +116,7 @@ namespace BismillahGraphic.DataCore
                 ProductName = p.ProductName,
                 SquareInch = p.SellingList.Where(l => l.Selling.SellingDate >= fDate && l.Selling.SellingDate <= tDate).Sum(l => l.SellingQuantity)
             });
-            return report.ToList();
+            return report.Where(p => p.SquareInch > 0).OrderByDescending(p => p.SquareInch).ToList();
         }
     }
 }

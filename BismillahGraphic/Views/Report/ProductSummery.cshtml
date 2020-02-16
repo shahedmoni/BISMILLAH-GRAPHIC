@@ -59,10 +59,7 @@
             }
 
             $.get(url, { formDate, toDate }, function(response) {
-                if (response.length) {
-                    buildTable(response)
-                    console.log(response);
-                }
+                buildTable(response);
             });
         }
 

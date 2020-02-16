@@ -130,7 +130,7 @@
         var cart = [];
 
         $(function() {
-            $('.datepicker').pickadate().val(new Date().toLocaleDateString());
+            $('.datepicker').pickadate().val(moment(new Date()).format('DD MMMM, YYYY'));
 
             //clear id if refresh page
             $("#vendorId").val("");

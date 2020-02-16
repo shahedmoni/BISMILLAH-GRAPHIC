@@ -294,6 +294,7 @@
     <Content Include="CSS\images\works\graphic.png" />
     <Content Include="CSS\images\works\nylo.jpg" />
     <Content Include="CSS\Login.css" />
+    <Content Include="CSS\multiReceipt.css" />
     <Content Include="CSS\receipt.css" />
     <Content Include="CSS\SideNavbar.css" />
     <Content Include="favic.ico" />
@@ -309,6 +310,7 @@
     <Content Include="JS\sideManuLink.js" />
     <Content Include="MDB\css\mdb_core.css" />
     <Content Include="MDB\js\mdb_core.js" />
+    <Content Include="scripts\multiReceiptPaid.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -404,6 +406,8 @@
     <Content Include="Views\Report\NetSummery.cshtml" />
     <Content Include="Views\Report\ProductSummery.cshtml" />
     <Content Include="Views\Report\PaymentSummery.cshtml" />
+    <Content Include="Views\Vendors\PaidReceipt.cshtml" />
+    <Content Include="Views\Vendors\DueReceipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BismillahGraphic.DataCore\BismillahGraphic.DataCore.csproj">

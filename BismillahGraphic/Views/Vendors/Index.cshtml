@@ -62,20 +62,23 @@
                     columns:
                     [
                         { data: "VendorCompanyName", "render": function(data, type, row, meta) {
-                                return `<a class="blue-text" href="/Vendors/Details/${row.VendorID}">${data}<a/>`;
+                                return `<a title="click to details" class="blue-text" href="/Vendors/Details/${row.VendorID}">${data}<a/>`;
                             }
                         },
                         { data: "VendorName" },
                         { data: "VendorAddress" },
                         { data: "VendorPhone" },
-                        { data: "VendorDue","render": function(data) { return `${data}/-` }},
+                        { data: "VendorDue", "render": function(data, type, row, meta) {
+                            return row.VendorDue ? `<a title="click to paid" class="blue-text" href="/Vendors/DueReceipt/${row.VendorID}">${data}/-<a/>` : `${data}/-`;
+                            }
+                        },
                         { data: "VendorID", "render": function(data) { return `<a class="edit fas fa-edit" href="/Vendors/Edit/${data}"></a>`; } },
                         { data: "VendorID", "render": function(data) { return `<a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Vendors/Delete/${data}"></a>`; } }
                     ],
                     columnDefs: [
-                        { 'searchable': false, 'targets': [4,5,6] },
-                        { 'sortable': false, 'targets': [5,6] },
-                        { 'className': "text-left", "targets": [0,1,2,3] },
+                        { 'searchable': false, 'targets': [4, 5, 6] },
+                        { 'sortable': false, 'targets': [5, 6] },
+                        { 'className': "text-left", "targets": [0, 1, 2, 3] },
                         { 'className': "text-right", "targets": [4] }
                     ]
                 });

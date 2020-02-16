@@ -3,6 +3,7 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
+
 <div class="m-0 m-sm-4">
     <div class="container-fluid">
         <section class="mb-5">
@@ -97,7 +98,7 @@
                                     }
                                     </tbody>
                                 </table>
-                                <a href="/Vendors/Index" class="btn btn btn-flat grey lighten-3 btn-rounded waves-effect float-right font-weight-bold dark-grey-text btn-dash">View full report</a>
+                                <a href="/Vendors/Index" class="btn btn btn-flat grey lighten-3 btn-rounded float-right font-weight-bold dark-grey-text">View full report</a>
                             </div>
                         </div>
 
@@ -106,6 +107,7 @@
                                 <canvas id="lineChart"></canvas>
                                 <input type="hidden" id="chartData" value=" @Model.JsonChartData" />
                             </div>
+                            <a href="/Report/NetSummery" class="btn btn btn-flat grey lighten-3 btn-rounded float-right font-weight-bold dark-grey-text mr-4 mt-3">View full report</a>
                         </div>
                     </div>
                 </section>

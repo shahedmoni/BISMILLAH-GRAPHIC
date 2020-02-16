@@ -36,8 +36,6 @@ namespace BismillahGraphic.Controllers
         // POST: Selling
         public async Task<int> PostSelling(SellingVM model)
         {
-
-
             if (model.SellingTotalPrice <= 0) return 0;
 
             model.RegistrationID = _db.Registrations.GetRegID_ByUserName(User.Identity.Name);
@@ -59,16 +57,6 @@ namespace BismillahGraphic.Controllers
             if (id == null) return RedirectToAction($"Selling");
 
             var data = _db.Selling.Sold(id.GetValueOrDefault());
-            data.InstitutionInfo = _db.Institutions.FindCustom();
-
-            return View(data);
-        }
-
-        public ActionResult PaidReceipt(int? id)
-        {
-            if (id == null) return RedirectToAction($"Selling");
-
-            var data = _db.SellingPaymentReceipts.Print(id.GetValueOrDefault());
             data.InstitutionInfo = _db.Institutions.FindCustom();
 
             return View(data);

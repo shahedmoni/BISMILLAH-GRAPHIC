@@ -88,8 +88,8 @@ namespace BismillahGraphic.DataCore
                     SellingID = i.SellingID,
                     RegistrationID = model.RegistrationID,
                     SellingPaidAmount = i.SellingPaidAmount,
-                    Payment_Situation = i.Payment_Situation,
-                    SellingPaid_Date = i.SellingPaid_Date
+                    Payment_Situation = model.Payment_Situation,
+                    SellingPaid_Date = model.Paid_Date
 
                 }).ToList()
             };

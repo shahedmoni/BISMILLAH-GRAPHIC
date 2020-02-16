@@ -109,6 +109,43 @@ namespace BismillahGraphic.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        //GET: PayDue Receipt
+        public ActionResult DueReceipt(int? id, DateTime? fromDate, DateTime? toDate)
+        {
+            if (id == null) return RedirectToAction("Index");
+            ViewBag.id = id;
+
+            return View(new VendorDetails(_db, id.GetValueOrDefault(), fromDate, toDate));
+        }
+
+        //Post: receipt
+        [HttpPost]
+        public int PostReceipt(PaymentReceipt model)
+        {
+            if (model.PaidAmount <= 0) return 0;
+
+            model.RegistrationID = _db.Registrations.GetRegID_ByUserName(User.Identity.Name);
+            model.ReceiptSN = _db.SellingPaymentReceipts.GetReceiptSN();
+            var receipt = _db.SellingPaymentReceipts.AddCustom(model);
+
+            _db.SaveChanges();
+            _db.Vendors.UpdatePaidDue(model.VendorID);
+            var status = _db.SaveChanges();
+
+            return status != 0 ? receipt.ReceiptID : status;
+        }
+
+        //receipt
+        public ActionResult PaidReceipt(int? id)
+        {
+            if (id == null) return RedirectToAction($"Index");
+
+            var data = _db.SellingPaymentReceipts.Print(id.GetValueOrDefault());
+            data.InstitutionInfo = _db.Institutions.FindCustom();
+
+            return View(data);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

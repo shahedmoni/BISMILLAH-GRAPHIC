@@ -5,32 +5,84 @@
 }
 
 
-<div class="card card-body m-md-3">
-    <h3 class="mb-3">Payment Summery</h3>
+    <div class="card card-body m-md-3">
+        <div class="row">
+            <div class="col-lg-5">
+                <h3 class="h3-responsive">Payment Summery: ৳<span id="total"></span></h3>
+                <em class="d-block text-muted mb-3" id="showDate"></em>
+            </div>
 
-    <table id="DataTable" class="table table-sm table-bordered">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Vendor</th>
-                <th>#Receipt</th>
-                <th>Amount</th>
-            </tr>
-        </thead>
-    </table>
-</div>
+            <div class="col-lg-7 d-print-none">
+                <div class="form-inline justify-content-end">
+                    <div class="md-form m-0 mr-3">
+                        <input id="formDate" class="form-control datepicker" placeholder="Form Date" type="text" />
+                    </div>
+                    <div class="md-form m-0">
+                        <input id="toDate" class="form-control datepicker" placeholder="To Date" type="text" />
+
+                        <button id="find" class="btn aqua-gradient btn-rounded btn-sm my-0" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <table id="DataTable" class="table table-sm table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Vendor</th>
+                    <th>#Receipt</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
 
 
 @section scripts
 {
     <script>
         $(function() {
-            dataTable.getData();
+            startEndOfMonth("#formDate", "#toDate");
+            loadData();
+
+            $('.datepicker').pickadate();
         });
+
+        function loadData() {
+            const from = $("#formDate").val();
+            const to = $("#toDate").val();
+
+            if (from || to) {
+                const shoDate = showDate(from, to);
+                $("#showDate").text(shoDate);
+            }
+
+            dataTable.fromDate = from;
+            dataTable.toDate = to;
+            dataTable.getData();
+        };
+
+        function showDate(from, to) {
+            var label = "";
+            if (from && !to)
+                label = `from ${from}`;
+
+            if (to && !from)
+                label = `upto ${to}`;
+
+            if (from && to)
+                label = `from (${from}) upto (${to})`;
+
+            return label;
+
+        }
 
         //get data
         var dataTable = {
             table: null,
+            fromDate: "",
+            toDate: "",
             init: function() {
                 dataTable.table = $("#DataTable").DataTable({
                     processing: true,
@@ -39,17 +91,26 @@
                     buttons: dataTable.button,
                     ajax: {
                         url: "/Report/GetPaymentSummery",
-                        type: "POST"
+                        type: "POST",
+                        data: function(data) {
+                            data.sFromDate = dataTable.fromDate;
+                            data.sToDate = dataTable.toDate;
+                            data.GrandTotalProperty = "Amount";
+                        },
+                        dataSrc: function(data) {
+                            $("#total").text(data.GrandTotal);
+                            return data.data;
+                        }
                     },
                     columns:
                     [
                         { data: "Date", "render": function(data) { return moment(data).format('DD MMM YYYY') } },
                         { data: "Vendor" },
                         { data: "Receipt", "render": function(data, type, row, meta) {
-                                return `<a class="blue-text" href="/Selling/Receipt/${row.ReceiptID}">${data}</a>`;
+                                return `<a class="blue-text" href="/Vendors/PaidReceipt/${row.ReceiptID}">${data}</a>`;
                             }
                         },
-                        { data: "Amount", "render": dataTable.addSign },
+                        { data: "Amount", "render": dataTable.addSign }
                     ],
                     columnDefs: [
                         { 'searchable': false, 'targets': [0, 3] },
@@ -69,7 +130,7 @@
                     title: '',
                     exportOptions: {
                         //columns: [0,1] //Column value those print
-                                        },
+                                                            },
                     customize: function(win) {
                         $(win.document.body).prepend(`
                         <nav class="mb-3 navbar aqua-gradient">
@@ -77,7 +138,8 @@
                             <img src="http://bismillahgraphic.com/CSS/images/logo.png" style="height: 40px;" alt="">Bismillah Graphic
                           </h4>
                         </nav>
-                        <h3 class="h3-responsive">${$('h3').text()}</h3>`);
+                        <h3 class="h3-responsive">${$('h3').text()}</h3>
+                       <em class="d-block text-muted mb-3">${$("#showDate").text()}</em>`);
                     },
                     autoPrint: true
                 }],
@@ -88,6 +150,10 @@
                 }
             }
         }
+
+        $("#find").on("click", function() {
+            loadData();
+        });
     </script>
 }
 

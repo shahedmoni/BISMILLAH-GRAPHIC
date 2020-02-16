@@ -96,6 +96,7 @@ namespace BismillahGraphic.Controllers
             DateTime.TryParse(sFromDate, out var fDate);
             DateTime.TryParse(sToDate, out var tDate);
             var model = _db.SellingPaymentReceipts.DateToDate(request, fDate, tDate);
+
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
