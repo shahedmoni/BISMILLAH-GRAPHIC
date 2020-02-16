@@ -149,26 +149,27 @@
                 <div class="col-md-6">
                     <div id="payment-area" class="card card-body">
                         <h4>Total Due: ৳<strong id="dueAmount">@Model.SellingInfo.SellingDueAmount</strong></h4>
-                        
-                        <div class="md-form">
-                            <label for="inputPaid">Paid Amount</label>
-                            <input id="inputPaid" type="text" class="form-control"/>
-                        </div>
-                        <div class="md-form mt-0">
-                            <label for="inputPaidDate">Paid Date</label>
-                            <input id="inputPaidDate" type="text" class="form-control datepicker"/>
-                        </div>
-                        <div class="md-form">
-                            <select id="selectPaymentMethod" class="mdb-select">
-                                <option value="" selected>[ Payment Method ]</option>
-                                <option>Cash</option>
-                                <option>Bank</option>
-                                <option>Cheque</option>
-                                <option>bkash</option>
-                            </select>
-                        </div>
+                        <form id="submitForm">
+                            <div class="md-form">
+                                <label for="inputPaid">Paid Amount</label>
+                                <input required="" id="inputPaid" type="text" class="form-control" />
+                            </div>
+                            <div class="md-form mt-0">
+                                <label for="inputPaidDate">Paid Date</label>
+                                <input required="" id="inputPaidDate" type="text" class="form-control datepicker" />
+                            </div>
+                            <div class="md-form">
+                                <select required="" id="selectPaymentMethod" class="mdb-select">
+                                    <option value="" selected>[ Payment Method ]</option>
+                                    <option>Cash</option>
+                                    <option>Bank</option>
+                                    <option>Cheque</option>
+                                    <option>bkash</option>
+                                </select>
+                            </div>
 
-                        <button type="submit" id="btnPaid" class="btn aqua-gradient btn-rounded d-block">Submit</button>
+                            <button type="submit" id="btnPaid" class="btn aqua-gradient btn-rounded d-block">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -256,7 +257,10 @@
         }
 
         //Sell Submit
-        $("#btnPaid").on("click", function() {
+        //submit
+        document.getElementById("submitForm").addEventListener("submit", submitValue);
+
+        function submitValue() {
             const isValid = validation();
             const that = $(this);
 
@@ -295,7 +299,7 @@
                     complete: function() { that.prop('disabled', false).val('Submit') }
                 });
             }
-        });
+        };
 
         function validation() {
             var isValid = true;

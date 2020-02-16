@@ -30,7 +30,7 @@ function buildTable(data) {
     if (row.children().length > 0)
         row.empty();
 
-    $.each(data.Sales, function(i, item) {
+    $.each(data.Dues, function(i, item) {
         html += `<tr>
         <td>${moment(item.SellingDate).format("D MMM YYYY")}</td>
         <td>${item.SellingSN}</td>
@@ -92,13 +92,10 @@ document.querySelector("#inputPaid").addEventListener("input", updateValue);
 const table = document.getElementById("DataTable");
 
 function updateValue(e) {
-    if (isNaN(e.target.value) || !e.target.value) return;
-
     const totalDue = salesData.DateToDateDue;
-    var totalPaid = +e.target.value;
+    var totalPaid = parseNumber(e.target.value);
 
     this.setAttribute("max", totalDue);
-    console.log(totalPaid);
 
     for (var i = 1, row; (row = table.rows[i]); i++) {
         const due = row.cells[5].innerHTML;
@@ -152,4 +149,9 @@ function submitValue(evt) {
 
     console.log(data)
     evt.preventDefault();
+}
+
+function parseNumber(n) {
+    const f = parseFloat(n);
+    return isNaN(f) ? 0 : f;
 }
