@@ -12,6 +12,7 @@ namespace BismillahGraphic.DataCore
         private readonly int _vendorId;
         public VendorVM VendorInfo { get; private set; }
         public ICollection<SellingRecord> Sales { get; private set; }
+        public ICollection<SellingRecord> Dues { get; private set; }
 
         public double DateToDateSale { get; }
         public double DateToDatePaid { get; }
@@ -25,7 +26,7 @@ namespace BismillahGraphic.DataCore
             _eDate = eDate ?? new DateTime(3000, 1, 1);
             GetVendorInfo();
             GetSales();
-
+            GetDues();
             DateToDateDue = this.Sales.Sum(s => s.SellingDueAmount);
             DateToDatePaid = this.Sales.Sum(s => s.SellingPaidAmount);
             DateToDateSale = this.Sales.Sum(s => s.SellingAmount);
@@ -46,6 +47,9 @@ namespace BismillahGraphic.DataCore
             this.Sales = _db.Vendors.SellDateToDate(this._vendorId, this._sDate, this._eDate);
         }
 
-
+        private void GetDues()
+        {
+            this.Dues = Sales.Where(s => s.SellingDueAmount > 0).ToList();
+        }
     }
 }

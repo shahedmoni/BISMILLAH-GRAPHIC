@@ -173,5 +173,23 @@ namespace BismillahGraphic.DataCore
                 SellingDate = s.SellingDate
             }).Where(e => e.SellingDate <= eD && e.SellingDate >= sD).OrderBy(e => e.SellingDate).ToList();
         }
+
+        public ICollection<SellingRecord> DueDateToDate(int id, DateTime? sDateTime, DateTime? eDateTime)
+        {
+            var sD = sDateTime ?? new DateTime(1000, 1, 1);
+            var eD = eDateTime ?? new DateTime(3000, 1, 1);
+            return Context.Vendor.Include(v => v.Selling).FirstOrDefault(v => v.VendorID == id)?.Selling.Select(s => new SellingRecord
+            {
+                SellingID = s.SellingID,
+                VendorID = s.VendorID,
+                VendorCompanyName = s.Vendor.VendorCompanyName,
+                SellingSN = s.SellingSN,
+                SellingAmount = s.SellingTotalPrice - s.SellingDiscountAmount.GetValueOrDefault(),
+                SellingPaidAmount = s.SellingPaidAmount.GetValueOrDefault(),
+                SellingDueAmount = s.SellingDueAmount.GetValueOrDefault(),
+                SellingDiscountAmount = s.SellingDiscountAmount.GetValueOrDefault(),
+                SellingDate = s.SellingDate
+            }).Where(e => e.SellingDueAmount > 0 && e.SellingDate <= eD && e.SellingDate >= sD).OrderBy(e => e.SellingDate).ToList();
+        }
     }
 }
