@@ -3,35 +3,36 @@
     Layout = null;
 }
 
-<header>
-    <div id="slide-out" class="side-nav sn-bg-4 fixed">
-        <ul class="collapsible collapsible-accordion">
-            @foreach (var item in Model) { 
-                <li>
-                    <a class="collapsible-header waves-effect arrow-r">
-                        <i class="@item.IconClass"></i> @item.Category<i class="fas fa-angle-down rotate-icon"></i>
-                    </a>
+    <header>
+        <div id="slide-out" class="side-nav sn-bg-4 fixed">
+            <ul class="collapsible collapsible-accordion">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a class="collapsible-header waves-effect arrow-r">
+                            <i class="@item.IconClass"></i> @item.Category<i class="fas fa-angle-down rotate-icon"></i>
+                        </a>
 
-                    <div class="collapsible-body">
-                        <ul>
-                            @foreach (var link in item.links)
-                            {
-                                <li><a class="waves-effect" href="/@link.Controller/@link.Action">@link.Title</a></li>
-                            }
-                        </ul>
-                    </div>
-                </li>
+                        <div class="collapsible-body">
+                            <ul>
+                                @foreach (var link in item.links)
+                                {
+                                    <li><a class="waves-effect" href="/@link.Controller/@link.Action">@link.Title</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </li>
                 }
             </ul>
             <div class="sidenav-bg mask-strong"></div>
         </div>
 
-    <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
-        <div class="float-left">
-            <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
-        </div>
-        <div class="breadcrumb-dn mr-auto">
-            <p>Bismillah Graphic</p>
-        </div>
-    </nav>
-</header>
+        <nav class="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
+            <div class="float-left">
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
+            </div>
+            <div class="breadcrumb-dn mr-auto">
+                <p>Bismillah Graphic</p>
+            </div>
+        </nav>
+    </header>   
