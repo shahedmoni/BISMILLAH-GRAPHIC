@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace BismillahGraphic.Controllers
 {
@@ -41,6 +42,7 @@ namespace BismillahGraphic.Controllers
 
         //Login Info
         [Authorize(Roles = "Admin, Sub-Admin")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public string GetUserLoggedInInfo()
         {
             var admin = _db.Registrations.GetAdminBasic(User.Identity.Name);
@@ -50,6 +52,7 @@ namespace BismillahGraphic.Controllers
 
         //Side Menu
         [Authorize(Roles = "Admin, Sub-Admin")]
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public string GetSideMenu()
         {
             var data = _db.PageLinks.GetSideMenuByUser(User.Identity.Name);
