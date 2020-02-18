@@ -126,8 +126,8 @@ namespace BismillahGraphic.Controllers
 
             model.RegistrationID = _db.Registrations.GetRegID_ByUserName(User.Identity.Name);
             model.ReceiptSN = _db.SellingPaymentReceipts.GetReceiptSN();
-            var receipt = _db.SellingPaymentReceipts.AddCustom(model);
-
+            var receipt = _db.SellingPaymentReceipts.dueCollection(model);
+            if (receipt == null) return 0;
             _db.SaveChanges();
             _db.Vendors.UpdatePaidDue(model.VendorID);
             var status = _db.SaveChanges();

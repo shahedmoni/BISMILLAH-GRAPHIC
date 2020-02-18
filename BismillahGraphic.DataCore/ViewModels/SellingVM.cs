@@ -100,16 +100,18 @@ namespace BismillahGraphic.DataCore
     public class InvoicePay
     {
         public int SellingID { get; set; }
-        public int RegistrationID { get; set; }
+
         public double SellingPaidAmount { get; set; }
-        public string Payment_Situation { get; set; }
-        public DateTime SellingPaid_Date { get; set; }
+
     }
 
     public class InvoicePaySingle : InvoicePay
     {
         public int VendorID { get; set; }
+        public int RegistrationID { get; set; }
         public int ReceiptSN { get; set; }
+        public string Payment_Situation { get; set; }
+        public DateTime SellingPaid_Date { get; set; }
     }
     public class IncomeVM
     {
