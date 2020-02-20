@@ -57,10 +57,9 @@
             <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
         </div>
     </div>
-    
-    <div class="data-area">
-        <table>
-            <thead>
+
+    <table>
+        <thead>
             <tr>
                 <th style="width: 30px"><strong>No.</strong></th>
                 <th><strong>Selling Date</strong></th>
@@ -68,8 +67,8 @@
                 <th><strong>Amount</strong></th>
                 <th><strong>Paid</strong></th>
             </tr>
-            </thead>
-            <tbody>
+        </thead>
+        <tbody>
             @{
                 var index = 0;
                 foreach (var item in Model.Invoices)
@@ -91,14 +90,14 @@
                 <td>
                     <div class="text-right">
                         <h5>Total Paid: <strong>@Model.PaidAmount/-</strong></h5>
+                        <h5>Payment Method: <strong>@Model.Payment_Situation</strong></h5>
                     </div>
                 </td>
             </tr>
-            </tbody>
-        </table>
-    </div>
+        </tbody>
+    </table>
 
-    <div class="p-footer">
+    <div class="p-footer mt-4">
         <div class="row">
             <div class="col">
                 Received By

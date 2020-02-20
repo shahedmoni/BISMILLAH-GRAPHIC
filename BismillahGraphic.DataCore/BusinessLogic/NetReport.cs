@@ -58,10 +58,6 @@ namespace BismillahGraphic.DataCore
         {
             var months = new AllMonth();
 
-            var a = months.AllMonthNames;
-            var b = _db.Expanses.MonthlyAmounts(year);
-            var c = _db.Selling.MonthlyAmounts(year);
-
             var result = (from m in months.AllMonthNames
                           join e in _db.Expanses.MonthlyAmounts(year) on m.MonthNumber equals e.MonthNumber
                                     into expanse
@@ -76,10 +72,10 @@ namespace BismillahGraphic.DataCore
                               Month = m.Month,
                               Income = s?.Amount ?? 0,
                               Expense = e?.Amount ?? 0,
-                              Net = s?.Amount ?? 0 - e?.Amount ?? 0
+                              Net = (s?.Amount ?? 0) - (e?.Amount ?? 0)
                           }).ToList();
 
-            return result ?? new List<MonthIncomeExpenseNet>(); ;
+            return result ?? new List<MonthIncomeExpenseNet>();
         }
     }
 }

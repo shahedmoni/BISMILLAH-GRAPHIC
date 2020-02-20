@@ -1,5 +1,6 @@
 ﻿using BismillahGraphic.DataCore;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace BismillahGraphic.Controllers
 {
@@ -11,6 +12,8 @@ namespace BismillahGraphic.Controllers
         {
             _db = new UnitOfWork(new DataContext());
         }
+
+        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public ActionResult Index()
         {
             var model = _db.Institutions.HomeInfo();
