@@ -24,7 +24,8 @@
                             <div class="admin-up">
                                 <i class="far fa-money-bill-alt success-color mr-3 z-depth-2"></i>
                                 <div class="data">
-                                    <p class="text-uppercase mt-3">Sales</p>
+                                    <h6 class="text-uppercase mt-3 mb-0 font-weight-bold grey-text">Sales</h6>
+                                    <p class="mb-2"><span class="current-year"></span></p>
                                     <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.SaleYearly</h4>
                                 </div>
                             </div>
@@ -36,7 +37,8 @@
                             <div class="admin-up">
                                 <i class="fas fa-chart-bar red accent-2 mr-3 z-depth-2"></i>
                                 <div class="data">
-                                    <p class="text-uppercase mt-3">Expense</p>
+                                    <h6 class="text-uppercase mt-3 mb-0 font-weight-bold grey-text">Expense</h6>
+                                    <p class="mb-2"><span class="current-year"></span></p>
                                     <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.ExpenseYearly</h4>
                                 </div>
                             </div>
@@ -48,8 +50,9 @@
                             <div class="admin-up">
                                 <i class="fas fa-chart-pie light-blue lighten-1 mr-3 z-depth-2"></i>
                                 <div class="data">
-                                    <p class="text-uppercase mt-3">Net</p>
-                                    <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.NetYearly</h4>
+                                    <h6 class="text-uppercase mt-3 mb-0 font-weight-bold grey-text">Net</h6>
+                                    <p class="mb-2"><span class="current-year"></span></p>
+                                    <h4 class="font-weight-bold @(@Model.NetYearly >= 0 ? "dark-grey-text" : "red-text") mb-3">৳@Model.NetYearly</h4>
                                 </div>
                             </div>
                         </div>
@@ -60,7 +63,8 @@
                             <div class="admin-up">
                                 <i class="fas fa-chart-line warning-color mr-3 z-depth-2"></i>
                                 <div class="data">
-                                    <p class="text-uppercase mt-3">Total Due</p>
+                                    <h6 class="text-uppercase mt-3 mb-0 font-weight-bold grey-text">Total Due</h6>
+                                    <p class="mb-2">All Years</p>
                                     <h4 class="font-weight-bold dark-grey-text mb-3">৳@Model.TotalDue</h4>
                                 </div>
                             </div>
@@ -87,7 +91,7 @@
                                     <td><strong>@item.Month</strong></td>
                                     <td class="text-right">@item.Income/-</td>
                                     <td class="text-right">@item.Expense/-</td>
-                                    <td class="text-right">@item.Net/-</td>
+                                    <td class="text-right @(item.Net >= 0 ? "" : "red-text")">@item.Net/-</td>
                                 </tr>
                             }
                         </tbody>
@@ -103,6 +107,7 @@
         // select Init
         $(function() {
             $('.mdb-select').materialSelect();
+            $(".current-year").text(`YEAR: ${$("#selectYear").val()}`);
         });
 
         //year selected value

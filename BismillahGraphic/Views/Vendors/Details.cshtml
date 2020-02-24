@@ -47,8 +47,8 @@
                     <th>Date</th>
                     <th>Bill No</th>
                     <th>Sales</th>
-                    <th>Discount</th>
                     <th>Received</th>
+                    <th>Discount</th>
                     <th>Due Balance</th>
                     <th class="d-print-none">Action</th>
                 </tr>
@@ -91,8 +91,8 @@
                                 <td>${moment(item.SellingDate).format('D MMM YYYY')}</td>
                                 <td>${item.SellingSN}</td>
                                 <td class="text-right">${item.SellingAmount}/-</td>
-                                <td class="text-right">${item.SellingDiscountAmount}/-</td>
                                 <td class="text-right">${item.SellingPaidAmount}/-</td>
+                                <td class="text-right">${item.SellingDiscountAmount}/-</td>
                                 <td class="text-right">${item.SellingDueAmount}/-</td>
                                 <td class="d-print-none">${createLink(item)}</td>
                             </tr>`;
