@@ -36,25 +36,25 @@
             <li class="list-group-item flex-fill">Total Sales: <strong id="sales"></strong></li>
             <li class="list-group-item flex-fill">Total Received: <strong id="received"></strong></li>
             <li class="list-group-item flex-fill">Total Discount: <strong id="discount"></strong></li>
-            <li class="list-group-item flex-fill">Total Due: <strong id="due"></strong></li>
+            <li class="list-group-item flex-fill">Total Due: <strong>৳<span id="due"></span></strong></li>
         </ul>
 
-        <table id="DataTable" class="table table-bordered table-sm">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Bill No</th>
-                    <th>Sales</th>
-                    <th>Discount</th>
-                    <th>Received</th>
-                    <th>Due Balance</th>
-                    <th>Paid</th>
-                </tr>
-            </thead>
-            <tbody id="t-row"></tbody>
-        </table>
-
         <form id="submitForm">
+            <table id="DataTable" class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Bill No</th>
+                        <th>Sales</th>
+                        <th>Discount</th>
+                        <th>Received</th>
+                        <th>Due Balance</th>
+                        <th>Paid</th>
+                    </tr>
+                </thead>
+                <tbody id="t-row"></tbody>
+            </table>
+
             <div class="form-inline">
                 <div class="md-form">
                     <input id="inputPaid" required="" type="number" class="form-control" placeholder="Total paid amount" />
@@ -79,6 +79,6 @@
 </div>
 
 @section scripts{
-    <script src="~/scripts/multiReceiptPaid.js?v=1.2"></script>
+    <script src="~/scripts/multiReceiptPaid.js"></script>
 }
 

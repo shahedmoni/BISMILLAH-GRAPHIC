@@ -7,6 +7,17 @@ $(function () {
     $("#inputSellingDate").val(moment(new Date()).format("DD MMMM, YYYY"));
 });
 
+$("#find").on("click", function () {
+    loadData();
+});
+
+//selectors
+const tBody = document.getElementById('t-row')
+const inputTotalPaid = document.getElementById("inputPaid")
+const table = document.getElementById("DataTable");
+const dueContent = document.getElementById("due");
+const formReceipt = document.getElementById("submitForm");
+
 function loadData() {
     const from = $("#formDate").val();
     const to = $("#toDate").val();
@@ -35,10 +46,10 @@ function buildTable(data) {
         <td>${moment(item.SellingDate).format("D MMM YYYY")}</td>
         <td>${item.SellingSN}</td>
         <td class="text-right">${item.SellingAmount}/-</td>
-        <td class="text-right">${item.SellingDiscountAmount}/-</td>
+        <td class="text-right" style="max-width:100px"><input type="number" data-due="${item.SellingDueAmount}" class="form-control inputDiscount" min="0" max="${item.SellingDueAmount}" step="0.01" placeholder="Discount amount" value="${item.SellingDiscountAmount}" /></td>
         <td class="text-right">${item.SellingPaidAmount}/-</td> 
-        <td class="text-right">${item.SellingDueAmount}</td>
-        <td data-id="${item.SellingID}" class="text-right">0</td></tr>`;
+        <td class="text-right dueAmount">${item.SellingDueAmount}</td>
+        <td class="text-right paidAmount" data-id="${item.SellingID}">0</td></tr>`;
     });
 
     row.append(html);
@@ -54,7 +65,7 @@ function summeryInfo(data) {
     $("#sales").text(`৳${data.DateToDateSale}`);
     $("#received").text(`৳${data.DateToDatePaid}`);
     $("#discount").text(`৳${data.DateToDateDiscount}`);
-    $("#due").text(`৳${data.DateToDateDue}`);
+    $("#due").text(data.DateToDateDue);
 }
 
 function displayDates(from, to) {
@@ -78,27 +89,40 @@ function combineDate(from, to) {
     return label;
 };
 
+//show month name
 function monthName(date) {
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return months[date.getMonth()];
 }
 
-$("#find").on("click", function () {
-    loadData();
-});
+//convert to float
+function parseNumber(n) {
+    const f = parseFloat(n);
+    return isNaN(f) ? 0 : f;
+}
+
+//reset paid amount
+function resetPaidAmount(updatedDue) {
+    dueContent.textContent = updatedDue
+    inputTotalPaid.setAttribute("max", updatedDue);
+    inputTotalPaid.value = '';
+
+    const rows = tBody.querySelectorAll("tr")
+    rows.forEach(row => {
+        row.cells[6].textContent = 0
+    })
+}
+
 
 //paid area
-document.querySelector("#inputPaid").addEventListener("input", updateValue);
-const table = document.getElementById("DataTable");
-
-function updateValue(e) {
-    const totalDue = salesData.DateToDateDue;
+inputTotalPaid.addEventListener("input", function(e) {
+    var totalDue = parseNumber(dueContent.textContent);
     var totalPaid = parseNumber(e.target.value);
-
     this.setAttribute("max", totalDue);
 
     for (var i = 1, row; (row = table.rows[i]); i++) {
         const due = row.cells[5].innerHTML;
+
         if (totalPaid < due && totalPaid > 0) {
             row.cells[6].innerHTML = totalPaid;
         } else if (totalPaid >= due) {
@@ -113,12 +137,12 @@ function updateValue(e) {
         this.value = totalDue;
         return;
     }
-}
+});
 
 //submit
-document.getElementById("submitForm").addEventListener("submit", submitValue);
+formReceipt.addEventListener("submit", function(evt) {
+    evt.preventDefault();
 
-function submitValue(evt) {
     const data = {
         VendorID: salesData.VendorInfo.VendorID,
         PaidAmount: +document.querySelector("#inputPaid").value,
@@ -128,12 +152,14 @@ function submitValue(evt) {
     };
 
     for (var i = 1, row; (row = table.rows[i]); i++) {
-        const paid = row.cells[6].innerHTML;
+        const paid = +row.cells[6].innerHTML;
+        const discount = +row.cells[3].querySelector(".inputDiscount").value;
 
-        if (paid > 0) {
+        if (paid > 0 || discount > 0) {
             const invoice = {
                 SellingID: row.cells[6].getAttribute("data-id"),
-                SellingPaidAmount: paid
+                SellingPaidAmount: paid,
+                SellingDiscountAmount: discount
             };
 
             data.Invoices.push(invoice);
@@ -141,17 +167,23 @@ function submitValue(evt) {
     }
 
     const url = "/Vendors/PostReceipt";
-    $.post(url, { model: data }, function(response) {
+    $.post(url, { model: data }, function (response) {
         if (response) {
             location.href = `/Vendors/PaidReceipt/${response}`;
         }
     });
+});
 
-    console.log(data)
-    evt.preventDefault();
-}
+//on discount change
+tBody.addEventListener('input', function (evt) {
+    const input = evt.target
+    const due = +input.getAttribute('data-due')
+    const discount = +input.value
 
-function parseNumber(n) {
-    const f = parseFloat(n);
-    return isNaN(f) ? 0 : f;
-}
+    if (input.classList.contains("inputDiscount")) {
+        input.parentElement.parentElement.cells[5].textContent = (due - discount)
+
+        //reset paid amount
+        resetPaidAmount(salesData.DateToDateDue - discount)
+    }
+})
