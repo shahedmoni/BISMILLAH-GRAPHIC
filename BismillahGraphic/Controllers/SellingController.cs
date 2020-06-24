@@ -66,10 +66,19 @@ namespace BismillahGraphic.Controllers
         public ActionResult ReceiptChange(int? id)
         {
             if (id == null) return RedirectToAction("Record");
+            var data = _db.Selling.FindUpdateBill(id.GetValueOrDefault());
+            return View(data);
+        }
 
+        //Post: Change Receipt
+        [HttpPost]
+        public async Task<int> ReceiptChange(SellingBillChangeViewModel model)
+        {
+            if (model.SellingTotalPrice <= 0) return 0;
+            _db.Selling.BillUpdated(model);
+            await _db.SaveChangesAsync();
 
-
-            return View();
+            return model.SellingID;
         }
         //GET: Record
         [Authorize(Roles = "Admin, SellingRecord")]

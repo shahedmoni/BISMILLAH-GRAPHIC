@@ -102,7 +102,6 @@ namespace BismillahGraphic.DataCore
                         VendorDue = s.Vendor.VendorDue
                     },
                     SellingID = s.SellingID,
-                    ReceiptSN = 0,
                     SellingSN = s.SellingSN,
                     SellingTotalPrice = s.SellingTotalPrice,
                     SellingDiscountAmount = s.SellingDiscountAmount,
@@ -120,6 +119,32 @@ namespace BismillahGraphic.DataCore
                 }).FirstOrDefault(s => s.SellingID == id);
 
             return bill;
+        }
+
+        public void BillUpdated(SellingBillChangeViewModel model)
+        {
+            var selling = Context.Selling
+                .Include(s => s.SellingList)
+                .FirstOrDefault(s => s.SellingID == model.SellingID);
+
+            var due = selling.SellingPaidAmount -
+                      (model.SellingTotalPrice + model.SellingDiscountAmount.GetValueOrDefault());
+            if (due < 0) return;
+
+            selling.SellingDiscountAmount = model.SellingDiscountAmount;
+            selling.SellingTotalPrice = model.SellingTotalPrice;
+            selling.SellingList = model.SellingCarts.Select(c => new SellingList
+            {
+                ProductID = c.ProductID,
+                RegistrationID = selling.RegistrationID,
+                SellingQuantity = c.SellingQuantity,
+                SellingUnitPrice = c.SellingUnitPrice,
+                Length = c.Length,
+                Width = c.Width
+
+            }).ToList();
+
+            Context.Selling.Update(selling);
         }
 
         public int GetSellingSN()

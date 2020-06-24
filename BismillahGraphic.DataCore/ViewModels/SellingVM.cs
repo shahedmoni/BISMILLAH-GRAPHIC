@@ -146,7 +146,6 @@ namespace BismillahGraphic.DataCore
         }
         public VendorVM VendorInfo { get; set; }
         public int SellingID { get; set; }
-        public int ReceiptSN { get; set; }
         public int SellingSN { get; set; }
         public double SellingTotalPrice { get; set; }
         public double? SellingDiscountAmount { get; set; }
@@ -154,8 +153,6 @@ namespace BismillahGraphic.DataCore
         public DateTime SellingDate { get; set; }
         public ICollection<SellingUpdateCart> SellingCarts { get; set; }
     }
-
-
     public class SellingUpdateCart
     {
         public int ProductID { get; set; }
@@ -164,5 +161,17 @@ namespace BismillahGraphic.DataCore
         public double SellingUnitPrice { get; set; }
         public double Length { get; set; }
         public double Width { get; set; }
+    }
+
+    public class SellingBillChangeViewModel
+    {
+        public SellingBillChangeViewModel()
+        {
+            SellingCarts = new HashSet<SellingCart>();
+        }
+        public int SellingID { get; set; }
+        public double SellingTotalPrice { get; set; }
+        public double? SellingDiscountAmount { get; set; }
+        public ICollection<SellingCart> SellingCarts { get; set; }
     }
 }
