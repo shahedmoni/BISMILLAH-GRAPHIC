@@ -119,6 +119,13 @@ namespace BismillahGraphic.Controllers
             return Content("success");
         }
 
+        public void DeleteBill(int id)
+        {
+            var Isdelete = _db.Selling.DeleteBill(id);
+
+            if (Isdelete) _db.SaveChanges();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

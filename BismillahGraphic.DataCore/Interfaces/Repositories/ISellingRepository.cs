@@ -9,7 +9,7 @@ namespace BismillahGraphic.DataCore
         SellingReceipt Sold(int id);
         SellingUpdateViewModel FindUpdateBill(int id);
         void BillUpdated(SellingBillChangeViewModel model);
-
+        bool DeleteBill(int id);
         int GetSellingSN();
         ICollection<int> Years();
         double SaleYearly(int year);

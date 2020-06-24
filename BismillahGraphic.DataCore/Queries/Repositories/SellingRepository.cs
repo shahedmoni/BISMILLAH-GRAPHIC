@@ -147,6 +147,18 @@ namespace BismillahGraphic.DataCore
             Context.Selling.Update(selling);
         }
 
+        public bool DeleteBill(int id)
+        {
+            var selling = Context.Selling
+                .Include(s => s.SellingList)
+                .Include(s => s.SellingPaymentRecord)
+                .FirstOrDefault(s => s.SellingID == id);
+            if (selling.SellingPaymentRecord.Count > 0) return false;
+            Context.Selling.Remove(selling);
+            return true;
+
+        }
+
         public int GetSellingSN()
         {
             var sn = 0;
