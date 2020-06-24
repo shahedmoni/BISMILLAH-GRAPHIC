@@ -7,6 +7,8 @@ namespace BismillahGraphic.DataCore
     {
         Selling Selling(SellingVM model);
         SellingReceipt Sold(int id);
+        SellingUpdateViewModel FindUpdateBill(int id);
+
         int GetSellingSN();
         ICollection<int> Years();
         double SaleYearly(int year);

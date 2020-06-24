@@ -80,7 +80,9 @@ namespace BismillahGraphic.DataCore
             foreach (var invoice in model.Invoices)
             {
                 var sell = sells.FirstOrDefault(s => s.SellingID == invoice.SellingID);
-                if (sell.SellingDueAmount < invoice.SellingPaidAmount) return null;
+                sell.SellingDiscountAmount = invoice.SellingDiscountAmount;
+                var due = sell.SellingTotalPrice - (sell.SellingDiscountAmount + sell.SellingPaidAmount);
+                if (due < invoice.SellingPaidAmount) return null;
                 sell.SellingPaidAmount += invoice.SellingPaidAmount;
             }
 

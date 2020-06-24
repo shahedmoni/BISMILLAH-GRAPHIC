@@ -83,6 +83,45 @@ namespace BismillahGraphic.DataCore
             return receipt;
         }
 
+        public SellingUpdateViewModel FindUpdateBill(int id)
+        {
+            var bill = Context.Selling
+                .Include(s => s.Vendor)
+                .Include(s => s.SellingList)
+                .ThenInclude(l => l.Product)
+                .Select(s => new SellingUpdateViewModel
+                {
+                    VendorInfo = new VendorVM
+                    {
+                        VendorID = s.Vendor.VendorID,
+                        VendorCompanyName = s.Vendor.VendorCompanyName,
+                        VendorName = s.Vendor.VendorName,
+                        VendorAddress = s.Vendor.VendorAddress,
+                        VendorPhone = s.Vendor.VendorPhone,
+                        Insert_Date = s.Vendor.Insert_Date,
+                        VendorDue = s.Vendor.VendorDue
+                    },
+                    SellingID = s.SellingID,
+                    ReceiptSN = 0,
+                    SellingSN = s.SellingSN,
+                    SellingTotalPrice = s.SellingTotalPrice,
+                    SellingDiscountAmount = s.SellingDiscountAmount,
+                    SellingPaidAmount = s.SellingPaidAmount.GetValueOrDefault(),
+                    SellingDate = s.SellingDate,
+                    SellingCarts = s.SellingList.Select(l => new SellingUpdateCart
+                    {
+                        ProductID = l.ProductID,
+                        ProductName = l.Product.ProductName,
+                        SellingQuantity = l.SellingQuantity,
+                        SellingUnitPrice = l.SellingUnitPrice,
+                        Length = l.Length,
+                        Width = l.Width
+                    }).ToList()
+                }).FirstOrDefault(s => s.SellingID == id);
+
+            return bill;
+        }
+
         public int GetSellingSN()
         {
             var sn = 0;

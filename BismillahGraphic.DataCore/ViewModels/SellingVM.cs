@@ -100,8 +100,9 @@ namespace BismillahGraphic.DataCore
     public class InvoicePay
     {
         public int SellingID { get; set; }
-
         public double SellingPaidAmount { get; set; }
+        public double SellingDiscountAmount { get; set; }
+
 
     }
 
@@ -137,5 +138,31 @@ namespace BismillahGraphic.DataCore
         public DateTime SellingDate { get; set; }
     }
 
+    public class SellingUpdateViewModel
+    {
+        public SellingUpdateViewModel()
+        {
+            SellingCarts = new HashSet<SellingUpdateCart>();
+        }
+        public VendorVM VendorInfo { get; set; }
+        public int SellingID { get; set; }
+        public int ReceiptSN { get; set; }
+        public int SellingSN { get; set; }
+        public double SellingTotalPrice { get; set; }
+        public double? SellingDiscountAmount { get; set; }
+        public double SellingPaidAmount { get; set; }
+        public DateTime SellingDate { get; set; }
+        public ICollection<SellingUpdateCart> SellingCarts { get; set; }
+    }
 
+
+    public class SellingUpdateCart
+    {
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public double SellingQuantity { get; set; }
+        public double SellingUnitPrice { get; set; }
+        public double Length { get; set; }
+        public double Width { get; set; }
+    }
 }
