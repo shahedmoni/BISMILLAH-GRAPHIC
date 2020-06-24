@@ -9,7 +9,7 @@ $(function () {
 
 $("#find").on("click", function () {
     loadData();
-});
+})
 
 //selectors
 const tBody = document.getElementById('t-row')
@@ -32,7 +32,7 @@ function loadData() {
         //assign to global
         salesData = data;
     });
-};
+}
 
 function buildTable(data) {
     var html = "";
@@ -53,7 +53,7 @@ function buildTable(data) {
     });
 
     row.append(html);
-};
+}
 
 function summeryInfo(data) {
     const info = data.VendorInfo;
@@ -87,7 +87,7 @@ function combineDate(from, to) {
         label = `from (${from}) upto (${to})`;
 
     return label;
-};
+}
 
 //show month name
 function monthName(date) {
@@ -137,7 +137,7 @@ inputTotalPaid.addEventListener("input", function(e) {
         this.value = totalDue;
         return;
     }
-});
+})
 
 //submit
 formReceipt.addEventListener("submit", function(evt) {
@@ -172,7 +172,7 @@ formReceipt.addEventListener("submit", function(evt) {
             location.href = `/Vendors/PaidReceipt/${response}`;
         }
     });
-});
+})
 
 //on discount change
 tBody.addEventListener('input', function (evt) {

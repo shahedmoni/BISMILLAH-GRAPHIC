@@ -311,6 +311,8 @@
     <Content Include="MDB\css\mdb_core.css" />
     <Content Include="MDB\js\mdb_core.js" />
     <Content Include="scripts\multiReceiptPaid.js" />
+    <Content Include="scripts\receipt-change.js" />
+    <Content Include="scripts\Selling.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -408,6 +410,7 @@
     <Content Include="Views\Report\PaymentSummery.cshtml" />
     <Content Include="Views\Vendors\PaidReceipt.cshtml" />
     <Content Include="Views\Vendors\DueReceipt.cshtml" />
+    <None Include="Views\Selling\ReceiptChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BismillahGraphic.DataCore\BismillahGraphic.DataCore.csproj">

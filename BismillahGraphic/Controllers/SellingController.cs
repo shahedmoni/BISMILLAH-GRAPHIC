@@ -62,6 +62,15 @@ namespace BismillahGraphic.Controllers
             return View(data);
         }
 
+        //GET: Change Receipt
+        public ActionResult ReceiptChange(int? id)
+        {
+            if (id == null) return RedirectToAction("Record");
+
+
+
+            return View();
+        }
         //GET: Record
         [Authorize(Roles = "Admin, SellingRecord")]
         public ActionResult Record()

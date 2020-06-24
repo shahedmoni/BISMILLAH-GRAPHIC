@@ -1,0 +1,66 @@
+﻿@model BismillahGraphic.DataCore.SellingVM
+@{
+    ViewBag.Title = "Change Receipt";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+@section Styles{
+    <style>
+        #vendor-info li { font-size: 19px; line-height: 3.17; }
+        #vendor-info i { color: #13c7d4 }
+
+        #payment-area li strong { font-size: 19px; }
+        #inputDiscount, #inputPaid { display: inline-block; width: auto; border-radius: 50px; text-align: right; color: #000; }
+
+        .has-error { border: 2px solid #ff0000 }
+    </style>
+}
+
+<h3 class="mb-3">Change Receipt</h3>
+
+<section class="card card-body">
+    <div class="md-form mt-0">
+        <input placeholder="Add Product" type="text" id="inputProduct" class="form-control" autocomplete="off" />
+    </div>
+
+    <div class="table-responsive">
+        <table class="table text-center nowrap">
+            <thead>
+                <tr>
+                    <th><strong>SN</strong></th>
+                    <th><strong>Product&nbsp;Name</strong></th>
+                    <th><strong>Length</strong></th>
+                    <th><strong>Width</strong></th>
+                    <th><strong>Square&nbsp;Inch</strong></th>
+                    <th><strong>Unit&nbsp;Price</strong></th>
+                    <th><strong>Line&nbsp;Total</strong></th>
+                    <th><strong>Remove</strong></th>
+                </tr>
+            </thead>
+            <tbody id="table-row">
+            @{
+                var serialNo = 1;
+                foreach (var item in Model.SellingCarts)
+                {
+                    <tr>
+                        <td><strong class="SN">@serialNo</strong></td>
+                        <td>@item</td>
+                        <td><input type="number" step="0.01" class="length form-control" value="${data.Length}" name="Length" placeholder="Length"/></td>
+                        <td><input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width"/></td>
+                        <td><input type="number" step="0.01" class="quantity form-control" value="${data.SellingQuantity}" name="SellingQuantity" placeholder="Square Inch" disabled/></td>
+                        <td><input type="number" step="0.01" class="unitPrice form-control" value="${data.SellingUnitPrice}" name="SellingUnitPrice" placeholder="Unit Price"/></td>
+                        <td><input type="number" step="0.01" class="lineTotal form-control" value="${data.LineTotal}" name="LineTotal" placeholder="Line Total" disabled/></td>
+                        <td><a style="color: #ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/${data.ProductID}"></a></td>
+                    </tr>
+                    serialNo++;
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+</section>
+
+@section scripts
+{
+    <script src="~/scripts/receipt-change.js"></script>
+}
