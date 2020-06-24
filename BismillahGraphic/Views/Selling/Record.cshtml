@@ -16,6 +16,7 @@
                     <th>Paid</th>
                     <th>Due</th>
                     <th>Date</th>
+                    <th>Change</th>
                 </tr>
             </thead>
         </table>
@@ -44,15 +45,21 @@
                     },
                     columns:
                     [
-                        { data: "SellingSN", "render": function(data, type, row, meta) {
+                        {
+                            data: "SellingSN", "render": function(data, type, row, meta) {
                                 return `<a class="blue-text" href="/Selling/Receipt/${row.SellingID}">${data}</a>`;
                             }
                         },
                         { data: "VendorCompanyName" },
-                        { data: "SellingAmount","render": dataTable.addSign},
-                        { data: "SellingPaidAmount","render": dataTable.addSign},
-                        { data: "SellingDueAmount","render": dataTable.addSign},
-                        { data: "SellingDate", "render": function(data) { return moment(data).format('DD MMM YYYY') } }
+                        { data: "SellingAmount", "render": dataTable.addSign },
+                        { data: "SellingPaidAmount", "render": dataTable.addSign },
+                        { data: "SellingDueAmount", "render": dataTable.addSign },
+                        { data: "SellingDate", "render": function(data) { return moment(data).format('DD MMM YYYY') } },
+                        {
+                            data: "SellingID", "render": function(data, type, row, meta) {
+                                return `<a class="blue-text" href="/Selling/ReceiptChange/${row.SellingID}">Change</a>`;
+                            }
+                        }
                     ],
                     columnDefs: [
                         { 'searchable': false, 'targets': [2, 4, 5] },
@@ -64,7 +71,7 @@
             getData: function() {
                 dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
             },
-            addSign: function (data) { return `${data}/-` },
+            addSign: function(data) { return `${data}/-` },
             button: {
                 buttons: [{
                     extend: 'print',
@@ -72,7 +79,7 @@
                     title: '',
                     exportOptions: {
                         //columns: [0,1] //Column value those print
-                    },
+                                                                                                                                            },
                     customize: function(win) {
                         $(win.document.body).prepend(`
                         <nav class="mb-3 navbar aqua-gradient">
@@ -84,7 +91,8 @@
                     },
                     autoPrint: true
                 }],
-                dom: {
+                dom:
+                {
                     button: {
                         className: 'btn purple-gradient btn-rounded btn-sm my-0'
                     }
