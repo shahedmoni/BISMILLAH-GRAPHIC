@@ -5,8 +5,6 @@ var cart = [];
 $(function () {
     $('.datepicker').pickadate().val(moment(new Date()).format('DD MMMM, YYYY'));
 
-    //clear id if refresh page
-    $("#vendorId").val("");
 
     // Material Select Initialization
     $('.mdb-select').materialSelect();
@@ -20,7 +18,7 @@ $(function () {
     });
 
     //input Paid, input Discount
-    $('#inputPaid,#inputDiscount').on('input keypress', function (event) {
+    $('#inputDiscount').on('input keypress', function (event) {
         if ((event.which !== 46 || $(this).val().indexOf('.') !== -1) &&
             (event.which < 48 || event.which > 57)) {
             event.preventDefault();
@@ -195,44 +193,13 @@ $("#inputDiscount").on("change", function () {
 
     $("#grandTotal").text(grandTotal.toFixed());
     $("#totalDue").text(grandTotal.toFixed());
-
-    const inputPaid = $("#inputPaid");
-    if (inputPaid.val())
-        inputPaid.val('');
 });
 
-//paid change
-$("#inputPaid").on("change", function () {
-    const grandTotal = parseNumber($("#grandTotal").text());
-    const paid = parseNumber($(this).val());
-    const isValid = compareValidation(grandTotal, paid);
 
-    $(this).next('em').remove();
-
-    if (!isValid) {
-        $(this).after(`<em class="d-block red-text text-right">Pay within ৳${grandTotal}</em>`);
-        return;
-    }
-
-    $("#totalDue").text(grandTotal - paid);
-
-    const paymentMethod = $("#selectPaymentMethod");
-    paymentMethod.next('em').remove();
-
-    if (paid > 0)
-        paymentMethod.after('<em class="d-block red-text text-right">Select payment method</em>');
-});
-
-//remove error
-$("#selectPaymentMethod").on("change", function () {
-    $(this).next('em').remove();
-});
 
 //reset discount/paid amount
 function resetPayment() {
     $("#inputDiscount").val('').next('em').remove();
-    $("#inputPaid").val('').next('em').remove();
-    $("#payment-method-error").text('');
 }
 
 //input field validation
@@ -266,61 +233,6 @@ function compareValidation(total, inputted) {
     return isValid;
 }
 
-//vendor autocomplete
-$("#inputFindVendor").typeahead({
-    minLength: 1,
-    displayText: function (item) {
-        return `${item.VendorCompanyName} (${item.VendorName}, ${item.VendorPhone})`;
-    },
-    afterSelect: function (item) {
-        this.$element[0].value = item.VendorCompanyName
-    },
-    source: function (request, result) {
-        $.ajax({
-            url: "/Selling/FindVendor",
-            data: JSON.stringify({ 'prefix': request }),
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            success: function (response) { result(response); }
-        });
-    },
-    updater: function (item) {
-        bindData(item);
-        return item;
-    }
-});
-
-//insert vendor
-$("#CreateClick").on("click", function () {
-    $.get($(this).data("url"), function (response) {
-        $('#InsertModal').html(response).modal('show');
-    });
-});
-
-function OnCreateSuccess(response) {
-    if (response.Status) {
-        $('#InsertModal').html(response).modal('hide');
-        bindData(response.Data);
-        $("#inputFindVendor").val('');
-    } else {
-        $('#InsertModal').html(response);
-    }
-}
-
-function bindData(data) {
-    const vendorInfo = $("#vendor-info");
-    $("#vendorId").val(data.VendorID);
-
-    const html = `<li class="list-group-item"><i class="fas fa-building"></i> ${data.VendorCompanyName}</li>
-    <li class="list-group-item"><i class="fas fa-user-tie"></i> ${data.VendorName}</li>
-    <li class="list-group-item"><i class="fas fa-phone"></i> ${data.VendorPhone}</li>
-    <li class="list-group-item"><i class="fas fa-map-marker-alt"></i> ${data.VendorAddress}</li>`;
-
-    if (vendorInfo.children)
-        vendorInfo.empty();
-
-    vendorInfo.append(html);
-}
 
 //Submit Sell
 $("#btnSelling").on("click", function (evt) {
