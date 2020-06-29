@@ -166,7 +166,7 @@ namespace BismillahGraphic.DataCore
                 VendorID = s.VendorID,
                 VendorCompanyName = s.Vendor.VendorCompanyName,
                 SellingSN = s.SellingSN,
-                SellingAmount = s.SellingTotalPrice - s.SellingDiscountAmount.GetValueOrDefault(),
+                SellingAmount = s.SellingTotalPrice,
                 SellingPaidAmount = s.SellingPaidAmount.GetValueOrDefault(),
                 SellingDueAmount = s.SellingDueAmount.GetValueOrDefault(),
                 SellingDiscountAmount = s.SellingDiscountAmount.GetValueOrDefault(),
