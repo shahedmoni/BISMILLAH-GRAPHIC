@@ -127,8 +127,8 @@ namespace BismillahGraphic.DataCore
                 .Include(s => s.SellingList)
                 .FirstOrDefault(s => s.SellingID == model.SellingID);
 
-            var due = selling.SellingPaidAmount -
-                      (model.SellingTotalPrice + model.SellingDiscountAmount.GetValueOrDefault());
+            var due = selling.SellingPaidAmount - (model.SellingTotalPrice + model.SellingDiscountAmount.GetValueOrDefault());
+            
             if (due < 0) return;
 
             selling.SellingDiscountAmount = model.SellingDiscountAmount;

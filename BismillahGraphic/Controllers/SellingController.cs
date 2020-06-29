@@ -75,11 +75,13 @@ namespace BismillahGraphic.Controllers
         public async Task<int> ReceiptChange(SellingBillChangeViewModel model)
         {
             if (model.SellingTotalPrice <= 0) return 0;
+
             _db.Selling.BillUpdated(model);
             await _db.SaveChangesAsync();
 
             return model.SellingID;
         }
+        
         //GET: Record
         [Authorize(Roles = "Admin, SellingRecord")]
         public ActionResult Record()

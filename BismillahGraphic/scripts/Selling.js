@@ -64,7 +64,7 @@ function productTable(products) {
     products.forEach(function (data) {
         html += `<tr>
                 <td><strong class="SN">${data.SN}</strong></td>
-                <td>${data.ProductName}</td>
+                <td class="text-left">${data.ProductName}</td>
                 <td><input type="number" step="0.01" class="length form-control" value="${data.Length}" name="Length" placeholder="Length"/></td>
                 <td><input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width"/></td>
                 <td><input type="number" step="0.01" class="quantity form-control" value="${data.SellingQuantity}" name="SellingQuantity" placeholder="Square Inch" disabled/></td>
