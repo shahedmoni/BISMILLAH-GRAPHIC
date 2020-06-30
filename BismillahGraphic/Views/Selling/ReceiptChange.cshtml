@@ -15,7 +15,7 @@
     </style>
 }
 
-<h3 class="mb-3">Change Receipt</h3>
+<h3 class="mb-3">Change Receipt #@Model.SellingSN</h3>
 <input id="hiddenSellingId" type="hidden" value="@Model.SellingID"/>
 
 <section class="card card-body mb-3">
@@ -106,7 +106,7 @@
 
                 <div class="mt-4 text-right">
                     <input type="submit" value="Submit" id="btnSelling" class="btn aqua-gradient btn-rounded" />
-                    <h5 id="vendor-error" class="mt-2 text-center"></h5>
+                    <h5 id="error" class="mt-2 text-center red-text"></h5>
                 </div>
             </div>
         </div>

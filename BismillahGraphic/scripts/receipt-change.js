@@ -28,6 +28,7 @@ const inputDiscount = document.getElementById('inputDiscount')
 const totalPayable = document.getElementById('totalPayable')
 const paidAmount = document.getElementById('paidAmount')
 const totalDue = document.getElementById('totalDue')
+const error = document.getElementById('error')
 
 //product autocomplete
 $("#inputProduct").typeahead({
@@ -161,25 +162,33 @@ function calculateTotal() {
 formProduct.addEventListener('submit', function(evt) {
     evt.preventDefault()
 
+    error.textContent = ""
+    const payable = +totalPayable.textContent;
+    const paid = +paidAmount.textContent;
+
     const data = {
         SellingID: +document.getElementById('hiddenSellingId').value,
         SellingTotalPrice: +totalPrice.textContent | 0,
         SellingDiscountAmount: +inputDiscount.value | 0,
         SellingCarts: productsList
     };
-    console.log(data)
+   
     const btn = formProduct.btnSelling;
-
-    if (productsList.length) {
-        $.ajax({
-            url: "/Selling/ReceiptChange",
-            data: JSON.stringify({ model: data }),
-            type: "POST",
-            contentType: "application/json; charset=utf-8",
-            beforeSend: function () { btn.setAttribute('disabled', true) },
-            success: function(id) { window.location.href = `/Selling/Receipt/${id}` },
-            error: function(error) { console.log(error) },
-            complete: function () { btn.removeAttribute('disabled')}
-        });
+    if (payable <= paid) {
+        if (productsList.length) {
+            $.ajax({
+                url: "/Selling/ReceiptChange",
+                data: JSON.stringify({ model: data }),
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                beforeSend: function() { btn.setAttribute('disabled', true) },
+                success: function(id) { window.location.href = `/Selling/Receipt/${id}` },
+                error: function(error) { console.log(error) },
+                complete: function() { btn.removeAttribute('disabled') }
+            });
+        }
+    }
+    else {
+        error.textContent ="Payable amount must be greater than paid amount"
     }
 });
