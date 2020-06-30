@@ -12,6 +12,7 @@ namespace BismillahGraphic.DataCore
 
             entity.Property(e => e.SellingPrice).HasComputedColumnSql("(ceiling([SellingQuantity]*[SellingUnitPrice]))");
 
+
             entity.HasOne(d => d.Product)
                 .WithMany(p => p.SellingList)
                 .HasForeignKey(d => d.ProductID)
@@ -21,7 +22,7 @@ namespace BismillahGraphic.DataCore
             entity.HasOne(d => d.Selling)
                 .WithMany(p => p.SellingList)
                 .HasForeignKey(d => d.SellingID)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_SellingList_Selling");
 
         }
