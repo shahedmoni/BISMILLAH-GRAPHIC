@@ -33,12 +33,10 @@
     </table>
 </div>
 
-    <!-- Insert Modal -->
-    <div class="modal fade" id="InsertModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <!-- Update Modal -->
-    <div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
-
-
+<!-- Insert Modal -->
+<div class="modal fade" id="InsertModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<!-- Update Modal -->
+<div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
 
 
 @section Scripts {
@@ -61,7 +59,8 @@
                     },
                     columns:
                     [
-                        { data: "VendorCompanyName", "render": function(data, type, row, meta) {
+                        {
+                            data: "VendorCompanyName", "render": function(data, type, row, meta) {
                                 return `<a title="click to details" class="blue-text" href="/Vendors/Details/${row.VendorID}">${data}<a/>`;
                             }
                         },
@@ -69,7 +68,7 @@
                         { data: "VendorAddress" },
                         { data: "VendorPhone" },
                         { data: "VendorDue", "render": function(data, type, row, meta) {
-                            return row.VendorDue ? `<a title="click to paid" class="blue-text" href="/Vendors/DueReceipt/${row.VendorID}">${data}/-<a/>` : `${data}/-`;
+                                return row.VendorDue ? `<a title="click to paid" class="blue-text" href="/Vendors/DueReceipt/${row.VendorID}">${data}/-<a/>` : `${data}/-`;
                             }
                         },
                         { data: "VendorID", "render": function(data) { return `<a class="edit fas fa-edit" href="/Vendors/Edit/${data}"></a>`; } },

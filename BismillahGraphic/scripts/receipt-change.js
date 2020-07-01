@@ -131,7 +131,7 @@ $tableBody.on('change', 'input', function (e) {
 
 //discount change
 $("#inputDiscount").on("change", function () {
-    calculateTotal();
+    calculateTotal(true);
 });
 
 //convert to float number
@@ -141,7 +141,7 @@ function parseNumber(n) {
 }
 
 //sum table value
-function calculateTotal() {
+function calculateTotal(isDiscount = false) {
     const total = productsList.reduce(function (prev, cur) {
         return prev + (cur.SellingQuantity * cur.SellingUnitPrice);
     }, 0);
@@ -154,6 +154,10 @@ function calculateTotal() {
 
     const payable = +totalPayable.textContent | 0;
     totalDue.textContent = Math.ceil(payable - paid);
+
+    error.textContent = ""
+
+    if (isDiscount) return;
 
     inputDiscount.setAttribute('max', totalDue.textContent);
 };
@@ -174,7 +178,7 @@ formProduct.addEventListener('submit', function(evt) {
     };
    
     const btn = formProduct.btnSelling;
-    if (payable <= paid) {
+    if (payable >= paid) {
         if (productsList.length) {
             $.ajax({
                 url: "/Selling/ReceiptChange",
@@ -189,6 +193,6 @@ formProduct.addEventListener('submit', function(evt) {
         }
     }
     else {
-        error.textContent ="Payable amount must be greater than paid amount"
+        error.textContent ="Payable amount must be greater than or equal paid amount"
     }
 });
