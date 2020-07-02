@@ -23,7 +23,7 @@ namespace BismillahGraphic.Controllers
         [HttpPost]
         public ActionResult VendorSMS(SmsSendMultipleVendorVM model)
         {
-            return View(model);
+            return Json(model);
         }
 
         //for sms balance.. from ajax
