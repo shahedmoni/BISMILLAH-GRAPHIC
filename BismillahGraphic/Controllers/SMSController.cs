@@ -7,6 +7,7 @@ using BismillahGraphic.DataCore;
 
 namespace BismillahGraphic.Controllers
 {
+    [Authorize(Roles = "Admin, SMS")]
     public class SMSController : Controller
     {
         // GET: Vendor SMS
