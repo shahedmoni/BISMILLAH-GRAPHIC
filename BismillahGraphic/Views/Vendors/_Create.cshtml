@@ -33,6 +33,11 @@
                     @Html.ValidationMessageFor(model => model.VendorPhone, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
+                    <label>SMS Mobile Number</label>
+                    @Html.EditorFor(model => model.SmsNumber, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SmsNumber, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
                     <label>Address</label>
                     @Html.EditorFor(model => model.VendorAddress, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.VendorAddress, "", new { @class = "text-danger" })

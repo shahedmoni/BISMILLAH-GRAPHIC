@@ -9,8 +9,8 @@ namespace BismillahGraphic.SMS
     {
 
         private const string HostUrl = "http://loopsitbd.powersms.net.bd/httpapi/";
-        private const string UserId = "Sikkhaloy";
-        private const string Password = "Sikkhaloy@SMS_345";
+        private const string UserId = "bismillah_graphic";
+        private const string Password = "Bis_Sms3214";
 
         public int GetSmsBalance()
         {
@@ -43,7 +43,7 @@ namespace BismillahGraphic.SMS
 
         public void SendSms(string massage, string number)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

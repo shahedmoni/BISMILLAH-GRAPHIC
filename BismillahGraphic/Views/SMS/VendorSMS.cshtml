@@ -6,7 +6,12 @@
 
 
 <div class="card card-body m-md-3 mb-3">
-    <h3 class="mb-3">Send SMS To Vendor</h3>
+    <h3 class="mb-3">
+        Send SMS To Vendor
+        <small class="text-muted text-lowercase">
+            SMS balance: <strong id="smsBalance"></strong>
+        </small>
+    </h3>        
 
     <table id="DataTable" class="table table-sm table-bordered text-left">
         <thead>
@@ -20,7 +25,7 @@
             <th>Company</th>
             <th>Name</th>
             <th>Address</th>
-            <th>Phone</th>
+            <th>SMS Mobile</th>
         </tr>
         </thead>
     </table>
@@ -33,19 +38,33 @@
             <textarea id="inputSMS" type="text" class="md-textarea form-control" rows="1" required></textarea>
         </div>
         <input type="submit" class="btn btn-elegant mt-3" id="btnSendSMS" value="SEND SMS" />
+        <label id="messageStatus"></label>
     </form>
 </div>
 
 @section Scripts {
     <script>
-        $(function () {
+        $(function() {
             dataTable.getData();
+            getSMSBalance()
         });
+
+        function getSMSBalance() {
+            $.ajax({
+                url: '/SMS/SmsBalance',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function(response) {
+                    document.getElementById('smsBalance').textContent = response;
+                },
+                error: error => console.log(error)
+            });
+        }
 
         //get data
         var dataTable = {
             table: null,
-            init: function () {
+            init: function() {
                 dataTable.table = $("#DataTable").DataTable({
                     processing: true,
                     serverSide: true,
@@ -54,13 +73,13 @@
                         type: "POST"
                     },
                     columns:
-                        [
-                            { data: "VendorPhone", 'render': dataTable.checkbox },
-                            { data: "VendorCompanyName" },
-                            { data: "VendorName" },
-                            { data: "VendorAddress" },
-                            { data: "VendorPhone" }
-                        ],
+                    [
+                        { data: "SmsNumber", 'render': dataTable.checkbox },
+                        { data: "VendorCompanyName" },
+                        { data: "VendorName" },
+                        { data: "VendorAddress" },
+                        { data: "SmsNumber" }
+                    ],
                     columnDefs: [
                         { 'searchable': false, 'targets': [0] },
                         { 'sortable': false, 'targets': [0] },
@@ -69,33 +88,74 @@
                     order: [1, 'asc']
                 });
             },
-            getData: function () {
+            getData: function() {
                 dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
             },
-            checkbox: function (data, type, full, meta) {
-                return `<div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" id="${meta.row}" value="${data}"><label class="custom-control-label" for="${meta.row}"></label></div>`;
+            checkbox: function(data, type, row, meta) {
+                const enable = `<div class="custom-control custom-checkbox">
+                            <input data-id="${row.VendorID}" type="checkbox" class="custom-control-input" id="${meta.row}" value="${data}">
+                            <label class="custom-control-label" for="${meta.row}"></label>
+                        </div>`;
+
+                const disable = `<div class="custom-control custom-checkbox">
+                            <input disabled data-id="${row.VendorID}" type="checkbox" class="custom-control-input" id="${meta.row}" value="${data}">
+                            <label class="custom-control-label" for="${meta.row}"></label>
+                        </div>`;
+
+                return data ? enable : disable;
             }
         }
 
+        //on paging clicked
+        $('#DataTable').on('page.dt', function () {
+            $('#select-all').prop("checked", false);
+        });
+
+
         //select all checkbox
-        $('#select-all').on('click', function () {
+        $('#select-all').on('click', function() {
             const rows = dataTable.table.rows({ 'search': 'applied' }).nodes();
-            $('input[type="checkbox"]', rows).prop('checked', this.checked);
+
+            $('input[type=checkbox]', rows).not(":disabled").prop("checked", this.checked);
         });
 
         //button click
-        document.getElementById("formSMS").addEventListener('submit', function (e) {
+        const form = document.getElementById("formSMS")
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
+            $("#messageStatus").text('');
 
-            let val = ''
-            dataTable.table.$('input[type="checkbox"]').each(function () {
+            const model = { Vendors: [], TextSMS: form.inputSMS.value };
+            dataTable.table.$('input[type="checkbox"]').each(function() {
                 if (this.checked) {
-                    val += this.value
+                    const obj = { VendorID: $(this).data('id'), SmsNumber: this.value }
+                    model.Vendors.push(obj)
                 }
             });
 
-            console.log(val)
-        })
+            if (!model.Vendors.length) {
+                $("#messageStatus").text('Select vendor to send SMS').removeClass('text-success').addClass('red-text');
+                return;
+            }
+
+            $.ajax({
+                url: '/SMS/VendorSMS',
+                type: "POST",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                success: function(response) {
+                    $("#messageStatus").text(`SMS Send Successfully, total: ${model.Vendors.length} SMS sent.`).removeClass('red-text').addClass('text-success');
+                    $('input[type=checkbox]').prop("checked", false);
+
+                    model.Vendors = [];
+                    model.TextSMS = '';
+                    form.inputSMS.value = "";
+                },
+                error: error => console.log(error)
+            });
+
+            console.log(model)
+        });
     </script>
 }
 

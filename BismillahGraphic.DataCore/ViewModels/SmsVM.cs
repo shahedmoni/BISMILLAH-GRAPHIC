@@ -18,7 +18,7 @@ namespace BismillahGraphic.DataCore
     public class SmsSendVendor
     {
         public int VendorID { get; set; }
-        public string PhoneNumber { get; set; }
+        public string SmsNumber { get; set; }
     }
 
     public class SmsSendRecordViewModel

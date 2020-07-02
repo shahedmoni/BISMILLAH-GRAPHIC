@@ -41,7 +41,6 @@ namespace BismillahGraphic.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(VendorVM model)
         {
-
             if (_db.Vendors.IsExistSmsNumber(0, model.SmsNumber))
                 ModelState.AddModelError("SmsNumber", "SMS Number Already exist");
 
@@ -77,6 +76,9 @@ namespace BismillahGraphic.Controllers
         [HttpPost]
         public async Task<ActionResult> Edit(VendorVM model)
         {
+            if (_db.Vendors.IsExistSmsNumber(model.VendorID, model.SmsNumber))
+                ModelState.AddModelError("SmsNumber", "SMS Number Already exist");
+
             if (!ModelState.IsValid) return View(Request.IsAjaxRequest() ? "_Edit" : "Edit", model);
 
             _db.Vendors.UpdateCustom(model);
