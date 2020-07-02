@@ -20,7 +20,7 @@ namespace BismillahGraphic.Controllers
 
         //POST: Vendor SMS
         [HttpPost]
-        public ActionResult VendorSMS(VendorVM model)
+        public ActionResult VendorSMS(SmsSendMultipleVendorVM model)
         {
             return View(model);
         }
