@@ -22,7 +22,8 @@ namespace BismillahGraphic.DataCore
                 VendorAddress = v.VendorAddress,
                 VendorPhone = v.VendorPhone,
                 Insert_Date = v.Insert_Date,
-                VendorDue = v.VendorDue
+                VendorDue = v.VendorDue,
+                SmsNumber = v.SmsNumber
             });
 
             return vendor.ToDataResult(request);
@@ -38,7 +39,8 @@ namespace BismillahGraphic.DataCore
                 VendorAddress = v.VendorAddress,
                 VendorPhone = v.VendorPhone,
                 Insert_Date = v.Insert_Date,
-                VendorDue = v.VendorDue
+                VendorDue = v.VendorDue,
+                SmsNumber = v.SmsNumber
             }).ToListAsync();
 
             return vendor;
@@ -55,7 +57,8 @@ namespace BismillahGraphic.DataCore
                       VendorAddress = v.VendorAddress,
                       VendorPhone = v.VendorPhone,
                       Insert_Date = v.Insert_Date,
-                      VendorDue = v.VendorDue
+                      VendorDue = v.VendorDue,
+                      SmsNumber = v.SmsNumber
                   }).Take(5).ToListAsync();
         }
 
@@ -66,7 +69,8 @@ namespace BismillahGraphic.DataCore
                 VendorCompanyName = model.VendorCompanyName,
                 VendorName = model.VendorName,
                 VendorAddress = model.VendorAddress,
-                VendorPhone = model.VendorPhone
+                VendorPhone = model.VendorPhone,
+                SmsNumber = model.SmsNumber
             };
             Add(vendor);
             return vendor;
@@ -79,6 +83,7 @@ namespace BismillahGraphic.DataCore
             vendor.VendorName = model.VendorName;
             vendor.VendorAddress = model.VendorAddress;
             vendor.VendorPhone = model.VendorPhone;
+            vendor.SmsNumber = model.SmsNumber;
             Update(vendor);
         }
 
@@ -95,7 +100,8 @@ namespace BismillahGraphic.DataCore
                 VendorAddress = vendor.VendorAddress,
                 VendorPhone = vendor.VendorPhone,
                 Insert_Date = vendor.Insert_Date,
-                VendorDue = vendor.VendorDue
+                VendorDue = vendor.VendorDue,
+                SmsNumber = vendor.SmsNumber
 
             };
         }

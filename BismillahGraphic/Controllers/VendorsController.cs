@@ -41,6 +41,10 @@ namespace BismillahGraphic.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(VendorVM model)
         {
+
+            if (_db.Vendors.IsExistSmsNumber(0, model.SmsNumber))
+                ModelState.AddModelError("SmsNumber", "SMS Number Already exist");
+
             if (!ModelState.IsValid) return View($"_Create", model);
 
             var vendor = _db.Vendors.AddCustom(model);

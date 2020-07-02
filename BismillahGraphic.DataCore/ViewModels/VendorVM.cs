@@ -16,6 +16,9 @@ namespace BismillahGraphic.DataCore
         [Required]
         [Display(Name = "Phone")]
         public string VendorPhone { get; set; }
+        [Required]
+        [Display(Name = "SMS Number")]
+        public string SmsNumber { get; set; }
         [Display(Name = "Add Date")]
         public DateTime Insert_Date { get; set; }
         [Display(Name = "Due")]
