@@ -2,8 +2,8 @@
 {
     public interface ISmsRepository : IRepository<SmsSendRecord>
     {
-        void SendMultipleToVendor(SmsSendMultipleVendorVM model);
-        void SendSingleSMS(SmsSendSingleVM model);
+        string SendMultipleToVendor(SmsSendMultipleVendorVM model);
+        string SendSingleSMS(SmsSendSingleVM model);
         DataResult<SmsSendRecordViewModel> SendRecords(DataRequest request);
         int SmsBalance();
     }

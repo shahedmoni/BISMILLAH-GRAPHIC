@@ -1,4 +1,5 @@
 ﻿using BismillahGraphic.SMS;
+using System.Linq;
 
 namespace BismillahGraphic.DataCore
 {
@@ -9,14 +10,63 @@ namespace BismillahGraphic.DataCore
 
         }
 
-        public void SendMultipleToVendor(SmsSendMultipleVendorVM model)
+        public string SendMultipleToVendor(SmsSendMultipleVendorVM model)
         {
-            throw new System.NotImplementedException();
+            var massageLength = SmsValidator.MassageLength(model.TextSMS);
+            var smsCount = SmsValidator.TotalSmsCount(model.TextSMS);
+            var vendorCount = model.Vendors.Count();
+
+            var totalSMS = smsCount * vendorCount;
+
+            var numbers = string.Join(",", model.Vendors.Select(v => v.SmsNumber));
+            var smsProvider = new SmsProviderBuilder();
+
+            var smsBalance = smsProvider.SmsBalance();
+            if (smsBalance < totalSMS) return "No SMS Balance";
+
+            var providerSendId = smsProvider.SendSms(model.TextSMS, numbers);
+
+            if (smsProvider.IsSuccess) return smsProvider.Error;
+
+            var smsRecord = model.Vendors.Select(v => new SmsSendRecord
+            {
+                PhoneNumber = v.SmsNumber,
+                TextSMS = model.TextSMS,
+                TextCount = massageLength,
+                SMSCount = smsCount,
+                VendorID = v.VendorID,
+                SmsProviderSendId = providerSendId,
+            }).ToList();
+            Context.SmsSendRecord.AddRange(smsRecord);
+
+            return "Success";
         }
 
-        public void SendSingleSMS(SmsSendSingleVM model)
+        public string SendSingleSMS(SmsSendSingleVM model)
         {
-            throw new System.NotImplementedException();
+            var massageLength = SmsValidator.MassageLength(model.TextSMS);
+            var smsCount = SmsValidator.TotalSmsCount(model.TextSMS);
+
+            var smsProvider = new SmsProviderBuilder();
+
+            var smsBalance = smsProvider.SmsBalance();
+            if (smsBalance < smsCount) return "No SMS Balance";
+
+            var providerSendId = smsProvider.SendSms(model.TextSMS, model.PhoneNumber);
+
+            if (smsProvider.IsSuccess) return smsProvider.Error;
+
+            var smsRecord = new SmsSendRecord
+            {
+                PhoneNumber = model.PhoneNumber,
+                TextSMS = model.TextSMS,
+                TextCount = massageLength,
+                SMSCount = smsCount,
+                SmsProviderSendId = providerSendId,
+            };
+            Context.SmsSendRecord.Add(smsRecord);
+
+            return "Success";
         }
 
         public DataResult<SmsSendRecordViewModel> SendRecords(DataRequest request)

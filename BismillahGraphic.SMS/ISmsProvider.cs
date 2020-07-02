@@ -3,6 +3,6 @@
     public interface ISmsProvider
     {
         int GetSmsBalance();
-        void SendSms(string massage, string number);
+        string SendSms(string massage, string number);
     }
 }

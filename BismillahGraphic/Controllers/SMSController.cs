@@ -23,7 +23,9 @@ namespace BismillahGraphic.Controllers
         [HttpPost]
         public ActionResult VendorSMS(SmsSendMultipleVendorVM model)
         {
-            return Json(model);
+            var r = _db.SMS.SendMultipleToVendor(model);
+            if (r == "Success") _db.SaveChanges();
+            return Json(r);
         }
 
         //for sms balance.. from ajax
