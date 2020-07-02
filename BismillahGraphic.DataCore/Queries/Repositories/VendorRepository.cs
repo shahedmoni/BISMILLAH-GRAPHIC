@@ -191,5 +191,17 @@ namespace BismillahGraphic.DataCore
                 SellingDate = s.SellingDate
             }).Where(e => e.SellingDueAmount > 0 && e.SellingDate <= eD && e.SellingDate >= sD).OrderBy(e => e.SellingDate).ToList();
         }
+
+        public void UpdateSmsNumber(int id, string number)
+        {
+            var vendor = Context.Vendor.Find(id);
+            vendor.SmsNumber = number;
+            Context.Vendor.Update(vendor);
+        }
+
+        public bool IsExistSmsNumber(int id, string number)
+        {
+            return Context.Vendor.Any(v => v.VendorID != id && v.SmsNumber == number);
+        }
     }
 }

@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using BismillahGraphic.DataCore;
 using System.Web.Mvc;
-using BismillahGraphic.DataCore;
 
 namespace BismillahGraphic.Controllers
 {
     public class SMSController : Controller
     {
+        private readonly IUnitOfWork _db;
+
+        public SMSController()
+        {
+            _db = new UnitOfWork(new DataContext());
+        }
         // GET: Vendor SMS
         public ActionResult VendorSMS()
         {
@@ -21,5 +23,10 @@ namespace BismillahGraphic.Controllers
         {
             return View(model);
         }
+        public int SmsBalance()
+        {
+            return _db.SMS.SmsBalance();
+        }
+
     }
 }

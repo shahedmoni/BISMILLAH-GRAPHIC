@@ -15,6 +15,7 @@ namespace BismillahGraphic.DataCore
         public string VendorName { get; set; }
         public string VendorAddress { get; set; }
         public string VendorPhone { get; set; }
+        public string SmsNumber { get; set; }
         public DateTime Insert_Date { get; set; }
         public double TotalAmount { get; set; }
         public double TotalDiscount { get; set; }

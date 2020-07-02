@@ -162,8 +162,6 @@
     <Compile Include="EntityConfigurations\SellingListConfiguration.cs" />
     <Compile Include="EntityConfigurations\SellingPaymentReceiptConfiguration.cs" />
     <Compile Include="EntityConfigurations\SellingPaymentRecordConfiguration.cs" />
-    <Compile Include="EntityConfigurations\SmsBalanceConfiguration.cs" />
-    <Compile Include="EntityConfigurations\SmsRechargeRecordConfiguration.cs" />
     <Compile Include="EntityConfigurations\SmsSendRecordConfiguration.cs" />
     <Compile Include="EntityConfigurations\UserLoginInfoConfiguration.cs" />
     <Compile Include="EntityConfigurations\VendorConfiguration.cs" />
@@ -183,6 +181,7 @@
     <Compile Include="Interfaces\Repositories\ISellingPaymentReceiptRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISellingPaymentRecordRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISellingRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ISmsRepository.cs" />
     <Compile Include="Interfaces\Repositories\IVendorRepository.cs" />
     <Compile Include="Models\AspNetRoles.cs" />
     <Compile Include="Models\AspNetUserClaims.cs" />
@@ -202,8 +201,6 @@
     <Compile Include="Models\SellingList.cs" />
     <Compile Include="Models\SellingPaymentReceipt.cs" />
     <Compile Include="Models\SellingPaymentRecord.cs" />
-    <Compile Include="Models\SmsBalance.cs" />
-    <Compile Include="Models\SmsRechargeRecord.cs" />
     <Compile Include="Models\SmsSendRecord.cs" />
     <Compile Include="Models\UserLoginInfo.cs" />
     <Compile Include="Models\Vendor.cs" />
@@ -221,6 +218,7 @@
     <Compile Include="Queries\Repositories\SellingPaymentReceiptRepository.cs" />
     <Compile Include="Queries\Repositories\SellingPaymentRecordRepository.cs" />
     <Compile Include="Queries\Repositories\SellingRepository.cs" />
+    <Compile Include="Queries\Repositories\SmsRepository.cs" />
     <Compile Include="Queries\Repositories\VendorRepository.cs" />
     <Compile Include="Queries\Repository.cs" />
     <Compile Include="Queries\UnitOfWork.cs" />
@@ -233,6 +231,7 @@
     <Compile Include="ViewModels\RegistrationVM.cs" />
     <Compile Include="ViewModels\SellingVM.cs" />
     <Compile Include="ViewModels\SideMenuBarVM.cs" />
+    <Compile Include="ViewModels\SmsVM.cs" />
     <Compile Include="ViewModels\VendorVM.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -240,9 +239,14 @@
     <None Include="DatabaseFiles\BismillahGraphic.bak" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="DatabaseFiles\Empty BismillahGraphic.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BismillahGraphic.SMS\BismillahGraphic.SMS.csproj">
+      <Project>{2c83ed12-71e2-426e-acc3-a8f8c0c8d675}</Project>
+      <Name>BismillahGraphic.SMS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Data.SqlClient.SNI.1.0.19235.1\build\net46\Microsoft.Data.SqlClient.SNI.targets" Condition="Exists('..\packages\Microsoft.Data.SqlClient.SNI.1.0.19235.1\build\net46\Microsoft.Data.SqlClient.SNI.targets')" />

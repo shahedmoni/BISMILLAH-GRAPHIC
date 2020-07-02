@@ -21,10 +21,9 @@ namespace BismillahGraphic.DataCore
                 .HasMaxLength(128);
 
             entity.Property(e => e.VendorDue).HasComputedColumnSql("([TotalAmount]-([TotalDiscount]+[VendorPaid]))");
-
             entity.Property(e => e.VendorName).HasMaxLength(128);
-
             entity.Property(e => e.VendorPhone).HasMaxLength(50);
+            entity.Property(e => e.SmsNumber).HasMaxLength(50);
 
         }
     }
