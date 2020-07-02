@@ -26,6 +26,21 @@ namespace BismillahGraphic.Controllers
             return Json(model);
         }
 
+
+        // GET: SingleSMS
+        public ActionResult SingleSMS()
+        {
+            return View();
+        }
+
+        //POST: SingleSMS
+        [HttpPost]
+        public ActionResult SingleSMS(SmsSendSingleVM model)
+        {
+            return Json(model);
+        }
+
+
         //for sms balance.. from ajax
         public int SmsBalance()
         {

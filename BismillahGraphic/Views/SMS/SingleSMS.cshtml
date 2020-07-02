@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Single SMS";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<div class="row">
+    <div class="col-xl-6 col-md-10 mx-auto">
+        <div class="card card-body m-md-3">
+            <h3 class="mb-3 h3-responsive">
+                Send Single SMS
+                <small class="text-muted text-lowercase">
+                    SMS balance: <strong id="smsBalance"></strong>
+                </small>
+            </h3>
+
+            <form id="formSMS">
+                <div class="md-form">
+                    <label for="inputMobile">Mobile Number</label>
+                    <input id="inputMobile" type="number" class="form-control" required>
+                </div>
+                <div class="md-form">
+                    <label for="inputSMS">Write SMS here</label>
+                    <textarea id="inputSMS" type="text" class="md-textarea form-control" rows="1" required></textarea>
+                </div>
+                <input type="submit" class="btn btn-elegant mt-3" id="btnSendSMS" value="SEND SMS" />
+                <label id="messageStatus"></label>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            getSMSBalance()
+        });
+
+        function getSMSBalance() {
+            $.ajax({
+                url: '/SMS/SmsBalance',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    document.getElementById('smsBalance').textContent = response;
+                },
+                error: error => console.log(error)
+            });
+        }
+
+
+        //button click
+        const form = document.getElementById("formSMS")
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            if (!validate()) return;
+
+            const model = { PhoneNumber: form.inputMobile.value, TextSMS: form.inputSMS.value };
+            $.ajax({
+                url: '/SMS/SingleSMS',
+                type: "POST",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                    $("#messageStatus").text(`SMS Send Successfully`).removeClass('red-text').addClass('text-success');
+
+                    form.inputMobile.value = "";
+                    form.inputSMS.value = "";
+
+                    getSMSBalance();
+                },
+                error: error => console.log(error)
+            });
+        });
+
+        function validate(){
+            const phoneNumber = form.inputMobile.value;
+            const phoneRegex = /^(88)?((011)|(015)|(016)|(017)|(018)|(019)|(013)|(014))\d{8,8}$/;
+
+            const phoneResult = phoneRegex.test(phoneNumber);
+
+            $("#messageStatus").text('');
+            if(!phoneResult)
+            {
+                $("#messageStatus").text('Please enter a valid phone number').removeClass('text-success').addClass('red-text');;
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+}

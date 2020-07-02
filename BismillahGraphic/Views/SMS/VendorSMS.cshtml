@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
-
 <div class="card card-body m-md-3 mb-3">
     <h3 class="mb-3">
         Send SMS To Vendor
@@ -41,6 +40,7 @@
         <label id="messageStatus"></label>
     </form>
 </div>
+
 
 @section Scripts {
     <script>
@@ -150,11 +150,10 @@
                     model.Vendors = [];
                     model.TextSMS = '';
                     form.inputSMS.value = "";
+                    getSMSBalance();
                 },
                 error: error => console.log(error)
             });
-
-            console.log(model)
         });
     </script>
 }
