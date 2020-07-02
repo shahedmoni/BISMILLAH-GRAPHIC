@@ -3,6 +3,7 @@ using System.Web.Mvc;
 
 namespace BismillahGraphic.Controllers
 {
+    [Authorize(Roles = "Admin, SMS")]
     public class SMSController : Controller
     {
         private readonly IUnitOfWork _db;
