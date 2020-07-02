@@ -12,6 +12,7 @@ namespace BismillahGraphic.Controllers
         {
             _db = new UnitOfWork(new DataContext());
         }
+
         // GET: Vendor SMS
         public ActionResult VendorSMS()
         {
@@ -24,6 +25,8 @@ namespace BismillahGraphic.Controllers
         {
             return View(model);
         }
+
+        //for sms balance.. from ajax
         public int SmsBalance()
         {
             return _db.SMS.SmsBalance();

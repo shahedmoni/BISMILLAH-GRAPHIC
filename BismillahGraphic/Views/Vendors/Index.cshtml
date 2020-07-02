@@ -25,6 +25,7 @@
                 <th>Name</th>
                 <th>Address</th>
                 <th>Phone</th>
+                <th>SMS Mobile</th>
                 <th>Due</th>
                 <th style="width:50px">Edit</th>
                 <th style="width:50px">Delete</th>
@@ -67,7 +68,9 @@
                         { data: "VendorName" },
                         { data: "VendorAddress" },
                         { data: "VendorPhone" },
-                        { data: "VendorDue", "render": function(data, type, row, meta) {
+                        { data: "SmsNumber" },
+                        {
+                            data: "VendorDue", "render": function(data, type, row, meta) {
                                 return row.VendorDue ? `<a title="click to paid" class="blue-text" href="/Vendors/DueReceipt/${row.VendorID}">${data}/-<a/>` : `${data}/-`;
                             }
                         },
