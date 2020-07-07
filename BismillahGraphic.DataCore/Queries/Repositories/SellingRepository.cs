@@ -74,6 +74,7 @@ namespace BismillahGraphic.DataCore
                     VendorName = vendor.VendorName,
                     VendorAddress = vendor.VendorAddress,
                     VendorPhone = vendor.VendorPhone,
+                    SmsNumber = vendor.SmsNumber,
                     Insert_Date = vendor.Insert_Date,
                     VendorDue = vendor.VendorDue
 
