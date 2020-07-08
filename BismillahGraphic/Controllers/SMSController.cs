@@ -39,7 +39,9 @@ namespace BismillahGraphic.Controllers
         [HttpPost]
         public ActionResult SingleSMS(SmsSendSingleVM model)
         {
-            return Json(model);
+            var r = _db.SMS.SendSingleSMS(model);
+            if (r == "Success") _db.SaveChanges();
+            return Json(r);
         }
 
 
