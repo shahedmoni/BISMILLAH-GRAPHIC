@@ -107,7 +107,7 @@
         }
 
         //on paging clicked
-        $('#DataTable').on('page.dt', function () {
+        $('#DataTable').on('page.dt', function() {
             $('#select-all').prop("checked", false);
         });
 
@@ -143,8 +143,13 @@
                 type: "POST",
                 data: JSON.stringify(model),
                 contentType: "application/json; charset=utf-8",
-                success: function(response) {
-                    $("#messageStatus").text(`SMS Send Successfully, total: ${model.Vendors.length} SMS sent.`).removeClass('red-text').addClass('text-success');
+                success: function (response) {
+                    if (response === "Success") {
+                        $("#messageStatus").text(`${response}, total: ${model.Vendors.length} SMS sent.`).removeClass('red-text').addClass('text-success');
+                    } else {
+                        $("#messageStatus").text(response).removeClass('text-success').addClass('red-text');
+                    }
+
                     $('input[type=checkbox]').prop("checked", false);
 
                     model.Vendors = [];

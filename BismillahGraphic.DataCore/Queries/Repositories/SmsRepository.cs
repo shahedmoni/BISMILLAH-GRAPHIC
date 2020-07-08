@@ -26,7 +26,7 @@ namespace BismillahGraphic.DataCore
 
             var providerSendId = smsProvider.SendSms(model.TextSMS, numbers);
 
-            if (smsProvider.IsSuccess) return smsProvider.Error;
+            if (!smsProvider.IsSuccess) return smsProvider.Error;
 
             var smsRecord = model.Vendors.Select(v => new SmsSendRecord
             {
@@ -54,7 +54,7 @@ namespace BismillahGraphic.DataCore
 
             var providerSendId = smsProvider.SendSms(model.TextSMS, model.PhoneNumber);
 
-            if (smsProvider.IsSuccess) return smsProvider.Error;
+            if (!smsProvider.IsSuccess) return smsProvider.Error;
 
             var smsRecord = new SmsSendRecord
             {

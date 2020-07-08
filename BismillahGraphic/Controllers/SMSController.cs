@@ -44,6 +44,11 @@ namespace BismillahGraphic.Controllers
             return Json(r);
         }
 
+        // GET: Sent Record
+        public ActionResult SentRecord()
+        {
+            return View();
+        }
 
         //for sms balance.. from ajax
         public int SmsBalance()

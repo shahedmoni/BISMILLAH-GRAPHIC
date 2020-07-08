@@ -32,7 +32,7 @@
 
 @section Scripts {
     <script>
-        $(function () {
+        $(function() {
             getSMSBalance()
         });
 
@@ -41,7 +41,7 @@
                 url: '/SMS/SmsBalance',
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
-                success: function (response) {
+                success: function(response) {
                     document.getElementById('smsBalance').textContent = response;
                 },
                 error: error => console.log(error)
@@ -51,10 +51,10 @@
 
         //button click
         const form = document.getElementById("formSMS")
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            if (!validate()) return;
+            //if (!validate()) return;
 
             const model = { PhoneNumber: form.inputMobile.value, TextSMS: form.inputSMS.value };
             $.ajax({
@@ -63,7 +63,11 @@
                 data: JSON.stringify(model),
                 contentType: "application/json; charset=utf-8",
                 success: function (response) {
-                    $("#messageStatus").text(`SMS Send Successfully`).removeClass('red-text').addClass('text-success');
+                    if (response === "Success") {
+                        $("#messageStatus").text(response).removeClass('red-text').addClass('text-success');
+                    } else {
+                        $("#messageStatus").text(response).removeClass('text-success').addClass('red-text');
+                    }
 
                     form.inputMobile.value = "";
                     form.inputSMS.value = "";
@@ -74,15 +78,14 @@
             });
         });
 
-        function validate(){
+        function validate() {
             const phoneNumber = form.inputMobile.value;
             const phoneRegex = /^(88)?((011)|(015)|(016)|(017)|(018)|(019)|(013)|(014))\d{8,8}$/;
 
             const phoneResult = phoneRegex.test(phoneNumber);
 
             $("#messageStatus").text('');
-            if(!phoneResult)
-            {
+            if (!phoneResult) {
                 $("#messageStatus").text('Please enter a valid phone number').removeClass('text-success').addClass('red-text');;
                 return false;
             }

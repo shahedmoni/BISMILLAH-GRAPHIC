@@ -83,7 +83,7 @@ namespace BismillahGraphic.SMS
         }
         public string SendSms(string massage, string number)
         {
-            const string actionUrl = " sendsms"; // your powersms site url; register the ip first
+            const string actionUrl = "sendsms"; // your powers ms site url; register the ip first
             var request = HttpWebRequest.Create(HostUrl + actionUrl);
             var smsText = Uri.EscapeDataString(massage);
             var receiversParam = number;
@@ -130,7 +130,7 @@ namespace BismillahGraphic.SMS
                 }
             }
 
-            return String.Empty;
+            return string.Empty;
         }
     }
 }
