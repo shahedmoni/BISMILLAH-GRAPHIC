@@ -413,6 +413,7 @@
     <Content Include="Views\Vendors\DueReceipt.cshtml" />
     <None Include="Views\Selling\ReceiptChange.cshtml" />
     <Content Include="Views\SMS\VendorSMS.cshtml" />
+    <Content Include="Views\SMS\SingleSMS.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BismillahGraphic.DataCore\BismillahGraphic.DataCore.csproj">

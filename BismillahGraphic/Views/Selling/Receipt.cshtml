@@ -8,17 +8,24 @@
     <link href="/CSS/receipt.css" rel="stylesheet" />
 }
 
-    <section class="my-4 d-print-none">
-        <div class="card">
-            <div class="card-body d-flex justify-content-between">
+<section class="my-4 d-print-none">
+    <div class="mb-2">
+        <span id="smsBalance" class="badge badge-primary"></span>
+        <span>SMS Number: @(Model.VendorInfo.SmsNumber.IsEmpty()? "N/A": Model.VendorInfo.SmsNumber)</span>
+    </div>
+    <div class="card">
+        <div class="card-body d-flex justify-content-between">
+            <div>
+                <button id="btnSendSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-deep-purple btn-rounded"><i class="fas fa-paper-plane mr-1"></i>Send SMS</button>
                 <a class="btn btn-success btn-rounded" href="/Selling/DueCollection/@Model.SellingInfo.SellingID"><i class="fas fa-money-bill-alt mr-1"></i>Pay Due</a>
-                <div>
-                    <a class="btn btn-elegant btn-rounded" href="/Selling/Selling"><i class="fas fa-shopping-cart mr-1"></i>Sell</a>
-                    <button class="btn btn-default btn-rounded" onclick="print()"><i class="fas fa-print mr-1"></i>Print</button>
-                </div>
+            </div>
+            <div>
+                <a class="btn btn-elegant btn-rounded" href="/Selling/Selling"><i class="fas fa-shopping-cart mr-1"></i>Sell</a>
+                <button class="btn btn-default btn-rounded" onclick="print()"><i class="fas fa-print mr-1"></i>Print</button>
             </div>
         </div>
-    </section>
+    </div>
+</section>    
 
 
     <div id="main-page">
@@ -166,6 +173,49 @@
 
 @section scripts{
     <script>
+        $(function() {
+            $("#amount-word").text(`Taka (in word): ${number2text(@Model.SellingInfo.SellingTotalPrice)}`);
+            getSMSBalance();
+        });
+
+        //send SMS
+        const btnSendSMS = document.getElementById('btnSendSMS')
+        btnSendSMS.addEventListener('click', function() {
+            const number = this.getAttribute('data-number');
+
+            if (number) {
+                const text = `Thanks, @Model.VendorInfo.VendorCompanyName for order at BISMILLAH GRAPHIC. Order Total Amount: ৳@Model.SellingInfo.SellingTotalPrice`;
+                const model = { PhoneNumber: number, TextSMS: text };
+
+                $.ajax({
+                    url: '/SMS/SingleSMS',
+                    type: "POST",
+                    data: JSON.stringify(model),
+                    contentType: "application/json; charset=utf-8",
+                    success: function(response) {
+                        location.href = "/Selling/Selling";
+                    },
+                    error: error => console.log(error)
+                });
+            }
+        });
+
+        //SMS balance
+        function getSMSBalance() {
+            const balance = document.getElementById('smsBalance');
+            balance.textContent = "loading.."
+            $.ajax({
+                url: '/SMS/SmsBalance',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function(response) {
+                    balance.textContent = `Remaining SMS ${response}`;
+                },
+                error: error => console.log(error)
+            });
+        }
+
+        //amount in word
         function number2text(value) {
             const fraction = Math.round((value % 1) * 100);
             var fullText = "";
@@ -234,10 +284,6 @@
             }
             return res;
         }
-
-        $(function() {
-            $("#amount-word").text(`Taka (in word): ${number2text(@Model.SellingInfo.SellingTotalPrice)}`);
-        });
-    </script>  
+    </script>
 }
 
