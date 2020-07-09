@@ -71,7 +71,16 @@ namespace BismillahGraphic.DataCore
 
         public DataResult<SmsSendRecordViewModel> SendRecords(DataRequest request)
         {
-            throw new System.NotImplementedException();
+            var r = Context.SmsSendRecord.Select(s => new SmsSendRecordViewModel
+            {
+                PhoneNumber = s.PhoneNumber,
+                TextSMS = s.TextSMS,
+                TextCount = s.TextCount,
+                SMSCount = s.SMSCount,
+                Date = s.Date.GetValueOrDefault()
+            });
+
+            return r.ToDataResult(request);
         }
 
         public int SmsBalance()

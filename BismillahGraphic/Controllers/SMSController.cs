@@ -50,6 +50,12 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
+        public JsonResult SentRecordData(DataRequest request)
+        {
+            var data = _db.SMS.SendRecords(request);
+            return Json(data);
+        }
+
         //for sms balance.. from ajax
         public int SmsBalance()
         {
