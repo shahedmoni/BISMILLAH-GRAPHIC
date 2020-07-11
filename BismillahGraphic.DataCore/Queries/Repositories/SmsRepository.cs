@@ -1,4 +1,5 @@
-﻿using BismillahGraphic.SMS;
+﻿using System;
+using BismillahGraphic.SMS;
 using System.Linq;
 
 namespace BismillahGraphic.DataCore
@@ -36,6 +37,7 @@ namespace BismillahGraphic.DataCore
                 SMSCount = smsCount,
                 VendorID = v.VendorID,
                 SmsProviderSendId = providerSendId,
+                Date = DateTime.Now
             }).ToList();
             Context.SmsSendRecord.AddRange(smsRecord);
 
@@ -63,6 +65,7 @@ namespace BismillahGraphic.DataCore
                 TextCount = massageLength,
                 SMSCount = smsCount,
                 SmsProviderSendId = providerSendId,
+                Date = DateTime.Now
             };
             Context.SmsSendRecord.Add(smsRecord);
 
