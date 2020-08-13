@@ -23,34 +23,37 @@
     </div>
 
 @section scripts{
-<script>
-    $(function () {
-        dataTable.getData()
-    });
+    <script>
+        $(function() {
+            dataTable.getData()
+        });
 
-    var dataTable = {
-        table: null,
-        init: function () {
-            dataTable.table = $("#DataTable").DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "/SMS/SentRecordData",
-                    type: "POST"
-                },
-                columns:
+        var dataTable = {
+            table: null,
+            init: function() {
+                dataTable.table = $("#DataTable").DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: "/SMS/SentRecordData",
+                        type: "POST"
+                    },
+                    columns:
                     [
                         { data: "PhoneNumber" },
                         { data: "TextSMS" },
                         { data: "TextCount" },
                         { data: "SMSCount" },
-                        { data: "Date", "render": function (data) { return moment(data).format('D MMM YYYY') } }
+                        { data: "Date", "render": function(data) { return moment(data).format('D MMM YYYY') } }
+                    ],
+                    columnDefs: [
+                        { 'searchable': false, 'targets': [0, 1, 2, 3, 4] }
                     ]
-            });
-        },
-        getData: function () {
-            dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
+                });
+            },
+            getData: function() {
+                dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
+            }
         }
-    }
-</script>
+    </script>
 }

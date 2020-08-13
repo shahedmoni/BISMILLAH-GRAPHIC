@@ -52,7 +52,7 @@ namespace BismillahGraphic.Controllers
 
         //Side Menu
         [Authorize(Roles = "Admin, Sub-Admin")]
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        //[OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public string GetSideMenu()
         {
             var data = _db.PageLinks.GetSideMenuByUser(User.Identity.Name);
