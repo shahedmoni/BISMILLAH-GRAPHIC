@@ -275,7 +275,7 @@
             const number = this.getAttribute('data-number');
             if (!number) return;
 
-            const text = `Dear Valued Customer, Your Block is Ready For Delivery Please Collect. Bill Amount TK @Model.SellingInfo.SellingTotalPrice. Thanks Bismillah Graphic. Zirabo Bus Stand Ashulia Savar Dhaka. MD:HAZRAT ALI, 01712-676781`;
+            const text = `Dear Valued Customer, Your Block is Ready For Delivery Please Collect. Bill Amount TK: @Model.SellingInfo.SellingTotalPrice Thanks Bismillah Graphic. Zirabo MD:HAZRAT ALI, 01712-676781`;
             const model = { PhoneNumber: number, TextSMS: text };
 
             send(model);
@@ -290,9 +290,9 @@
             const dueAmount = @Model.SellingInfo.SellingDueAmount;
 
             const paid = paidAmount ? ` Paid Amount Tk: ${paidAmount}. ` : "";
-            const due = dueAmount ? ` Due Amount Tk: ${dueAmount}. ` : "";
+            const due = dueAmount ? ` Due Amount Tk: ${dueAmount}, please pay dues. ` : "";
 
-            const text = `Dear Valued Customer, Your Order Amount Tk: @Model.SellingInfo.SellingTotalPrice.${paid}${due}Thanks Bismillah Graphic. Zirabo Bus Stand Ashulia Savar Dhaka. MD:HAZRAT ALI, 01712-676781`;
+            const text = `Dear Valued Customer, Your Order Amount Tk: @Model.SellingInfo.SellingTotalPrice.${paid}${due}Thanks Bismillah Graphic. 01712-676781`;
             const model = { PhoneNumber: number, TextSMS: text };
 
             send(model);
