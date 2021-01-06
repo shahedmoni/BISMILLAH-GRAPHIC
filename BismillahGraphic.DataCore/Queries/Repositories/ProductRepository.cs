@@ -22,7 +22,8 @@ namespace BismillahGraphic.DataCore
                 {
                     ProductID = p.ProductID,
                     ProductName = p.ProductName,
-                    ProductPrice = p.ProductPrice
+                    ProductPrice = p.ProductPrice,
+                    Stock = p.Stock
                 }).ToList()
 
             }).ToList();
@@ -41,7 +42,8 @@ namespace BismillahGraphic.DataCore
                     {
                         ProductID = p.ProductID,
                         ProductName = p.ProductName,
-                        ProductPrice = p.ProductPrice
+                        ProductPrice = p.ProductPrice,
+                        Stock = p.Stock
                     }).ToList()
 
                 }).ToListAsync();
