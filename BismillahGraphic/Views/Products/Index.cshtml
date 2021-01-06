@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
+@section Styles{
+    <style>
+        .add-stock { cursor: pointer; font-size: 16px; color: #00bfff }
+    </style>
+}
+
 <div class="container">
     <div class="row">
         <div class="col justify-content-center align-self-center">
@@ -21,14 +27,14 @@
         {
             <h4 class="card-title font-weight-bold">@item.ProductCategoryName</h4>
 
-            <table id="table-product" class="table table-sm">
+            <table class="table table-sm table-product">
                 <thead>
                     <tr>
                         <th><strong>Products</strong></th>
-                        <th><strong>Price</strong></th>
-                        <th><strong>Stock</strong></th>
-                        <th><strong>Edit</strong></th>
-                        <th><strong>Delete</strong></th>
+                        <th class="text-right"><strong>Price</strong></th>
+                        <th class="text-right"><strong>Stock</strong></th>
+                        <th class="text-center"><strong>Edit</strong></th>
+                        <th class="text-center"><strong>Delete</strong></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,22 +42,47 @@
                     {
                         <tr>
                             <td>@data.ProductName</td>
-                            <td>@data.ProductPrice</td>
-                            <td>@data.Stock</td>
-                            <td style="width:40px"><a class="edit fas fa-edit" href="/Products/Edit/@data.ProductID"></a></td>
-                            <td style="width:40px"><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/@data.ProductID"></a></td>
+                            <td class="text-right">৳@data.ProductPrice</td>
+                            <td class="text-right">@data.Stock<i id="@data.ProductID" class="add-stock fas fa-plus-circle ml-2"></i></td>
+                            <td class="text-center"><a class="edit fas fa-edit" href="/Products/Edit/@data.ProductID"></a></td>
+                            <td class="text-center"><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/@data.ProductID"></a></td>
                         </tr>
                     }
                 </tbody>
             </table>
         }
     </div>
+</div>
 
+<!-- Insert Modal -->
+<div class="modal fade" id="InsertModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<!-- Update Modal -->
+<div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+<!-- stock Modal -->
+<div class="modal fade" id="stockModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header blue-gradient white-text">
+                <h4 class="m-0"><i class="fas fa-plus-circle"></i> Add Stock</h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
 
-    <!-- Insert Modal -->
-    <div class="modal fade" id="InsertModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
-    <!-- Update Modal -->
-    <div class="modal fade" id="UpdateModal" tabindex="-1" role="dialog" aria-hidden="true"></div>
+            <div class="modal-body">
+                <form id="formStock">
+                    <div class="form-group">
+                        <input id="hiddenProductId" type="hidden" />
+                        <label>Add Stock Quantity</label>
+                        <input id="inputStock" type="number" class="form-control" />
+                    </div>
+                    <div class="text-center mt-1-half">
+                        <button type="submit" class="btn blue-gradient mb-1 waves-effect waves-light">Add <i class="fas fa-check ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -72,12 +103,38 @@
                 return;
             }
 
-            $('#InsertModal').html(data).modal('hide');
-            indexData();
+            location.reload();
         }
 
+        //show stock form
+        const formStock = document.getElementById("formStock");
+
+        $('.table-product').on("click", ".add-stock", function () {
+            formStock.hiddenProductId.value = this.id;
+            $('#stockModal').modal('show');
+        });
+
+        //post stock
+        formStock.addEventListener("submit", function (evt) {
+            evt.preventDefault();
+
+            $.ajax({
+                url: "/Products/AddStock",
+                type: "POST",
+                data: { productId: formStock.hiddenProductId.value, stock: formStock.inputStock.value },
+                success: response => {
+                    formStock.hiddenProductId.value = "";
+                    stock: formStock.inputStock.value = "";
+
+                    location.reload();
+                },
+                error: err => console.log(err)
+            });
+        });
+
+
         //Update click
-        $('#table-product').on("click", ".edit", function (evt) {
+        $('.table-product').on("click", ".edit", function (evt) {
             evt.preventDefault();
             const url = $(this).attr("href");
 
@@ -92,12 +149,11 @@
                 return;
             }
 
-            $('#UpdateModal').html(data).modal('hide');
-            indexData();
+            location.reload();
         }
 
         //Delete click
-        $('#table-product').on("click", ".delete", function (evt) {
+        $('.table-product').on("click", ".delete", function (evt) {
             evt.preventDefault();
 
             var row = $(this).closest("tr");

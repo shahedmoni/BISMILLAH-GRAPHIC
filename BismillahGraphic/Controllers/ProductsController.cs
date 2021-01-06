@@ -22,12 +22,16 @@ namespace BismillahGraphic.Controllers
             return View(data);
         }
 
-        //Call from ajax
-        public async Task<JsonResult> IndexData()
+        // POST: Products/Create
+        [HttpPost]
+        public async Task<ActionResult> AddStock(int productId, int stock)
         {
-            var data = await _db.Products.ToListCustomAsync();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            _db.Products.AddStock(productId, stock);
+            
+            var task = await _db.SaveChangesAsync();
+            return Content(task != 0 ? "success" : "error");
         }
+
 
         // GET: Products/Create
         public ActionResult Create()
