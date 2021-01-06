@@ -16,9 +16,10 @@ namespace BismillahGraphic.Controllers
         }
 
         // GET: Products
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var data = await _db.Products.ToListCustomAsync();
+            return View(data);
         }
 
         //Call from ajax

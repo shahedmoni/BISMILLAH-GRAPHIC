@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<BismillahGraphic.DataCore.ProductListCategoryWise>
 @{
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
@@ -16,7 +16,36 @@
         </div>
     </div>
 
-    <div id="wrapper" class="card card-body"></div>
+    <div class="card card-body">
+        @foreach (var item in Model)
+        {
+            <h4 class="card-title font-weight-bold">@item.ProductCategoryName</h4>
+
+            <table id="table-product" class="table table-sm">
+                <thead>
+                    <tr>
+                        <th><strong>Products</strong></th>
+                        <th><strong>Price</strong></th>
+                        <th><strong>Stock</strong></th>
+                        <th><strong>Edit</strong></th>
+                        <th><strong>Delete</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var data in item.products)
+                    {
+                        <tr>
+                            <td>@data.ProductName</td>
+                            <td>@data.ProductPrice</td>
+                            <td>@data.Stock</td>
+                            <td style="width:40px"><a class="edit fas fa-edit" href="/Products/Edit/@data.ProductID"></a></td>
+                            <td style="width:40px"><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/@data.ProductID"></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
 
 
     <!-- Insert Modal -->
@@ -30,43 +59,6 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
     <script>
-        $(function () {
-            indexData();
-        });
-
-        //get data
-        function indexData() {
-            const url = '/Products/IndexData';
-            const row = $("#wrapper");
-
-            $.get(url, function (response) {
-
-                if (!response.length) return;
-
-                row.children().remove();
-                row.append(tableData(response));
-            });
-        };
-
-        function tableData(data) {
-            var html = "";
-            $.each(data, function (index, category) {
-                html += `<h4 class="card-title font-weight-bold">${category.ProductCategoryName}</h4>`;
-                html += '<table class="table table-sm customTable"><tbody class="table-row">';
-
-                $.each(category.products, function (i, item) {
-                    html += `<tr>
-                        <td>${item.ProductName} - ৳${item.ProductPrice}</td>
-                        <td style="width:40px"><a class="edit fas fa-edit" href="/Products/Edit/${item.ProductID}"></a></td>
-                        <td style="width:40px"><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/${item.ProductID}"></a></td>
-                    </tr>`;
-                });
-                html += '</tbody></table>';
-            });
-
-            return html;
-        };
-
         //Insert
         $("#CreateClick").on("click", function () {
             $.get($(this).data("url"), function (data) {
@@ -85,7 +77,7 @@
         }
 
         //Update click
-        $('#wrapper').on("click", ".edit", function (evt) {
+        $('#table-product').on("click", ".edit", function (evt) {
             evt.preventDefault();
             const url = $(this).attr("href");
 
@@ -105,15 +97,12 @@
         }
 
         //Delete click
-        $('#wrapper').on("click", ".delete", function (evt) {
+        $('#table-product').on("click", ".delete", function (evt) {
             evt.preventDefault();
 
             var row = $(this).closest("tr");
             var btnDelete = $(this);
             const url = $(this).attr('href');
-
-            $('.table-row em').remove();
-            $('.table-row tr').removeClass("error-color");
 
             if (!url) return;
 
