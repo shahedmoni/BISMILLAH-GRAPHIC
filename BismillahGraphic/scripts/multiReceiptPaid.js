@@ -109,7 +109,7 @@ function resetPaidAmount(updatedDue) {
 
     const rows = tBody.querySelectorAll("tr")
     rows.forEach(row => {
-        row.cells[6].textContent = 0
+        row.cells[6].textContent = 0;
     })
 }
 

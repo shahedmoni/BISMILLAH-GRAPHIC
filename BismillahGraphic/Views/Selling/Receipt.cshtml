@@ -5,7 +5,7 @@
 }
 
 @section Styles{
-    <link href="/CSS/receipt.css" rel="stylesheet" />
+    <link href="/CSS/receipt.css?v=1" rel="stylesheet" />
 }
 
 <section class="my-4 d-print-none">
@@ -111,7 +111,7 @@
             </tr>
         </tbody>
     </table>
-    
+
     <div class="d-flex justify-content-between align-items-center d-print-none mt-3">
         <button id="btnBlockReadySendSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-outline-primary"><i class="fas fa-paper-plane mr-1"></i>Send Block Ready SMS</button>
         <div class="text-center">
@@ -120,7 +120,7 @@
         </div>
         <button id="btnSendPaymentSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-outline-danger"><i class="fas fa-paper-plane mr-1"></i>Send Payment Status</button>
     </div>
-    
+
 
     @{
         var paymentRecord = Model.SellingInfo.SellingPaymentRecord;

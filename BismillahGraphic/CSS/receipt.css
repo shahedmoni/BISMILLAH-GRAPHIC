@@ -24,7 +24,7 @@ body { background-color: #fff; color: black }
 
 .p-footer { position: absolute; bottom: 0; width: 100%; border-top: 1px solid #333; padding-top: 5px; }
 
-@page { margin: 2.5rem 2.5rem 0 2.5rem; }
+@page { margin: 2.5rem 6rem 0 6rem; }
 
 @media print {
     #header { display: none !important }
