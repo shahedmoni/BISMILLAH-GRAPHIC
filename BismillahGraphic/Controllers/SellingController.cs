@@ -63,7 +63,7 @@ namespace BismillahGraphic.Controllers
         }
 
         //GET: Change Receipt
-        public ActionResult ReceiptChange(int? id)
+        public ActionResult UpdateBill(int? id)
         {
             if (id == null) return RedirectToAction("Record");
             var data = _db.Selling.FindUpdateBill(id.GetValueOrDefault());

@@ -57,7 +57,7 @@
                         { data: "SellingDate", "render": function(data) { return moment(data).format('DD MMM YYYY') } },
                         {
                             data: "SellingID", "render": function(data, type, row, meta) {
-                                return `<a class="blue-text" href="/Selling/ReceiptChange/${row.SellingID}">Change</a>`;
+                                return `<a class="blue-text" href="/Selling/UpdateBill/${row.SellingID}">Change</a>`;
                             }
                         }
                     ],

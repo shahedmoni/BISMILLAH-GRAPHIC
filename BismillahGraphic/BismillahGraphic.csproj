@@ -411,6 +411,7 @@
     <Content Include="Views\Report\PaymentSummery.cshtml" />
     <Content Include="Views\Vendors\PaidReceipt.cshtml" />
     <Content Include="Views\Vendors\DueReceipt.cshtml" />
+    <Content Include="Views\Selling\UpdateBill.cshtml" />
     <None Include="Views\Selling\ReceiptChange.cshtml" />
     <Content Include="Views\SMS\VendorSMS.cshtml" />
     <Content Include="Views\SMS\SingleSMS.cshtml" />

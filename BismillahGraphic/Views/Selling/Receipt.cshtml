@@ -9,166 +9,168 @@
 }
 
 <section class="my-4 d-print-none">
-    <div class="mb-2">
-        <span id="smsBalance" class="badge badge-primary"></span>
-        <span>SMS Number: @(Model.VendorInfo.SmsNumber.IsEmpty()? "N/A": Model.VendorInfo.SmsNumber)</span>
-    </div>
-    <div class="card">
-        <div class="card-body d-flex justify-content-between">
-            <div>
-                <button id="btnSendSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-deep-purple btn-rounded"><i class="fas fa-paper-plane mr-1"></i>Send SMS</button>
-                <a class="btn btn-success btn-rounded" href="/Selling/DueCollection/@Model.SellingInfo.SellingID"><i class="fas fa-money-bill-alt mr-1"></i>Pay Due</a>
-            </div>
-            <div>
-                <a class="btn btn-elegant btn-rounded" href="/Selling/Selling"><i class="fas fa-shopping-cart mr-1"></i>Sell</a>
-                <button class="btn btn-default btn-rounded" onclick="print()"><i class="fas fa-print mr-1"></i>Print</button>
-            </div>
+    <div class="d-flex justify-content-between">
+        <div>
+            <a class="btn btn-success btn-rounded" href="/Selling/DueCollection/@Model.SellingInfo.SellingID"><i class="fas fa-money-bill-alt mr-1"></i>Pay Due</a>
+        </div>
+        <div>
+            <a class="btn btn-elegant btn-rounded" href="/Selling/Selling"><i class="fas fa-shopping-cart mr-1"></i>Sell</a>
+            <button class="btn btn-default btn-rounded" onclick="print()"><i class="fas fa-print mr-1"></i>Print</button>
         </div>
     </div>
-</section>    
+</section>
 
 
-    <div id="main-page">
-        <div id="institution-info" class="mb-4 text-center">
-            @{
-                var imgSrc = "";
-                var logo = Model.InstitutionInfo.InstitutionLogo;
-                imgSrc = logo != null ? $"data:image/gif;base64,{Convert.ToBase64String(logo)}" : "";
-            }
-
-            <h3 class="mb-2">
-                <img src="@imgSrc" class="rounded-circle" style="height: 35px; width: 35px" alt="" />
-                @Model.InstitutionInfo.InstitutionName
-            </h3>
-            <p><i class="fas fa-map-marker-alt mr-1"></i>@Model.InstitutionInfo.Address</p>
-            <p><i class="fas fa-globe mr-1"></i>@Model.InstitutionInfo.Website, <i class="fas fa-at mr-1"></i>@Model.InstitutionInfo.Email</p>
-            <p><i class="fas fa-phone mr-1"></i>@Model.InstitutionInfo.Phone</p>
-        </div>
-
-        <div class="row mb-4 receipt-date">
-            <div class="col pt-3">
-                RECEIPT# @Model.SellingInfo.SellingSN
-            </div>
-            <div class="col text-center">
-                <h5>INVOICE</h5>
-            </div>
-            <div class="col text-right col pt-3">
-                Selling Date: @Model.SellingInfo.SellingDate.ToString("d MMM yyyy")
-            </div>
-        </div>
-
-        <div id="vendor-area" class="row">
-            <div class="col">
-                <h5>Company: <strong>@Model.VendorInfo.VendorCompanyName</strong></h5>
-                <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
-            </div>
-            <div class="col text-right">
-                <h5>Phone: <strong>@Model.VendorInfo.VendorPhone</strong></h5>
-                <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
-            </div>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 30px"><strong>No.</strong></th>
-                    <th><strong>Product&nbsp;Name</strong></th>
-                    <th><strong>Description</strong></th>
-                    <th><strong>Square&nbsp;Inch</strong></th>
-                    <th><strong>Unit&nbsp;Price</strong></th>
-                    <th><strong>Line&nbsp;Total</strong></th>
-                </tr>
-            </thead>
-            <tbody>
-                @{
-                    var index = 0;
-                    foreach (var item in Model.SellingInfo.SellingList)
-                    {
-                        index++;
-                        <tr>
-                            <td>@index</td>
-                            <td>@item.Product.ProductName</td>
-                            <td>@item.Details</td>
-                            <td>@item.SellingQuantity</td>
-                            <td>@item.SellingUnitPrice/-</td>
-                            <td>@item.SellingPrice/-</td>
-                        </tr>
-                    }
-                }
-                <tr>
-                    <td colspan="5">
-                        <span id="amount-word"></span>
-                    </td>
-                    <td>
-                        <div class="text-right">
-                            <h5>Total: <strong>@Model.SellingInfo.SellingTotalPrice/-</strong></h5>
-                            @{
-                                var discount = Model.SellingInfo.SellingDiscountAmount;
-
-                                if (discount > 0)
-                                {
-                                    <h5>Discount: <strong>@Model.SellingInfo.SellingDiscountAmount/-</strong></h5>
-                                }
-                            }
-
-                            <h5>Paid: <strong> @Model.SellingInfo.SellingPaidAmount/-</strong></h5>
-                            <h5>Due: <strong>@Model.SellingInfo.SellingDueAmount/-</strong></h5>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-
+<div id="main-page">
+    <div id="institution-info" class="mb-4 text-center">
         @{
-            var paymentRecord = Model.SellingInfo.SellingPaymentRecord;
-
-            if (paymentRecord.Count > 0)
-            {
-                <h5 class="mt-4">PAYMENT RECORD</h5>
-                <table>
-                    <thead>
-                        <tr>
-                            <th><strong>Paid Date</strong></th>
-                            <th><strong>Paid Amount</strong></th>
-                            <th><strong>Payment Method</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-
-                        @foreach (var item in paymentRecord)
-                        {
-                            <tr>
-                                <td>@item.SellingPaid_Date.ToString("d MMM yyyy")</td>
-                                <td class="text-right">@item.SellingPaidAmount/-</td>
-                                <td class="text-center">@item.Payment_Situation</td>
-                            </tr>
-                        }
-
-                    </tbody>
-                </table>
-            }
+            var imgSrc = "";
+            var logo = Model.InstitutionInfo.InstitutionLogo;
+            imgSrc = logo != null ? $"data:image/gif;base64,{Convert.ToBase64String(logo)}" : "";
         }
 
-        <div class="p-footer">
-            <div class="row">
-                <div class="col">
-                    Received By
-                    <small class="d-block text-muted">@DateTime.Now.ToString("ddd, dd-MMM-yyyy (hh: mm tt)")</small>
-                </div>
-                <div class="col text-center font-weight-bold">
-                    Thank you for your business!
-                    <small class="d-block text-muted">Technical support: www.loopsit.com</small>
-                </div>
+        <h3 class="mb-2">
+            <img src="@imgSrc" class="rounded-circle" style="height: 35px; width: 35px" alt="" />
+            @Model.InstitutionInfo.InstitutionName
+        </h3>
+        <p><i class="fas fa-map-marker-alt mr-1"></i>@Model.InstitutionInfo.Address</p>
+        <p><i class="fas fa-globe mr-1"></i>@Model.InstitutionInfo.Website, <i class="fas fa-at mr-1"></i>@Model.InstitutionInfo.Email</p>
+        <p><i class="fas fa-phone mr-1"></i>@Model.InstitutionInfo.Phone</p>
+    </div>
 
-                <div class="col text-right">
-                    For: <strong>@Model.InstitutionInfo.InstitutionName</strong>
-                    <small class="d-block text-muted">Served By: <strong>@Model.SoildBy</strong></small>
-                </div>
+    <div class="row mb-4 receipt-date">
+        <div class="col pt-3">
+            RECEIPT# @Model.SellingInfo.SellingSN
+        </div>
+        <div class="col text-center">
+            <h5>INVOICE</h5>
+        </div>
+        <div class="col text-right col pt-3">
+            Selling Date: @Model.SellingInfo.SellingDate.ToString("d MMM yyyy")
+        </div>
+    </div>
+
+    <div id="vendor-area" class="row">
+        <div class="col">
+            <h5>Company: <strong>@Model.VendorInfo.VendorCompanyName</strong></h5>
+            <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
+        </div>
+        <div class="col text-right">
+            <h5>Phone: <strong>@Model.VendorInfo.VendorPhone</strong></h5>
+            <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 30px"><strong>No.</strong></th>
+                <th><strong>Product&nbsp;Name</strong></th>
+                <th><strong>Description</strong></th>
+                <th><strong>Square&nbsp;Inch</strong></th>
+                <th><strong>Unit&nbsp;Price</strong></th>
+                <th><strong>Line&nbsp;Total</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var index = 0;
+                foreach (var item in Model.SellingInfo.SellingList)
+                {
+                    index++;
+                    <tr>
+                        <td>@index</td>
+                        <td>@item.Product.ProductName</td>
+                        <td>@item.Details</td>
+                        <td>@item.SellingQuantity</td>
+                        <td>@item.SellingUnitPrice/-</td>
+                        <td>@item.SellingPrice/-</td>
+                    </tr>
+                }
+            }
+            <tr>
+                <td colspan="5">
+                    <span id="amount-word"></span>
+                </td>
+                <td>
+                    <div class="text-right">
+                        <h5>Total: <strong>@Model.SellingInfo.SellingTotalPrice/-</strong></h5>
+                        @{
+                            var discount = Model.SellingInfo.SellingDiscountAmount;
+
+                            if (discount > 0)
+                            {
+                                <h5>Discount: <strong>@Model.SellingInfo.SellingDiscountAmount/-</strong></h5>
+                            }
+                        }
+
+                        <h5>Paid: <strong> @Model.SellingInfo.SellingPaidAmount/-</strong></h5>
+                        <h5>Due: <strong>@Model.SellingInfo.SellingDueAmount/-</strong></h5>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="d-flex justify-content-between align-items-center d-print-none mt-3">
+        <button id="btnBlockReadySendSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-outline-primary"><i class="fas fa-paper-plane mr-1"></i>Send Block Ready SMS</button>
+        <div class="text-center">
+            <h5 id="smsBalance" class="font-weight-bold"></h5>
+            <em class="m-0 text-muted">SMS Number: @(Model.VendorInfo.SmsNumber.IsEmpty()? "N/A": Model.VendorInfo.SmsNumber)</em>
+        </div>
+        <button id="btnSendPaymentSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-outline-danger"><i class="fas fa-paper-plane mr-1"></i>Send Payment Status</button>
+    </div>
+    
+
+    @{
+        var paymentRecord = Model.SellingInfo.SellingPaymentRecord;
+
+        if (paymentRecord.Count > 0)
+        {
+            <h5 class="mt-4">PAYMENT RECORD</h5>
+            <table>
+                <thead>
+                    <tr>
+                        <th><strong>Paid Date</strong></th>
+                        <th><strong>Paid Amount</strong></th>
+                        <th><strong>Payment Method</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+                    @foreach (var item in paymentRecord)
+                    {
+                        <tr>
+                            <td>@item.SellingPaid_Date.ToString("d MMM yyyy")</td>
+                            <td class="text-right">@item.SellingPaidAmount/-</td>
+                            <td class="text-center">@item.Payment_Situation</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+    }
+
+    <div class="p-footer">
+        <div class="row">
+            <div class="col">
+                Received By
+                <small class="d-block text-muted">@DateTime.Now.ToString("ddd, dd-MMM-yyyy (hh: mm tt)")</small>
+            </div>
+            <div class="col text-center font-weight-bold">
+                Thank you for your business!
+                <small class="d-block text-muted">Technical support: www.loopsit.com</small>
+            </div>
+
+            <div class="col text-right">
+                For: <strong>@Model.InstitutionInfo.InstitutionName</strong>
+                <small class="d-block text-muted">Served By: <strong>@Model.SoildBy</strong></small>
             </div>
         </div>
-    </div>   
+    </div>
+</div>
 
 
 @section scripts{
@@ -176,28 +178,6 @@
         $(function() {
             $("#amount-word").text(`Taka (in word): ${number2text(@Model.SellingInfo.SellingTotalPrice)}`);
             getSMSBalance();
-        });
-
-        //send SMS
-        const btnSendSMS = document.getElementById('btnSendSMS')
-        btnSendSMS.addEventListener('click', function() {
-            const number = this.getAttribute('data-number');
-
-            if (number) {
-                const text = `Thanks, @Model.VendorInfo.VendorCompanyName for order at BISMILLAH GRAPHIC. Order Total Amount: ৳@Model.SellingInfo.SellingTotalPrice`;
-                const model = { PhoneNumber: number, TextSMS: text };
-
-                $.ajax({
-                    url: '/SMS/SingleSMS',
-                    type: "POST",
-                    data: JSON.stringify(model),
-                    contentType: "application/json; charset=utf-8",
-                    success: function(response) {
-                        location.href = "/Selling/Selling";
-                    },
-                    error: error => console.log(error)
-                });
-            }
         });
 
         //SMS balance
@@ -209,7 +189,7 @@
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
                 success: function(response) {
-                    balance.textContent = `Remaining SMS ${response}`;
+                    balance.textContent = `Remaining SMS: ${response}`;
                 },
                 error: error => console.log(error)
             });
@@ -283,6 +263,53 @@
                 res = "zero";
             }
             return res;
+        }
+
+
+        //send SMS
+        const btnBlockReadySendSMS = document.getElementById('btnBlockReadySendSMS');
+        const btnSendPaymentSMS = document.getElementById('btnSendPaymentSMS');
+
+        //block ready event
+        btnBlockReadySendSMS.addEventListener('click', function() {
+            const number = this.getAttribute('data-number');
+            if (!number) return;
+
+            const text = `Dear Valued Customer, Your Block is Ready For Delivery Please Collect. Bill Amount TK: @Model.SellingInfo.SellingTotalPrice Thanks Bismillah Graphic. Zirabo MD:HAZRAT ALI, 01712-676781`;
+            const model = { PhoneNumber: number, TextSMS: text };
+
+            send(model);
+        });
+
+        //payment status
+        btnSendPaymentSMS.addEventListener('click', function() {
+            const number = this.getAttribute('data-number');
+            if (!number) return;
+
+            const paidAmount = @Model.SellingInfo.SellingPaidAmount;
+            const dueAmount = @Model.SellingInfo.SellingDueAmount;
+
+            const paid = paidAmount ? ` Paid Amount Tk: ${paidAmount}. ` : "";
+            const due = dueAmount ? ` Due Amount Tk: ${dueAmount}, please pay dues. ` : "";
+
+            const text = `Dear Valued Customer, Your Order Amount Tk: @Model.SellingInfo.SellingTotalPrice.${paid}${due}Thanks Bismillah Graphic. 01712-676781`;
+            const model = { PhoneNumber: number, TextSMS: text };
+
+            send(model);
+        });
+
+        //send to server
+        function send(model) {
+            $.ajax({
+                url: '/SMS/SingleSMS',
+                type: "POST",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                success: function(response) {
+                    location.href = "/Selling/Selling";
+                },
+                error: error => console.log(error)
+            });
         }
     </script>
 }
