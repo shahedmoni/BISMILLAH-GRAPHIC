@@ -23,6 +23,7 @@ namespace BismillahGraphic.DataCore
         [Required]
         [Display(Name = "Product Price")]
         public double ProductPrice { get; set; }
+        public double Stock { get; set; }
     }
 
 
