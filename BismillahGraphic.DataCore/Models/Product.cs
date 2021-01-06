@@ -14,6 +14,7 @@ namespace BismillahGraphic.DataCore
         public int ProductCategoryID { get; set; }
         public string ProductName { get; set; }
         public double ProductPrice { get; set; }
+        public double Stock { get; set; }
         public DateTime Insert_Date { get; set; }
 
         public virtual ProductCategory ProductCategory { get; set; }

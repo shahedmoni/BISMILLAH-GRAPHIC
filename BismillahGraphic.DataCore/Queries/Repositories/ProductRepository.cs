@@ -56,7 +56,8 @@ namespace BismillahGraphic.DataCore
                 ProductID = model.ProductID,
                 ProductCategoryID = model.ProductCategoryID,
                 ProductName = model.ProductName,
-                ProductPrice = model.ProductPrice
+                ProductPrice = model.ProductPrice,
+                Stock = model.Stock
             });
         }
 
@@ -67,6 +68,16 @@ namespace BismillahGraphic.DataCore
             product.ProductCategoryID = model.ProductCategoryID;
             if (product.ProductPrice != model.ProductPrice)
                 product.ProductPrice = model.ProductPrice;
+            if (product.Stock != model.Stock)
+                product.Stock = model.Stock;
+
+            Update(product);
+        }
+
+        public void AddStock(int productId, double stock)
+        {
+            var product = Find(productId);
+            product.Stock += stock;
             Update(product);
         }
 
@@ -80,7 +91,8 @@ namespace BismillahGraphic.DataCore
                 ProductID = p.ProductID,
                 ProductCategoryID = p.ProductCategoryID,
                 ProductName = p.ProductName,
-                ProductPrice = p.ProductPrice
+                ProductPrice = p.ProductPrice,
+                Stock = p.Stock
             };
         }
 
@@ -100,7 +112,8 @@ namespace BismillahGraphic.DataCore
                     ProductCategoryID = p.ProductCategoryID,
                     ProductName = p.ProductName,
                     ProductCategoryName = p.ProductCategory.ProductCategoryName,
-                    ProductPrice = p.ProductPrice
+                    ProductPrice = p.ProductPrice,
+                    Stock = p.Stock
                 }).Take(5).ToListAsync();
         }
 

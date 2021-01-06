@@ -10,6 +10,7 @@ namespace BismillahGraphic.DataCore
         Task<ICollection<ProductListCategoryWise>> ToListCustomAsync();
         // void AddCustom(ProductVM model);
         void UpdateCustom(ProductVM model);
+        void AddStock(int productId, double stock);
         ProductVM FindCustom(int? id);
         bool RemoveCustom(int id);
         Task<ICollection<ProductVM>> SearchAsync(string key);
