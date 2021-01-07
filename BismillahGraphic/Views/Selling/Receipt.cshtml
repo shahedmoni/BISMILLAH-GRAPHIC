@@ -5,13 +5,14 @@
 }
 
 @section Styles{
-    <link href="/CSS/receipt.css" rel="stylesheet" />
+    <link href="/CSS/receipt.css?v=2" rel="stylesheet" />
 }
 
 <section class="my-4 d-print-none">
     <div class="d-flex justify-content-between">
         <div>
             <a class="btn btn-success btn-rounded" href="/Selling/DueCollection/@Model.SellingInfo.SellingID"><i class="fas fa-money-bill-alt mr-1"></i>Pay Due</a>
+            <a class="btn btn-discord btn-rounded" href="/Selling/Record"><i class="fas fa-shopping-bag mr-1"></i>Selling Record</a>
         </div>
         <div>
             <a class="btn btn-elegant btn-rounded" href="/Selling/Selling"><i class="fas fa-shopping-cart mr-1"></i>Sell</a>
@@ -32,19 +33,11 @@
     </div>
     <div id="vendor-area">
         <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
-        <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
+        @if (!string.IsNullOrEmpty(Model.VendorInfo.VendorAddress))
+        {
+            <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
+        }
     </div>
-
-    @*<div id="vendor-area" class="row">
-            <div class="col">
-                <h5>Company: <strong>@Model.VendorInfo.VendorCompanyName</strong></h5>
-                <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
-            </div>
-            <div class="col text-right">
-                <h5>Phone: <strong>@Model.VendorInfo.VendorPhone</strong></h5>
-                <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
-            </div>
-        </div>*@
 
     <table>
         <thead>
@@ -141,18 +134,18 @@
     </div>
 
     <div class="p-footer">
-            <div class="row">
-                <div class="col">
-                    Received By
-                    <small class="d-block text-muted">@DateTime.Now.ToString("ddd, dd-MMM-yyyy (hh: mm tt)")</small>
-                </div>
+        <div class="row">
+            <div class="col">
+                Received By
+                <small class="d-block text-muted">@DateTime.Now.ToString("ddd, dd-MMM-yyyy (hh: mm tt)")</small>
+            </div>
 
-                <div class="col text-right">
-                    For: <strong>@Model.InstitutionInfo.InstitutionName</strong>
-                    <small class="d-block text-muted">Served By: <strong>@Model.SoildBy</strong></small>
-                </div>
+            <div class="col text-right">
+                For: <strong>@Model.InstitutionInfo.InstitutionName</strong>
+                <small class="d-block text-muted">Served By: <strong>@Model.SoildBy</strong></small>
             </div>
         </div>
+    </div>
 </div>
 
 
