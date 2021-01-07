@@ -5,7 +5,7 @@
 }
 
 @section Styles{
-    <link href="/CSS/receipt.css?v=1" rel="stylesheet" />
+    <link href="/CSS/receipt.css" rel="stylesheet" />
 }
 
 <section class="my-4 d-print-none">
@@ -22,54 +22,38 @@
 
 
 <div id="main-page">
-    <div id="institution-info" class="mb-4 text-center">
-        @{
-            var imgSrc = "";
-            var logo = Model.InstitutionInfo.InstitutionLogo;
-            imgSrc = logo != null ? $"data:image/gif;base64,{Convert.ToBase64String(logo)}" : "";
-        }
-
-        <h3 class="mb-2">
-            <img src="@imgSrc" class="rounded-circle" style="height: 35px; width: 35px" alt="" />
-            @Model.InstitutionInfo.InstitutionName
-        </h3>
-        <p><i class="fas fa-map-marker-alt mr-1"></i>@Model.InstitutionInfo.Address</p>
-        <p><i class="fas fa-globe mr-1"></i>@Model.InstitutionInfo.Website, <i class="fas fa-at mr-1"></i>@Model.InstitutionInfo.Email</p>
-        <p><i class="fas fa-phone mr-1"></i>@Model.InstitutionInfo.Phone</p>
-    </div>
-
-    <div class="row mb-4 receipt-date">
+    <div class="row mb-1 receipt-date">
         <div class="col pt-3">
             RECEIPT# @Model.SellingInfo.SellingSN
-        </div>
-        <div class="col text-center">
-            <h5>INVOICE</h5>
         </div>
         <div class="col text-right col pt-3">
             Selling Date: @Model.SellingInfo.SellingDate.ToString("d MMM yyyy")
         </div>
     </div>
-
-    <div id="vendor-area" class="row">
-        <div class="col">
-            <h5>Company: <strong>@Model.VendorInfo.VendorCompanyName</strong></h5>
-            <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
-        </div>
-        <div class="col text-right">
-            <h5>Phone: <strong>@Model.VendorInfo.VendorPhone</strong></h5>
-            <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
-        </div>
+    <div id="vendor-area">
+        <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
+        <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
     </div>
+
+    @*<div id="vendor-area" class="row">
+            <div class="col">
+                <h5>Company: <strong>@Model.VendorInfo.VendorCompanyName</strong></h5>
+                <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
+            </div>
+            <div class="col text-right">
+                <h5>Phone: <strong>@Model.VendorInfo.VendorPhone</strong></h5>
+                <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
+            </div>
+        </div>*@
 
     <table>
         <thead>
             <tr>
-                <th style="width: 30px"><strong>No.</strong></th>
-                <th><strong>Product&nbsp;Name</strong></th>
+                <th class="text-center"><strong>No.</strong></th>
                 <th><strong>Description</strong></th>
-                <th><strong>Square&nbsp;Inch</strong></th>
-                <th><strong>Unit&nbsp;Price</strong></th>
-                <th><strong>Line&nbsp;Total</strong></th>
+                <th class="text-center"><strong>Square&nbsp;Inch</strong></th>
+                <th class="text-right"><strong>Unit&nbsp;Price</strong></th>
+                <th class="text-right"><strong>Line&nbsp;Total</strong></th>
             </tr>
         </thead>
         <tbody>
@@ -79,20 +63,22 @@
                 {
                     index++;
                     <tr>
-                        <td>@index</td>
-                        <td>@item.Product.ProductName</td>
-                        <td>@item.Details</td>
-                        <td>@item.SellingQuantity</td>
-                        <td>@item.SellingUnitPrice/-</td>
-                        <td>@item.SellingPrice/-</td>
+                        <td class="text-center">@index</td>
+                        <td>
+                            @item.Product.ProductName-
+                            @item.Details
+                        </td>
+                        <td class="text-center">@item.SellingQuantity</td>
+                        <td class="text-right">@item.SellingUnitPrice/-</td>
+                        <td class="text-right">@item.SellingPrice/-</td>
                     </tr>
                 }
             }
             <tr>
-                <td colspan="5">
+                <td colspan="3">
                     <span id="amount-word"></span>
                 </td>
-                <td>
+                <td colspan="2">
                     <div class="text-right">
                         <h5>Total: <strong>@Model.SellingInfo.SellingTotalPrice/-</strong></h5>
                         @{
@@ -121,55 +107,52 @@
         <button id="btnSendPaymentSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-outline-danger"><i class="fas fa-paper-plane mr-1"></i>Send Payment Status</button>
     </div>
 
+    <div class="d-print-none">
+        @{
+            var paymentRecord = Model.SellingInfo.SellingPaymentRecord;
 
-    @{
-        var paymentRecord = Model.SellingInfo.SellingPaymentRecord;
-
-        if (paymentRecord.Count > 0)
-        {
-            <h5 class="mt-4">PAYMENT RECORD</h5>
-            <table>
-                <thead>
-                    <tr>
-                        <th><strong>Paid Date</strong></th>
-                        <th><strong>Paid Amount</strong></th>
-                        <th><strong>Payment Method</strong></th>
-                    </tr>
-                </thead>
-                <tbody>
-
-
-                    @foreach (var item in paymentRecord)
-                    {
+            if (paymentRecord.Count > 0)
+            {
+                <h5 class="mt-4">PAYMENT RECORD</h5>
+                <table>
+                    <thead>
                         <tr>
-                            <td>@item.SellingPaid_Date.ToString("d MMM yyyy")</td>
-                            <td class="text-right">@item.SellingPaidAmount/-</td>
-                            <td class="text-center">@item.Payment_Situation</td>
+                            <th><strong>Paid Date</strong></th>
+                            <th><strong>Paid Amount</strong></th>
+                            <th><strong>Payment Method</strong></th>
                         </tr>
-                    }
+                    </thead>
+                    <tbody>
 
-                </tbody>
-            </table>
+
+                        @foreach (var item in paymentRecord)
+                        {
+                            <tr>
+                                <td>@item.SellingPaid_Date.ToString("d MMM yyyy")</td>
+                                <td class="text-right">@item.SellingPaidAmount/-</td>
+                                <td class="text-center">@item.Payment_Situation</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
         }
-    }
+    </div>
 
     <div class="p-footer">
-        <div class="row">
-            <div class="col">
-                Received By
-                <small class="d-block text-muted">@DateTime.Now.ToString("ddd, dd-MMM-yyyy (hh: mm tt)")</small>
-            </div>
-            <div class="col text-center font-weight-bold">
-                Thank you for your business!
-                <small class="d-block text-muted">Technical support: www.loopsit.com</small>
-            </div>
+            <div class="row">
+                <div class="col">
+                    Received By
+                    <small class="d-block text-muted">@DateTime.Now.ToString("ddd, dd-MMM-yyyy (hh: mm tt)")</small>
+                </div>
 
-            <div class="col text-right">
-                For: <strong>@Model.InstitutionInfo.InstitutionName</strong>
-                <small class="d-block text-muted">Served By: <strong>@Model.SoildBy</strong></small>
+                <div class="col text-right">
+                    For: <strong>@Model.InstitutionInfo.InstitutionName</strong>
+                    <small class="d-block text-muted">Served By: <strong>@Model.SoildBy</strong></small>
+                </div>
             </div>
         </div>
-    </div>
 </div>
 
 
