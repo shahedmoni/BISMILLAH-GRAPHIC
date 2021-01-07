@@ -134,6 +134,31 @@ namespace BismillahGraphic.DataCore
 
             if (due < 0) return;
 
+            //product stock update
+            #region StockUpdate
+            var previousProductIds = selling.SellingList.Select(s => s.ProductID).ToArray();
+            var newProducts = model.SellingCarts.Where(s => !previousProductIds.Contains(s.ProductID)).ToList();
+
+            foreach (var list in newProducts)
+            {
+                var product = Context.Product.Find(list.ProductID);
+                product.Stock -= list.SellingQuantity;
+                Context.Product.Update(product);
+            }
+
+            foreach (var list in selling.SellingList)
+            {
+
+                var newQuantity = model.SellingCarts.FirstOrDefault(s => s.ProductID == list.ProductID)?.SellingQuantity ?? 0;
+
+                var product = Context.Product.Find(list.ProductID);
+                product.Stock += list.SellingQuantity - newQuantity;
+                Context.Product.Update(product);
+            }
+            #endregion
+
+
+
             selling.SellingDiscountAmount = model.SellingDiscountAmount;
             selling.SellingTotalPrice = model.SellingTotalPrice;
             selling.SellingList = model.SellingCarts.Select(c => new SellingList
@@ -156,6 +181,13 @@ namespace BismillahGraphic.DataCore
                 .Include(s => s.SellingPaymentRecord)
                 .FirstOrDefault(s => s.SellingID == id);
             if (selling.SellingPaymentRecord.Count > 0) return false;
+
+            foreach (var list in selling.SellingList)
+            {
+                var product = Context.Product.Find(list.ProductID);
+                product.Stock += list.SellingQuantity;
+                Context.Product.Update(product);
+            }
             Context.Selling.Remove(selling);
             return true;
 

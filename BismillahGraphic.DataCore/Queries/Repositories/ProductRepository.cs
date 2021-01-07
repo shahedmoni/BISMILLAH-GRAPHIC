@@ -83,6 +83,13 @@ namespace BismillahGraphic.DataCore
             Update(product);
         }
 
+        public void SubtractStock(int productId, double stock)
+        {
+            var product = Find(productId);
+            product.Stock -= stock;
+            Update(product);
+        }
+
         public ProductVM FindCustom(int? id)
         {
             var p = Find(id.GetValueOrDefault());

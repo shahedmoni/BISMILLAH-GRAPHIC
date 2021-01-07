@@ -46,6 +46,13 @@ namespace BismillahGraphic.Controllers
             await _db.SaveChangesAsync();
 
             _db.Vendors.UpdatePaidDue(model.VendorID);
+
+            foreach (var item in model.SellingCarts)
+            {
+                _db.Products.SubtractStock(item.ProductID, item.SellingQuantity);
+            }
+
+
             var status = _db.SaveChanges();
 
             return status != 0 ? selling.SellingID : status;
@@ -81,7 +88,7 @@ namespace BismillahGraphic.Controllers
 
             return model.SellingID;
         }
-        
+
         //GET: Record
         [Authorize(Roles = "Admin, SellingRecord")]
         public ActionResult Record()
@@ -123,9 +130,9 @@ namespace BismillahGraphic.Controllers
 
         public void DeleteBill(int id)
         {
-            var Isdelete = _db.Selling.DeleteBill(id);
+            var isDeleted = _db.Selling.DeleteBill(id);
 
-            if (Isdelete) _db.SaveChanges();
+            if (isDeleted) _db.SaveChanges();
         }
 
         protected override void Dispose(bool disposing)
