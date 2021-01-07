@@ -147,7 +147,7 @@ namespace BismillahGraphic.DataCore
 
         public CustomDataResult<VendorPaidDue> PaidDues(CustomDataRequest request)
         {
-            return Context.Vendor.OrderBy(v => v.VendorCompanyName).Select(v => new VendorPaidDue
+            return Context.Vendor.Where(v => v.VendorDue > 0).OrderBy(v => v.VendorCompanyName).Select(v => new VendorPaidDue
             {
                 VendorID = v.VendorID,
                 VendorCompanyName = v.VendorCompanyName,
