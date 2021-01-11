@@ -296,7 +296,7 @@
     <Content Include="CSS\images\works\nylo.jpg" />
     <Content Include="CSS\Login.css" />
     <Content Include="CSS\multiReceipt.css" />
-    <Content Include="CSS\receipt.css" />
+    <Content Include="CSS\selling-receipt.css" />
     <Content Include="CSS\SideNavbar.css" />
     <Content Include="favic.ico" />
     <Content Include="Global.asax" />

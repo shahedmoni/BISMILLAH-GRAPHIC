@@ -5,7 +5,7 @@
 }
 
 @section Styles{
-    <link href="/CSS/receipt.css?v=2" rel="stylesheet" />
+    <link href="~/CSS/selling-receipt.css" rel="stylesheet" />
 }
 
 <section class="my-4 d-print-none">
@@ -23,20 +23,52 @@
 
 
 <div id="main-page">
-    <div class="row mb-1 receipt-date">
-        <div class="col pt-3">
-            RECEIPT# @Model.SellingInfo.SellingSN
+    <div class="shop-info">
+        <div class="name-logo">
+            <img src="data:image;base64,@Convert.ToBase64String(Model.InstitutionInfo.InstitutionLogo)" alt="" />
+            <h2>@Model.InstitutionInfo.InstitutionName</h2>
         </div>
-        <div class="col text-right col pt-3">
-            Selling Date: @Model.SellingInfo.SellingDate.ToString("d MMM yyyy")
+
+        <div class="address-bar">
+            <p>
+                <i class="fas fa-map-marker-alt"></i>
+                @Model.InstitutionInfo.Address
+            </p>
+            <p>
+                <i class="fas fa-globe"></i>
+                @Model.InstitutionInfo.Website,
+                <i class="fas fa-at"></i>
+                @Model.InstitutionInfo.Email,
+                <i class="fas fa-phone"></i>
+                @Model.InstitutionInfo.Phone
+            </p>
         </div>
     </div>
-    <div id="vendor-area">
-        <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
-        @if (!string.IsNullOrEmpty(Model.VendorInfo.VendorAddress))
-        {
-            <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
-        }
+
+    <div class="row my-2 receipt-info align-items-center">
+        <div class="col">
+            <span>RECEIPT# @Model.SellingInfo.SellingSN</span>
+        </div>
+        <div class="col">
+            <div class="invice-title">INVOICE</div>
+        </div>
+        <div class="col text-right">
+            <span>Date: @Model.SellingInfo.SellingDate.ToString("d MMM yyyy")</span>
+        </div>
+    </div>
+
+    <div class="row mb-1" id="vendor-area">
+        <div class="col-7">
+            <h5><strong>@Model.VendorInfo.VendorCompanyName</strong></h5>
+            <h5><strong>@Model.VendorInfo.VendorName</strong></h5>
+        </div>
+        <div class="col text-right">
+            @if (!string.IsNullOrEmpty(Model.VendorInfo.VendorAddress))
+            {
+                <h5><strong>@Model.VendorInfo.VendorAddress</strong></h5>
+            }
+            <h5><strong>@Model.VendorInfo.VendorPhone</strong></h5>
+        </div>
     </div>
 
     <table>
@@ -95,7 +127,7 @@
         <button id="btnBlockReadySendSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-outline-primary"><i class="fas fa-paper-plane mr-1"></i>Send Block Ready SMS</button>
         <div class="text-center">
             <h5 id="smsBalance" class="font-weight-bold"></h5>
-            <em class="m-0 text-muted">SMS Number: @(Model.VendorInfo.SmsNumber.IsEmpty()? "N/A": Model.VendorInfo.SmsNumber)</em>
+            <em class="m-0 text-muted">SMS Number: @(Model.VendorInfo.SmsNumber.IsEmpty() ? "N/A" : Model.VendorInfo.SmsNumber)</em>
         </div>
         <button id="btnSendPaymentSMS" @(Model.VendorInfo.SmsNumber.IsEmpty() ? "disabled='disabled'" : "") data-number="@Model.VendorInfo.SmsNumber" class="btn btn-outline-danger"><i class="fas fa-paper-plane mr-1"></i>Send Payment Status</button>
     </div>
@@ -141,7 +173,7 @@
             </div>
 
             <div class="col text-right">
-                For: <strong>@Model.InstitutionInfo.InstitutionName</strong>
+                For: @Model.InstitutionInfo.InstitutionName
                 <small class="d-block text-muted">Served By: <strong>@Model.SoildBy</strong></small>
             </div>
         </div>
@@ -152,7 +184,7 @@
 @section scripts{
     <script>
         $(function() {
-            $("#amount-word").text(`Taka (in word): ${number2text(@Model.SellingInfo.SellingTotalPrice)}`);
+            $("#amount-word").text(`Taka (in words): ${number2text(@Model.SellingInfo.SellingTotalPrice)}`);
             getSMSBalance();
         });
 

@@ -60,7 +60,8 @@ $("#inputProduct").typeahead({
 //build table
 function appendDataTable() {
     let html = '';
-    productsList.forEach(function (data,i) {
+    productsList.forEach(function (data, i) {
+        const lineTotal = Math.floor((data.SellingQuantity * data.SellingUnitPrice)).toFixed(2);
     html += `<tr>
             <td><strong class="SN">${i+1}</strong></td>
             <td class="text-left">${data.ProductName}</td>
@@ -68,7 +69,7 @@ function appendDataTable() {
             <td><input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width" required/></td>
             <td><input type="number" step="0.01" class="quantity form-control" value="${data.SellingQuantity}" name="SellingQuantity" placeholder="Square Inch" disabled/></td>
             <td><input type="number" step="0.01" class="unitPrice form-control" value="${data.SellingUnitPrice}" name="SellingUnitPrice" placeholder="Unit Price" required/></td>
-            <td><input type="number" step="0.01" class="lineTotal form-control" value="${(data.SellingQuantity*data.SellingUnitPrice).toFixed(2)}" name="LineTotal" placeholder="Line Total" disabled/></td>
+            <td><input type="number" step="0.01" class="lineTotal form-control" value="${lineTotal}" name="LineTotal" placeholder="Line Total" disabled/></td>
             <td><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/${data.ProductID}"></a></td>
         </tr>`;
     });
@@ -113,7 +114,7 @@ $tableBody.on('input', '.unitPrice, .length, .width', function () {
     const lineTotal = row.find('.lineTotal');
 
     const total = (parseNumber(quantity.val()) * parseNumber(unitPrice.val()));
-    lineTotal.val(total.toFixed(2));
+    lineTotal.val(Math.floor(total));
 });
 
 //update product info
@@ -149,11 +150,11 @@ function calculateTotal(isDiscount = false) {
     const discount = +inputDiscount.value | 0;
     const paid = +paidAmount.textContent | 0;
 
-    totalPrice.textContent = Math.ceil(total);
-    totalPayable.textContent = Math.ceil(total - discount);
+    totalPrice.textContent = Math.floor(total);
+    totalPayable.textContent = Math.floor(total - discount);
 
     const payable = +totalPayable.textContent | 0;
-    totalDue.textContent = Math.ceil(payable - paid);
+    totalDue.textContent = Math.floor(payable - paid);
 
     error.textContent = ""
 

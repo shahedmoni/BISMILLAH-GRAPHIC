@@ -137,7 +137,7 @@ $tableBody.on('input', '.unitPrice, .length, .width', function () {
     const lineTotal = row.find('.lineTotal');
 
     const total = (parseNumber(quantity.val()) * parseNumber(unitPrice.val()));
-    lineTotal.val(total.toFixed(2));
+    lineTotal.val(Math.floor(total));
 });
 
 //convert to float number
@@ -167,15 +167,16 @@ function calculateTotal() {
     var total = 0;
 
     if (row.length > 0) {
-        row.find('input').each(function (i, element) {
+        row.find('input').each(function(i, element) {
             if (element.name === 'LineTotal')
-                total += Math.ceil(parseNumber(element.value));
+                total += Math.floor(parseNumber(element.value));
         });
     };
 
     $("#totalPrice").text(total);
     $("#grandTotal").text(total);
     $("#totalDue").text(total);
+
     resetPayment();
 };
 
