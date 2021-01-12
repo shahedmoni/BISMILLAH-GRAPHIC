@@ -137,7 +137,7 @@ $tableBody.on('input', '.unitPrice, .length, .width', function () {
     const lineTotal = row.find('.lineTotal');
 
     const total = (parseNumber(quantity.val()) * parseNumber(unitPrice.val()));
-    lineTotal.val(Math.floor(total));
+    lineTotal.val(total.toFixed(2));
 });
 
 //convert to float number
@@ -169,7 +169,7 @@ function calculateTotal() {
     if (row.length > 0) {
         row.find('input').each(function(i, element) {
             if (element.name === 'LineTotal')
-                total += Math.floor(parseNumber(element.value));
+                total += parseNumber(element.value);
         });
     };
 
@@ -185,7 +185,7 @@ $("#inputDiscount").on("change", function () {
     const totalPrice = parseNumber($("#totalPrice").text());
     const discount = parseNumber($(this).val());
     const isValid = compareValidation(totalPrice, discount);
-    const grandTotal = (totalPrice - discount);
+    const grandTotal = (totalPrice - discount).toFixed(2);
 
     $(this).next('em').remove();
 
@@ -194,8 +194,8 @@ $("#inputDiscount").on("change", function () {
         return;
     }
 
-    $("#grandTotal").text(grandTotal.toFixed());
-    $("#totalDue").text(grandTotal.toFixed());
+    $("#grandTotal").text(grandTotal);
+    $("#totalDue").text(grandTotal);
 
     const inputPaid = $("#inputPaid");
     if (inputPaid.val())
@@ -215,7 +215,7 @@ $("#inputPaid").on("change", function () {
         return;
     }
 
-    $("#totalDue").text(grandTotal - paid);
+    $("#totalDue").text((grandTotal - paid).toFixed(2));
 
     const paymentMethod = $("#selectPaymentMethod");
     paymentMethod.next('em').remove();

@@ -49,7 +49,7 @@ $("#inputProduct").typeahead({
         });
     },
     updater: function (item) {
-        item.SN = productsList.length+1
+        item.SN = productsList.length + 1
         productsList.push(item);
         appendDataTable();
         console.log(item)
@@ -61,9 +61,9 @@ $("#inputProduct").typeahead({
 function appendDataTable() {
     let html = '';
     productsList.forEach(function (data, i) {
-        const lineTotal = Math.floor((data.SellingQuantity * data.SellingUnitPrice)).toFixed(2);
-    html += `<tr>
-            <td><strong class="SN">${i+1}</strong></td>
+        const lineTotal = (data.SellingQuantity * data.SellingUnitPrice).toFixed(2);
+        html += `<tr>
+            <td><strong class="SN">${i + 1}</strong></td>
             <td class="text-left">${data.ProductName}</td>
             <td><input type="number" step="0.01" class="length form-control" value="${data.Length}" name="Length" placeholder="Length" required/></td>
             <td><input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width" required/></td>
@@ -114,7 +114,7 @@ $tableBody.on('input', '.unitPrice, .length, .width', function () {
     const lineTotal = row.find('.lineTotal');
 
     const total = (parseNumber(quantity.val()) * parseNumber(unitPrice.val()));
-    lineTotal.val(Math.floor(total));
+    lineTotal.val(total.toFixed(2));
 });
 
 //update product info
@@ -147,14 +147,14 @@ function calculateTotal(isDiscount = false) {
         return prev + (cur.SellingQuantity * cur.SellingUnitPrice);
     }, 0);
 
-    const discount = +inputDiscount.value | 0;
-    const paid = +paidAmount.textContent | 0;
+    const discount = parseNumber(inputDiscount.value);
+    const paid = parseNumber(paidAmount.textContent);
 
-    totalPrice.textContent = Math.floor(total);
-    totalPayable.textContent = Math.floor(total - discount);
+    totalPrice.textContent = total.toFixed(2);
+    totalPayable.textContent = (total - discount).toFixed(2);
 
-    const payable = +totalPayable.textContent | 0;
-    totalDue.textContent = Math.floor(payable - paid);
+    const payable = parseNumber(totalPayable.textContent);
+    totalDue.textContent = (payable - paid).toFixed(2);
 
     error.textContent = ""
 
@@ -164,7 +164,7 @@ function calculateTotal(isDiscount = false) {
 };
 
 //Submit Sell change
-formProduct.addEventListener('submit', function(evt) {
+formProduct.addEventListener('submit', function (evt) {
     evt.preventDefault()
 
     error.textContent = ""
@@ -177,7 +177,7 @@ formProduct.addEventListener('submit', function(evt) {
         SellingDiscountAmount: +inputDiscount.value | 0,
         SellingCarts: productsList
     };
-   
+
     const btn = formProduct.btnSelling;
     if (payable >= paid) {
         if (productsList.length) {
@@ -186,14 +186,14 @@ formProduct.addEventListener('submit', function(evt) {
                 data: JSON.stringify({ model: data }),
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
-                beforeSend: function() { btn.setAttribute('disabled', true) },
-                success: function(id) { window.location.href = `/Selling/Receipt/${id}` },
-                error: function(error) { console.log(error) },
-                complete: function() { btn.removeAttribute('disabled') }
+                beforeSend: function () { btn.setAttribute('disabled', true) },
+                success: function (id) { window.location.href = `/Selling/Receipt/${id}` },
+                error: function (error) { console.log(error) },
+                complete: function () { btn.removeAttribute('disabled') }
             });
         }
     }
     else {
-        error.textContent ="Payable amount must be greater than or equal paid amount"
+        error.textContent = "Payable amount must be greater than or equal paid amount"
     }
 });
