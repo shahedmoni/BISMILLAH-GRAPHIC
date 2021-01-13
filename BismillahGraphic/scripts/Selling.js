@@ -173,9 +173,9 @@ function calculateTotal() {
         });
     };
 
-    $("#totalPrice").text(total);
-    $("#grandTotal").text(total);
-    $("#totalDue").text(total);
+    $("#totalPrice").text(total.toFixed(2));
+    $("#grandTotal").text(total.toFixed(2));
+    $("#totalDue").text(total.toFixed(2));
 
     resetPayment();
 };
