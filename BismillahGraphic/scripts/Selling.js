@@ -328,7 +328,7 @@ $("#btnSelling").on("click", function (evt) {
     const isValid = validation();
     const that = $(this);
     const vendorId = $("#vendorId").val();
-    const totalPrice = $("#totalPrice").text() | 0;
+    const totalPrice = $("#totalPrice").text() || 0;
     const discountAmount = $("#inputDiscount").val();
     const paidAmount = parseNumber($("#inputPaid").val());
     const date = $("#inputSellingDate").val();
