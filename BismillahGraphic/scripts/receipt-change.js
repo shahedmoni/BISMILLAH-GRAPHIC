@@ -173,8 +173,8 @@ formProduct.addEventListener('submit', function (evt) {
 
     const data = {
         SellingID: +document.getElementById('hiddenSellingId').value,
-        SellingTotalPrice: +totalPrice.textContent | 0,
-        SellingDiscountAmount: +inputDiscount.value | 0,
+        SellingTotalPrice: +totalPrice.textContent,
+        SellingDiscountAmount: +inputDiscount.value,
         SellingCarts: productsList
     };
 
