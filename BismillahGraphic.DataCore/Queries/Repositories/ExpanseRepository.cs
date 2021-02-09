@@ -93,7 +93,7 @@ namespace BismillahGraphic.DataCore
 
         public double ExpenseYearly(int year)
         {
-            return ToList().Where(s => s.ExpanseDate.Year == year).Sum(s => s.ExpanseAmount);
+            return Math.Round(ToList().Where(s => s.ExpanseDate.Year == year).Sum(s => s.ExpanseAmount), 2);
         }
 
         public ICollection<MonthlyAmount> MonthlyAmounts(int year)
@@ -107,7 +107,7 @@ namespace BismillahGraphic.DataCore
                 .Select(g => new MonthlyAmount
                 {
                     MonthNumber = g.Key.number,
-                    Amount = g.Sum(e => e.ExpanseAmount)
+                    Amount = Math.Round(g.Sum(e => e.ExpanseAmount), 2)
                 })
                 .ToList();
 
@@ -149,7 +149,7 @@ namespace BismillahGraphic.DataCore
                 {
                     ExpanseCategoryID = g.Key.ExpanseCategoryID,
                     CategoryName = g.Key.CategoryName,
-                    TotalExpanse = g.Sum(e => e.ExpanseAmount)
+                    TotalExpanse = Math.Round(g.Sum(e => e.ExpanseAmount), 2)
 
                 })
                 .ToList();

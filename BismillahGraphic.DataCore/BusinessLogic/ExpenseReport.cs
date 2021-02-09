@@ -16,7 +16,7 @@ namespace BismillahGraphic.DataCore
             _eDate = eDate ?? new DateTime(3000, 1, 1);
             GetExpenses();
             GetCategoryExpenses();
-            this.TotalExpense = this.Expenses.Sum(e => e.ExpanseAmount);
+            this.TotalExpense = Math.Round(Expenses.Sum(e => e.ExpanseAmount), 2);
 
 
         }

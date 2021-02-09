@@ -27,10 +27,10 @@ namespace BismillahGraphic.DataCore
             GetVendorInfo();
             GetSales();
             GetDues();
-            DateToDateDue = this.Sales.Sum(s => s.SellingDueAmount);
-            DateToDatePaid = this.Sales.Sum(s => s.SellingPaidAmount);
-            DateToDateSale = this.Sales.Sum(s => s.SellingAmount);
-            DateToDateDiscount = this.Sales.Sum(s => s.SellingDiscountAmount);
+            DateToDateDue = Math.Round(Sales.Sum(s => s.SellingDueAmount), 2);
+            DateToDatePaid = Math.Round(Sales.Sum(s => s.SellingPaidAmount), 2);
+            DateToDateSale = Math.Round(Sales.Sum(s => s.SellingAmount), 2);
+            DateToDateDiscount = Math.Round(Sales.Sum(s => s.SellingDiscountAmount), 2);
 
 
 

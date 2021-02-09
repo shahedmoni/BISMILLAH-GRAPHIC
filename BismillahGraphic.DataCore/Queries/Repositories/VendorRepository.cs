@@ -118,9 +118,9 @@ namespace BismillahGraphic.DataCore
                        VendorPaid = s.Sum(c => c.SellingPaidAmount)
                    }).FirstOrDefault();
 
-            verdor.TotalAmount = obj.TotalAmount;
-            verdor.TotalDiscount = obj.TotalDiscount.GetValueOrDefault();
-            verdor.VendorPaid = obj.VendorPaid.GetValueOrDefault();
+            verdor.TotalAmount = Math.Round(obj.TotalAmount, 2);
+            verdor.TotalDiscount = Math.Round(obj.TotalDiscount.GetValueOrDefault(), 2);
+            verdor.VendorPaid = Math.Round(obj.VendorPaid.GetValueOrDefault(), 2);
 
             Update(verdor);
         }

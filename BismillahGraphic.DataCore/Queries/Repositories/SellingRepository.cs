@@ -217,8 +217,7 @@ namespace BismillahGraphic.DataCore
 
         public double SaleYearly(int year)
         {
-            return ToList().Where(s => s.SellingDate.Year == year)
-                .Sum(s => s.SellingTotalPrice - s.SellingDiscountAmount.GetValueOrDefault());
+            return Math.Round(ToList().Where(s => s.SellingDate.Year == year).Sum(s => s.SellingTotalPrice - s.SellingDiscountAmount.GetValueOrDefault()), 2);
         }
 
         public ICollection<MonthlyAmount> MonthlyAmounts(int year)
@@ -231,7 +230,7 @@ namespace BismillahGraphic.DataCore
                 .Select(g => new MonthlyAmount
                 {
                     MonthNumber = g.Key.number,
-                    Amount = g.Sum(s => s.SellingTotalPrice - s.SellingDiscountAmount.GetValueOrDefault())
+                    Amount = Math.Round(g.Sum(s => s.SellingTotalPrice - s.SellingDiscountAmount.GetValueOrDefault()), 2)
                 })
                 .ToList();
 
@@ -240,7 +239,7 @@ namespace BismillahGraphic.DataCore
 
         public double TotalDue()
         {
-            return ToList().Sum(s => s.SellingDueAmount.GetValueOrDefault());
+            return Math.Round(ToList().Sum(s => s.SellingDueAmount.GetValueOrDefault()), 2);
         }
 
         public DataResult<SellingRecord> Records(DataRequest request)
