@@ -83,7 +83,7 @@
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <strong>Discount</strong>
                         <div>
-                            <input placeholder="Discount" min="0" max="@(Model.SellingTotalPrice-Model.SellingPaidAmount)" id="inputDiscount" type="number" class="form-control" value="@Model.SellingDiscountAmount" />
+                            <input placeholder="Discount" min="0" max="@(Model.SellingTotalPrice-Model.SellingPaidAmount)" id="inputDiscount" type="number" step="0.01" class="form-control" value="@Model.SellingDiscountAmount" />
                         </div>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center green-text">
