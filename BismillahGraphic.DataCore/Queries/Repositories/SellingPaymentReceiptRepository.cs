@@ -81,7 +81,7 @@ namespace BismillahGraphic.DataCore
             {
                 var sell = sells.FirstOrDefault(s => s.SellingID == invoice.SellingID);
                 sell.SellingDiscountAmount = invoice.SellingDiscountAmount;
-                var due = sell.SellingTotalPrice - (sell.SellingDiscountAmount + sell.SellingPaidAmount);
+                var due = Math.Round(sell.SellingTotalPrice - (sell.SellingDiscountAmount.GetValueOrDefault() + sell.SellingPaidAmount.GetValueOrDefault()), 2);
                 if (due < invoice.SellingPaidAmount) return null;
                 sell.SellingPaidAmount += invoice.SellingPaidAmount;
             }
