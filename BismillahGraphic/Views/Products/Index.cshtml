@@ -43,7 +43,7 @@
                         <tr>
                             <td>@data.ProductName</td>
                             <td class="text-right">৳@data.ProductPrice</td>
-                            <td class="text-right">@data.Stock<i id="@data.ProductID" data-name="@data.ProductName" class="add-stock fas fa-plus-circle ml-2"></i></td>
+                            <td class="text-right">@data.Stock.ToString("F")<i id="@data.ProductID" data-name="@data.ProductName" class="add-stock fas fa-plus-circle ml-2"></i></td>
                             <td class="text-center"><a class="edit fas fa-edit" href="/Products/Edit/@data.ProductID"></a></td>
                             <td class="text-center"><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/@data.ProductID"></a></td>
                         </tr>
