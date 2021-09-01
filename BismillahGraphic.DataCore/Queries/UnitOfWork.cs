@@ -16,6 +16,7 @@ namespace BismillahGraphic.DataCore
             PageLinkAssigns = new PageLinkAssignRepository(_context);
             Products = new ProductRepository(_context);
             ProductCategories = new ProductCategoryRepository(_context);
+            Purchases = new PurchaseRepository(_context);
             Registrations = new RegistrationRepository(_context);
             ExpanseCategories = new ExpanseCategoryRepository(_context);
             Vendors = new VendorRepository(_context);
@@ -36,6 +37,7 @@ namespace BismillahGraphic.DataCore
         public IPageLinkAssignRepository PageLinkAssigns { get; private set; }
         public IProductRepository Products { get; private set; }
         public IProductCategoryRepository ProductCategories { get; private set; }
+        public IPurchaseRepository Purchases { get; }
         public IRegistrationRepository Registrations { get; private set; }
         public IExpanseCategoryRepository ExpanseCategories { get; private set; }
         public IVendorRepository Vendors { get; }

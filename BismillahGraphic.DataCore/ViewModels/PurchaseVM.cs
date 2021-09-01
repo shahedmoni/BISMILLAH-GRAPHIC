@@ -23,6 +23,7 @@ namespace BismillahGraphic.DataCore
         public double PurchasePaidAmount { get; set; }
         public DateTime PurchaseDate { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public ICollection<PurchaseCart> PurchaseCarts { get; set; }
     }
 
@@ -107,7 +108,7 @@ namespace BismillahGraphic.DataCore
 
     }
 
-    public class PurchaseInvoicePaySingle : InvoicePay
+    public class PurchaseInvoicePaySingle : PurchaseIncomeVM
     {
         public int SupplierID { get; set; }
         public int RegistrationID { get; set; }
@@ -152,16 +153,16 @@ namespace BismillahGraphic.DataCore
         public double? PurchaseDiscountAmount { get; set; }
         public double PurchasePaidAmount { get; set; }
         public DateTime PurchaseDate { get; set; }
+        public string Description { get; set; }
         public ICollection<PurchaseUpdateCart> PurchaseCarts { get; set; }
     }
     public class PurchaseUpdateCart
     {
         public int ProductID { get; set; }
+        public int MeasurementUnitId { get; set; }
         public string ProductName { get; set; }
         public double PurchaseQuantity { get; set; }
         public double PurchaseUnitPrice { get; set; }
-        public double Length { get; set; }
-        public double Width { get; set; }
     }
 
     public class PurchaseBillChangeViewModel
@@ -171,6 +172,7 @@ namespace BismillahGraphic.DataCore
             PurchaseCarts = new HashSet<PurchaseCart>();
         }
         public int PurchaseID { get; set; }
+        public string Description { get; set; }
         public double PurchaseTotalPrice { get; set; }
         public double? PurchaseDiscountAmount { get; set; }
         public ICollection<PurchaseCart> PurchaseCarts { get; set; }

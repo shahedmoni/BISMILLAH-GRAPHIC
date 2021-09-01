@@ -11,6 +11,7 @@ namespace BismillahGraphic.DataCore
         IPageLinkAssignRepository PageLinkAssigns { get; }
         IProductRepository Products { get; }
         IProductCategoryRepository ProductCategories { get; }
+        IPurchaseRepository Purchases { get; }
         IRegistrationRepository Registrations { get; }
         IExpanseCategoryRepository ExpanseCategories { get; }
         IVendorRepository Vendors { get; }

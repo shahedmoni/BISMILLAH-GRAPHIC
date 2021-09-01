@@ -112,6 +112,7 @@ namespace BismillahGraphic.DataCore
                     SellingCarts = s.SellingList.Select(l => new SellingUpdateCart
                     {
                         ProductID = l.ProductID,
+                        MeasurementUnitId = l.MeasurementUnitId,
                         ProductName = l.Product.ProductName,
                         SellingQuantity = l.SellingQuantity,
                         SellingUnitPrice = l.SellingUnitPrice,
