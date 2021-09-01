@@ -271,6 +271,7 @@
     <Compile Include="Controllers\SellingController.cs" />
     <Compile Include="Controllers\SMSController.cs" />
     <Compile Include="Controllers\SubAdminController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\VendorsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -420,6 +421,12 @@
     <Content Include="Views\SMS\VendorSMS.cshtml" />
     <Content Include="Views\SMS\SingleSMS.cshtml" />
     <Content Include="Views\SMS\SentRecord.cshtml" />
+    <Content Include="Views\Supplier\Details.cshtml" />
+    <Content Include="Views\Supplier\DueReceipt.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Supplier\PaidReceipt.cshtml" />
+    <Content Include="Views\Supplier\_Create.cshtml" />
+    <Content Include="Views\Supplier\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BismillahGraphic.DataCore\BismillahGraphic.DataCore.csproj">

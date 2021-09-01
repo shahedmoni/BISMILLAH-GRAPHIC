@@ -46,7 +46,7 @@
             <span>RECEIPT# @Model.SellingInfo.SellingSN</span>
         </div>
         <div class="col">
-            <div class="invice-title">INVOICE</div>
+            <div class="invice-title">BILL</div>
         </div>
         <div class="col text-right">
             <span>Date: @Model.SellingInfo.SellingDate.ToString("d MMM yyyy")</span>
@@ -71,8 +71,9 @@
         <thead>
             <tr>
                 <th class="text-center"><strong>No.</strong></th>
+                <th><strong>Product Name</strong></th>
                 <th><strong>Description</strong></th>
-                <th class="text-center"><strong>Square&nbsp;Inch</strong></th>
+                <th class="text-center"><strong>Quantity</strong></th>
                 <th class="text-right"><strong>Unit&nbsp;Price</strong></th>
                 <th class="text-right"><strong>Line&nbsp;Total</strong></th>
             </tr>
@@ -85,18 +86,19 @@
                     index++;
                     <tr>
                         <td class="text-center">@index</td>
-                        <td>
-                            @item.Product.ProductName-
-                            @item.Details
+                        <td>@item.Product.ProductName</td>
+                        <td class="text-center">@item.Details</td>
+                        <td class="text-center">
+                            @item.SellingQuantity
+                            @item.MeasurementUnit.MeasurementUnitName
                         </td>
-                        <td class="text-center">@item.SellingQuantity</td>
                         <td class="text-right">@item.SellingUnitPrice/-</td>
                         <td class="text-right">@item.SellingPrice/-</td>
                     </tr>
                 }
             }
             <tr>
-                <td colspan="3">
+                <td colspan="4">
                     <span id="amount-word"></span>
                 </td>
                 <td colspan="2">

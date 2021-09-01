@@ -9,6 +9,7 @@ using BismillahGraphic.DataCore;
 
 namespace BismillahGraphic.Controllers
 {
+    [Authorize(Roles = "Admin, MeasurementUnit")]
     public class MeasurementUnitController : Controller
     {
         private readonly IUnitOfWork _db;
