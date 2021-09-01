@@ -177,6 +177,7 @@
     <Compile Include="Interfaces\Repositories\IExpanseCategoryRepository.cs" />
     <Compile Include="Interfaces\Repositories\IExpanseRepository.cs" />
     <Compile Include="Interfaces\Repositories\IInstitutionRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IMeasurementUnitRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPageLinkAssignRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPageLinkCategoryRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPageLinkRepository.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Queries\Repositories\ExpanseCategoryRepository.cs" />
     <Compile Include="Queries\Repositories\ExpanseRepository.cs" />
     <Compile Include="Queries\Repositories\InstitutionRepository.cs" />
+    <Compile Include="Queries\Repositories\MeasurementUnitRepository.cs" />
     <Compile Include="Queries\Repositories\PageLinkAssignRepository.cs" />
     <Compile Include="Queries\Repositories\PageLinkCategoryRepository.cs" />
     <Compile Include="Queries\Repositories\PageLinkRepository.cs" />

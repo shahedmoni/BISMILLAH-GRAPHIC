@@ -10,6 +10,7 @@ namespace BismillahGraphic.DataCore
         {
             _context = context;
 
+            MeasurementUnits = new MeasurementUnitRepository(_context);
             PageLinks = new PageLinkRepository(_context);
             PageLinkCategorys = new PageLinkCategoryRepository(_context);
             PageLinkAssigns = new PageLinkAssignRepository(_context);
@@ -28,6 +29,7 @@ namespace BismillahGraphic.DataCore
         }
 
 
+        public IMeasurementUnitRepository MeasurementUnits { get; }
         public IPageLinkRepository PageLinks { get; private set; }
         public IPageLinkCategoryRepository PageLinkCategorys { get; private set; }
         public IPageLinkAssignRepository PageLinkAssigns { get; private set; }

@@ -5,6 +5,7 @@ namespace BismillahGraphic.DataCore
 {
     public interface IUnitOfWork : IDisposable
     {
+        IMeasurementUnitRepository MeasurementUnits { get; }
         IPageLinkRepository PageLinks { get; }
         IPageLinkCategoryRepository PageLinkCategorys { get; }
         IPageLinkAssignRepository PageLinkAssigns { get; }
