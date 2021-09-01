@@ -12,6 +12,7 @@
         #payment-area li strong { font-size: 19px; }
         #inputDiscount, #inputPaid { display: inline-block; width: auto; border-radius: 50px; text-align: right; color: #000; }
 
+        .length, .width{ display: inline-block; width: 100px;margin: 5px}
         .has-error { border: 2px solid #ff0000 }
     </style>
 }
@@ -30,9 +31,9 @@
                     <tr>
                         <th><strong>SN</strong></th>
                         <th><strong>Product&nbsp;Name</strong></th>
-                        <th><strong>Length</strong></th>
-                        <th><strong>Width</strong></th>
+                        <th style="width: 250px"><strong>Description</strong></th>
                         <th><strong>Square&nbsp;Inch</strong></th>
+                        <th><strong>M.Unit</strong></th>
                         <th><strong>Unit&nbsp;Price</strong></th>
                         <th><strong>Line&nbsp;Total</strong></th>
                         <th><strong>Remove</strong></th>
@@ -124,5 +125,5 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/jquery-ajax-unobtrusive@3.2.6/dist/jquery.unobtrusive-ajax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
-    <script src="~/scripts/Selling.js?v=0.21"></script>
+    <script src="~/scripts/Selling.js?v=1.0.0"></script>
 }

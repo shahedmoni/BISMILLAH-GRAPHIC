@@ -21,6 +21,12 @@ namespace BismillahGraphic.Controllers
             return View();
         }
 
+        public JsonResult GetMeasurementUnitNames()
+        {
+            var data = _db.MeasurementUnits.ddl();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         public async Task<JsonResult> FindVendor(string prefix)
         {
             var data = await _db.Vendors.SearchAsync(prefix);
@@ -53,7 +59,7 @@ namespace BismillahGraphic.Controllers
             }
 
 
-            var status = _db.SaveChanges();
+            var status = await _db.SaveChangesAsync();
 
             return status != 0 ? selling.SellingID : status;
         }
