@@ -42,7 +42,7 @@ namespace BismillahGraphic.DataCore
         public InstitutionVM InstitutionInfo { get; set; }
         public Purchase PurchaseInfo { get; set; }
         public SupplierVM SupplierInfo { get; set; }
-        public string SoildBy { get; set; }
+        public string SoldBy { get; set; }
     }
 
 

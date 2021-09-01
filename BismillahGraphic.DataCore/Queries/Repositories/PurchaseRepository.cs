@@ -81,7 +81,7 @@ namespace BismillahGraphic.DataCore
 
                 }).FirstOrDefault();
             if (receipt.PurchaseInfo != null)
-                receipt.SoildBy = Context.Registration.Find(receipt.PurchaseInfo.RegistrationID).Name;
+                receipt.SoldBy = Context.Registration.Find(receipt.PurchaseInfo.RegistrationID).Name;
             return receipt;
         }
 
