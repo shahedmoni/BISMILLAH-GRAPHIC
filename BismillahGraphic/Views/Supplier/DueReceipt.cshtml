@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Due Receipt";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+<div class="container">
+    <input id="Id" type="hidden" value="@ViewBag.id" />
+
+    <div class="card card-body">
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+                <h3 id="companyName" class="mb-0"></h3>
+                <span id="addressPhone" class="text-muted"></span>
+            </div>
+            <div class="form-inline justify-content-end">
+                <h4 class="m-0 font-weight-bold">Total Due: ৳<span id="totalDue"></span></h4>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between mb-3">
+            <em class="text-muted" id="showDate"></em>
+
+            <div class="form-inline justify-content-end">
+                <div class="md-form m-0 mr-3 d-print-none">
+                    <input id="formDate" class="form-control datepicker" placeholder="Form Date" type="text" />
+                </div>
+                <div class="md-form m-0 d-print-none">
+                    <input id="toDate" class="form-control datepicker" placeholder="To Date" type="text" />
+                    <button id="find" class="btn aqua-gradient btn-rounded btn-sm my-0" type="button">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <ul class="list-group list-group-horizontal mb-3">
+            <li class="list-group-item flex-fill">Total Sales: <strong id="sales"></strong></li>
+            <li class="list-group-item flex-fill">Total Received: <strong id="received"></strong></li>
+            <li class="list-group-item flex-fill">Total Discount: <strong id="discount"></strong></li>
+            <li class="list-group-item flex-fill">Total Due: <strong>৳<span id="due"></span></strong></li>
+        </ul>
+
+        <form id="submitForm">
+            <table id="DataTable" class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Bill No</th>
+                        <th>Sales</th>
+                        <th>Discount</th>
+                        <th>Received</th>
+                        <th>Due Balance</th>
+                        <th>Paid</th>
+                    </tr>
+                </thead>
+                <tbody id="t-row"></tbody>
+            </table>
+
+            <div class="form-inline">
+                <div class="md-form">
+                    <input id="inputPaid" required="" type="number" step="0.01" class="form-control" placeholder="Total paid amount" />
+                </div>
+                <div class="md-form mx-3">
+                    <input id="inputSellingDate" required="" placeholder="Paid Date" type="text" class="form-control datepicker" />
+                </div>
+                <div class="md-form">
+                    <select id="selectPaymentMethod" class="mdb-select mb-0 mt-1 mr-2">
+                        <option>Cash</option>
+                        <option>Bank</option>
+                        <option>Cheque</option>
+                        <option>bkash</option>
+                    </select>
+                </div>
+                <div class="md-form">
+                    <input id="submitPaid" type="submit" class="btn btn-brown" value="Paid" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/scripts/multiReceiptPaid.js"></script>
+}
+

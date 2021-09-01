@@ -23,7 +23,7 @@
     <!-- Image crop-er -->
     <link href="/CSS/Croper.css" rel="stylesheet" />
     <!-- custom -->
-    <link href="/CSS/Custom.css?v=1" rel="stylesheet" />
+    <link href="/CSS/Custom.css?v=1.0.0" rel="stylesheet" />
     <!-- render style -->
     @RenderSection("Styles", false)
 </head>
@@ -143,6 +143,12 @@
             $("#sidedrawer").mouseover(function () {
                 $("#sidedrawer").getNiceScroll().resize();
             });
+        });
+
+        //disable wheel in number type input
+        document.addEventListener("wheel", () => {
+            if (document.activeElement.type === "number")
+                document.activeElement.blur();
         });
 
         //select-picker error

@@ -29,6 +29,7 @@ namespace BismillahGraphic.DataCore
                     RegistrationID = model.RegistrationID,
                     SellingQuantity = c.SellingQuantity,
                     SellingUnitPrice = c.SellingUnitPrice,
+                    MeasurementUnitId = c.MeasurementUnitId,
                     Length = c.Length,
                     Width = c.Width
                 }).ToList(),

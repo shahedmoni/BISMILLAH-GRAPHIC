@@ -28,6 +28,10 @@ h3 { text-transform: uppercase; margin: 0; font-weight: 500; }
 .btn-floating { box-shadow: 0 5px 11px 0 #000000,0 4px 15px 0 #000000; box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15); width: 47px; height: 47px; position: relative; z-index: 1; vertical-align: middle; display: inline-block; overflow: hidden; transition: all .2s ease-in-out; margin: 10px; border-radius: 50%; padding: 0; cursor: pointer; }
 .btn-floating i { display: inline-block; width: inherit; text-align: center; color: #fff; font-size: 1.25rem; line-height: 47px; }
 
+/**DISABLE INPUT TYPE NUMBER WHEEL**/
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input[type="number"] { -moz-appearance: textfield; }
 
 /*Printing*/
 @page { margin: .5cm; }

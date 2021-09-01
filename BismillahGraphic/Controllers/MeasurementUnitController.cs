@@ -9,6 +9,7 @@ using BismillahGraphic.DataCore;
 
 namespace BismillahGraphic.Controllers
 {
+    [Authorize(Roles = "Admin, MeasurementUnit")]
     public class MeasurementUnitController : Controller
     {
         private readonly IUnitOfWork _db;
@@ -80,7 +81,7 @@ namespace BismillahGraphic.Controllers
 
             if (!ModelState.IsValid) return View(Request.IsAjaxRequest() ? "_Edit" : "Edit", model);
 
-
+            model.InsertDate = DateTime.Now;
             _db.MeasurementUnits.Update(model);
             var task = await _db.SaveChangesAsync();
 
