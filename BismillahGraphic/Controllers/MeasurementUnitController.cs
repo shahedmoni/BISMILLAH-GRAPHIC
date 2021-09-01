@@ -28,7 +28,7 @@ namespace BismillahGraphic.Controllers
         //Call from ajax
         public JsonResult IndexData()
         {
-            var data = _db.ExpanseCategories.ToList();
+            var data = _db.MeasurementUnits.ToList();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
@@ -40,14 +40,14 @@ namespace BismillahGraphic.Controllers
 
         //POST
         [HttpPost]
-        public async Task<ActionResult> Create(ExpanseCategory model)
+        public async Task<ActionResult> Create(MeasurementUnit model)
         {
-            var exist = _db.ExpanseCategories.Any(n => n.CategoryName == model.CategoryName);
+            var exist = _db.MeasurementUnits.Any(n => n.MeasurementUnitName == model.MeasurementUnitName);
 
-            if (exist) ModelState.AddModelError("CategoryName", "Category Name already exist!");
+            if (exist) ModelState.AddModelError("MeasurementUnitName", "Measurement Unit Name already exist!");
             if (!ModelState.IsValid) return View($"_Create", model);
 
-            _db.ExpanseCategories.Add(model);
+            _db.MeasurementUnits.Add(model);
 
             var task = await _db.SaveChangesAsync();
 
@@ -63,7 +63,7 @@ namespace BismillahGraphic.Controllers
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var model = _db.ExpanseCategories.Find(id.GetValueOrDefault());
+            var model = _db.MeasurementUnits.Find(id.GetValueOrDefault());
 
             if (model == null) return HttpNotFound();
             if (Request.IsAjaxRequest()) return PartialView($"_Edit", model);
@@ -73,15 +73,15 @@ namespace BismillahGraphic.Controllers
 
         //POST
         [HttpPost]
-        public async Task<ActionResult> Edit(ExpanseCategory model)
+        public async Task<ActionResult> Edit(MeasurementUnit model)
         {
-            var exist = _db.ExpanseCategories.Any(n => (n.CategoryName == model.CategoryName) && n.ExpanseCategoryID != model.ExpanseCategoryID);
-            if (exist) ModelState.AddModelError("CategoryName", "Category Name must be unique!");
+            var exist = _db.MeasurementUnits.Any(n => (n.MeasurementUnitName == model.MeasurementUnitName) && n.MeasurementUnitId != model.MeasurementUnitId);
+            if (exist) ModelState.AddModelError("MeasurementUnitName", "Measurement Unit Name must be unique!");
 
             if (!ModelState.IsValid) return View(Request.IsAjaxRequest() ? "_Edit" : "Edit", model);
 
 
-            _db.ExpanseCategories.Update(model);
+            _db.MeasurementUnits.Update(model);
             var task = await _db.SaveChangesAsync();
 
             if (task != 0)
@@ -96,7 +96,7 @@ namespace BismillahGraphic.Controllers
         // POST: Delete/5
         public int Delete(int id)
         {
-            if (!_db.ExpanseCategories.RemoveCustom(id)) return -1;
+            if (!_db.MeasurementUnits.RemoveCustom(id)) return -1;
             return _db.SaveChanges();
         }
     }

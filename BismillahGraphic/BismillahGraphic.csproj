@@ -323,9 +323,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\MeasurementUnit\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="MDB\font\roboto\Roboto-Bold.eot" />
     <Content Include="MDB\font\roboto\Roboto-Bold.ttf" />
@@ -415,6 +413,9 @@
     <Content Include="Views\Vendors\PaidReceipt.cshtml" />
     <Content Include="Views\Vendors\DueReceipt.cshtml" />
     <Content Include="Views\Selling\UpdateBill.cshtml" />
+    <Content Include="Views\MeasurementUnit\Index.cshtml" />
+    <Content Include="Views\MeasurementUnit\_Create.cshtml" />
+    <Content Include="Views\MeasurementUnit\_Edit.cshtml" />
     <None Include="Views\Selling\ReceiptChange.cshtml" />
     <Content Include="Views\SMS\VendorSMS.cshtml" />
     <Content Include="Views\SMS\SingleSMS.cshtml" />
