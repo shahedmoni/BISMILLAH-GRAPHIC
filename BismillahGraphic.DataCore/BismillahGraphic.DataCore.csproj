@@ -138,6 +138,7 @@
     <Compile Include="BusinessLogic\ExpenseReport.cs" />
     <Compile Include="BusinessLogic\NetReport.cs" />
     <Compile Include="BusinessLogic\SMS_Class.cs" />
+    <Compile Include="BusinessLogic\SupplierDetails.cs" />
     <Compile Include="BusinessLogic\VendorDetails.cs" />
     <Compile Include="DataContext.cs" />
     <Compile Include="DataTable\DataRequest.cs" />
