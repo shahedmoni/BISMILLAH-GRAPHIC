@@ -263,6 +263,7 @@
     <Compile Include="Controllers\ExpansesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MeasurementUnitController.cs" />
     <Compile Include="Controllers\ProductCategoriesController.cs" />
     <Compile Include="Controllers\ProductCategoryModelsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -412,6 +413,9 @@
     <Content Include="Views\Vendors\PaidReceipt.cshtml" />
     <Content Include="Views\Vendors\DueReceipt.cshtml" />
     <Content Include="Views\Selling\UpdateBill.cshtml" />
+    <Content Include="Views\MeasurementUnit\Index.cshtml" />
+    <Content Include="Views\MeasurementUnit\_Create.cshtml" />
+    <Content Include="Views\MeasurementUnit\_Edit.cshtml" />
     <None Include="Views\Selling\ReceiptChange.cshtml" />
     <Content Include="Views\SMS\VendorSMS.cshtml" />
     <Content Include="Views\SMS\SingleSMS.cshtml" />
