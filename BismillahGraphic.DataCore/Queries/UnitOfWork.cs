@@ -24,6 +24,7 @@ namespace BismillahGraphic.DataCore
             SellingLists = new SellingListRepository(_context);
             SellingPaymentReceipts = new SellingPaymentReceiptRepository(_context);
             SellingPaymentRecords = new SellingPaymentRecordRepository(_context);
+            Suppliers = new SupplierRepository(_context);
             Institutions = new InstitutionRepository(_context);
             SMS = new SmsRepository(_context);
         }
@@ -43,6 +44,7 @@ namespace BismillahGraphic.DataCore
         public ISellingListRepository SellingLists { get; }
         public ISellingPaymentReceiptRepository SellingPaymentReceipts { get; }
         public ISellingPaymentRecordRepository SellingPaymentRecords { get; }
+        public ISupplierRepository Suppliers { get; }
         public IInstitutionRepository Institutions { get; }
         public ISmsRepository SMS { get; }
 
