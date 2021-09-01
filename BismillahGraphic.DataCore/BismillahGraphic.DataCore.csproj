@@ -184,9 +184,8 @@
     <Compile Include="Interfaces\Repositories\IProductCategoryRepository.cs" />
     <Compile Include="Interfaces\Repositories\IProductRepository.cs" />
     <Compile Include="Interfaces\Repositories\IRegistrationRepository.cs" />
-    <Compile Include="Interfaces\Repositories\ISellingListRepository.cs" />
+    <Compile Include="Interfaces\Repositories\IPurchasePaymentReceiptRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISellingPaymentReceiptRepository.cs" />
-    <Compile Include="Interfaces\Repositories\ISellingPaymentRecordRepository.cs" />
     <Compile Include="Interfaces\Repositories\IPurchaseRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISellingRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISmsRepository.cs" />
@@ -230,9 +229,8 @@
     <Compile Include="Queries\Repositories\ProductCategoryRepository.cs" />
     <Compile Include="Queries\Repositories\ProductRepository.cs" />
     <Compile Include="Queries\Repositories\RegistrationRepository.cs" />
-    <Compile Include="Queries\Repositories\SellingListRepository.cs" />
+    <Compile Include="Queries\Repositories\PurchasePaymentReceiptRepository.cs" />
     <Compile Include="Queries\Repositories\SellingPaymentReceiptRepository.cs" />
-    <Compile Include="Queries\Repositories\SellingPaymentRecordRepository.cs" />
     <Compile Include="Queries\Repositories\PurchaseRepository.cs" />
     <Compile Include="Queries\Repositories\SellingRepository.cs" />
     <Compile Include="Queries\Repositories\SmsRepository.cs" />

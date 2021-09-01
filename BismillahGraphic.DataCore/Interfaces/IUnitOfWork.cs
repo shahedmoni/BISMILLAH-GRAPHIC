@@ -12,14 +12,13 @@ namespace BismillahGraphic.DataCore
         IProductRepository Products { get; }
         IProductCategoryRepository ProductCategories { get; }
         IPurchaseRepository Purchases { get; }
+        IPurchasePaymentReceiptRepository PurchasePaymentReceipts { get; }
         IRegistrationRepository Registrations { get; }
         IExpanseCategoryRepository ExpanseCategories { get; }
         IVendorRepository Vendors { get; }
         IExpanseRepository Expanses { get; }
         ISellingRepository Selling { get; }
-        ISellingListRepository SellingLists { get; }
         ISellingPaymentReceiptRepository SellingPaymentReceipts { get; }
-        ISellingPaymentRecordRepository SellingPaymentRecords { get; }
         ISupplierRepository Suppliers { get; }
         IInstitutionRepository Institutions { get; }
         ISmsRepository SMS { get; }

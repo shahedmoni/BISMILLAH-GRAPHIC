@@ -17,14 +17,13 @@ namespace BismillahGraphic.DataCore
             Products = new ProductRepository(_context);
             ProductCategories = new ProductCategoryRepository(_context);
             Purchases = new PurchaseRepository(_context);
+            PurchasePaymentReceipts = new PurchasePaymentReceiptRepository(_context);
             Registrations = new RegistrationRepository(_context);
             ExpanseCategories = new ExpanseCategoryRepository(_context);
             Vendors = new VendorRepository(_context);
             Expanses = new ExpanseRepository(_context);
             Selling = new SellingRepository(_context);
-            SellingLists = new SellingListRepository(_context);
             SellingPaymentReceipts = new SellingPaymentReceiptRepository(_context);
-            SellingPaymentRecords = new SellingPaymentRecordRepository(_context);
             Suppliers = new SupplierRepository(_context);
             Institutions = new InstitutionRepository(_context);
             SMS = new SmsRepository(_context);
@@ -38,14 +37,13 @@ namespace BismillahGraphic.DataCore
         public IProductRepository Products { get; private set; }
         public IProductCategoryRepository ProductCategories { get; private set; }
         public IPurchaseRepository Purchases { get; }
+        public IPurchasePaymentReceiptRepository PurchasePaymentReceipts { get; }
         public IRegistrationRepository Registrations { get; private set; }
         public IExpanseCategoryRepository ExpanseCategories { get; private set; }
         public IVendorRepository Vendors { get; }
         public IExpanseRepository Expanses { get; }
         public ISellingRepository Selling { get; }
-        public ISellingListRepository SellingLists { get; }
         public ISellingPaymentReceiptRepository SellingPaymentReceipts { get; }
-        public ISellingPaymentRecordRepository SellingPaymentRecords { get; }
         public ISupplierRepository Suppliers { get; }
         public IInstitutionRepository Institutions { get; }
         public ISmsRepository SMS { get; }
