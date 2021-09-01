@@ -1,4 +1,5 @@
-﻿using BismillahGraphic.DataCore;
+﻿using System.Collections.Generic;
+using BismillahGraphic.DataCore;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -80,6 +81,9 @@ namespace BismillahGraphic.Controllers
         {
             if (id == null) return RedirectToAction("Record");
             var data = _db.Selling.FindUpdateBill(id.GetValueOrDefault());
+
+            ViewBag.MesurementUnit = _db.MeasurementUnits.ddl();
+
             return View(data);
         }
 
