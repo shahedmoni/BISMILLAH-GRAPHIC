@@ -21,17 +21,23 @@ namespace BismillahGraphic.DataCore
         public virtual DbSet<Expanse> Expanse { get; set; }
         public virtual DbSet<ExpanseCategory> ExpanseCategory { get; set; }
         public virtual DbSet<Institution> Institution { get; set; }
+        public virtual DbSet<MeasurementUnit> MeasurementUnit { get; set; }
         public virtual DbSet<PageLink> PageLink { get; set; }
         public virtual DbSet<PageLinkAssign> PageLinkAssign { get; set; }
         public virtual DbSet<PageLinkCategory> PageLinkCategory { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductCategory> ProductCategory { get; set; }
+        public virtual DbSet<Purchase> Purchase { get; set; }
+        public virtual DbSet<PurchaseList> PurchaseList { get; set; }
+        public virtual DbSet<PurchasePaymentReceipt> PurchasePaymentReceipt { get; set; }
+        public virtual DbSet<PurchasePaymentRecord> PurchasePaymentRecord { get; set; }
         public virtual DbSet<Registration> Registration { get; set; }
         public virtual DbSet<Selling> Selling { get; set; }
         public virtual DbSet<SellingList> SellingList { get; set; }
         public virtual DbSet<SellingPaymentReceipt> SellingPaymentReceipt { get; set; }
         public virtual DbSet<SellingPaymentRecord> SellingPaymentRecord { get; set; }
         public virtual DbSet<SmsSendRecord> SmsSendRecord { get; set; }
+        public virtual DbSet<Supplier> Supplier { get; set; }
         public virtual DbSet<UserLoginInfo> UserLoginInfo { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
 
@@ -56,17 +62,24 @@ namespace BismillahGraphic.DataCore
             modelBuilder.ApplyConfiguration(new ExpanseCategoryConfiguration());
 
             modelBuilder.ApplyConfiguration(new InstitutionConfiguration());
+            modelBuilder.ApplyConfiguration(new MeasurementUnitConfiguration());
             modelBuilder.ApplyConfiguration(new PageLinkConfiguration());
             modelBuilder.ApplyConfiguration(new PageLinkAssignConfiguration());
             modelBuilder.ApplyConfiguration(new PageLinkCategoryConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new ProductCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new PurchaseConfiguration());
+            modelBuilder.ApplyConfiguration(new PurchaseListConfiguration());
+            modelBuilder.ApplyConfiguration(new PurchasePaymentReceiptConfiguration());
+            modelBuilder.ApplyConfiguration(new PurchasePaymentRecordConfiguration());
             modelBuilder.ApplyConfiguration(new RegistrationConfiguration());
             modelBuilder.ApplyConfiguration(new SellingConfiguration());
             modelBuilder.ApplyConfiguration(new SellingListConfiguration());
             modelBuilder.ApplyConfiguration(new SellingPaymentReceiptConfiguration());
             modelBuilder.ApplyConfiguration(new SellingPaymentRecordConfiguration());
             modelBuilder.ApplyConfiguration(new SmsSendRecordConfiguration());
+            modelBuilder.ApplyConfiguration(new SupplierConfiguration());
+
             modelBuilder.ApplyConfiguration(new UserLoginInfoConfiguration());
             modelBuilder.ApplyConfiguration(new VendorConfiguration());
 
