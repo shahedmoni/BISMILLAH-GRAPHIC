@@ -189,6 +189,7 @@
     <Compile Include="Interfaces\Repositories\ISellingPaymentRecordRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISellingRepository.cs" />
     <Compile Include="Interfaces\Repositories\ISmsRepository.cs" />
+    <Compile Include="Interfaces\Repositories\ISupplierRepository.cs" />
     <Compile Include="Interfaces\Repositories\IVendorRepository.cs" />
     <Compile Include="Models\AspNetRoles.cs" />
     <Compile Include="Models\AspNetUserClaims.cs" />
@@ -233,6 +234,7 @@
     <Compile Include="Queries\Repositories\SellingPaymentRecordRepository.cs" />
     <Compile Include="Queries\Repositories\SellingRepository.cs" />
     <Compile Include="Queries\Repositories\SmsRepository.cs" />
+    <Compile Include="Queries\Repositories\SupplierRepository.cs" />
     <Compile Include="Queries\Repositories\VendorRepository.cs" />
     <Compile Include="Queries\Repository.cs" />
     <Compile Include="Queries\UnitOfWork.cs" />
@@ -243,9 +245,11 @@
     <Compile Include="ViewModels\ProductVM.cs" />
     <Compile Include="ViewModels\ReceiptVM.cs" />
     <Compile Include="ViewModels\RegistrationVM.cs" />
+    <Compile Include="ViewModels\PurchaseVM.cs" />
     <Compile Include="ViewModels\SellingVM.cs" />
     <Compile Include="ViewModels\SideMenuBarVM.cs" />
     <Compile Include="ViewModels\SmsVM.cs" />
+    <Compile Include="ViewModels\SupplierVM.cs" />
     <Compile Include="ViewModels\VendorVM.cs" />
   </ItemGroup>
   <ItemGroup>
