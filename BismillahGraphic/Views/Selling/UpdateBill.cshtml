@@ -12,6 +12,8 @@
         #payment-area li strong { font-size: 19px; }
         #inputDiscount { display: inline-block; width: auto; border-radius: 50px; font-weight: bold; color: #000; }
         .delete { color: #ff0000 !important }
+
+        .length, .width{ display: inline-block; width: 100px;margin: 5px}
     </style>
 }
 
@@ -32,9 +34,9 @@
                     <tr>
                         <th><strong>SN</strong></th>
                         <th><strong>Product&nbsp;Name</strong></th>
-                        <th><strong>Length</strong></th>
-                        <th><strong>Width</strong></th>
-                        <th><strong>Square&nbsp;Inch</strong></th>
+                        <th style="width: 250px"><strong>Description</strong></th>
+                        <th><strong>Quantity</strong></th>
+                        <th><strong>M.Unit</strong></th>
                         <th><strong>Unit&nbsp;Price</strong></th>
                         <th><strong>Line&nbsp;Total</strong></th>
                         <th><strong>Remove</strong></th>
@@ -48,11 +50,22 @@
                             <tr>
                                 <td><strong class="SN">@serialNo</strong></td>
                                 <td class="text-left">@item.ProductName</td>
-                                <td><input type="number" step="0.01" class="length form-control" value="@item.Length" name="Length" placeholder="Length" required /></td>
-                                <td><input type="number" step="0.01" class="width form-control" value="@item.Width" name="Width" placeholder="Width" required /></td>
-                                <td><input type="number" step="0.01" class="quantity form-control" value="@item.SellingQuantity" name="SellingQuantity" placeholder="Square Inch" disabled /></td>
-                                <td><input type="number" step="0.01" class="unitPrice form-control" value="@item.SellingUnitPrice" name="SellingUnitPrice" placeholder="Unit Price" required /></td>
-                                <td><input type="number" step="0.01" class="lineTotal form-control" value="@(item.SellingQuantity*item.SellingUnitPrice)" name="LineTotal" placeholder="Line Total" disabled /></td>
+                                <td>
+                                    <input type="number" step="0.01" class="length form-control" value="@item.Length" name="Length" placeholder="Length" required/>
+                                    <input type="number" step="0.01" class="width form-control" value="@item.Width" name="Width" placeholder="Width" required/>
+                                </td>
+                                <td><input type="number" step="0.01" class="quantity form-control" value="@item.SellingQuantity" name="SellingQuantity" placeholder="Square Inch" disabled/></td>
+                                <td>
+                                    <select name="MeasurementUnitId" class="measurement-unit form-control">
+                                        <option value="">[ Select ]</option>
+                                        @foreach (var option in ViewBag.MesurementUnit)
+                                        {
+                                            <option value="@option.value">@option.label</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td><input type="number" step="0.01" class="unitPrice form-control" value="@item.SellingUnitPrice" name="SellingUnitPrice" placeholder="Unit Price" required/></td>
+                                <td><input type="number" step="0.01" class="lineTotal form-control" value="@(item.SellingQuantity * item.SellingUnitPrice)" name="LineTotal" placeholder="Line Total" disabled/></td>
                                 <td><a class="delete fas fa-trash-alt" href="/Products/Delete/@item.ProductID"></a></td>
                             </tr>
                             serialNo++;

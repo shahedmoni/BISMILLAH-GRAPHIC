@@ -30,6 +30,36 @@ const paidAmount = document.getElementById('paidAmount')
 const totalDue = document.getElementById('totalDue')
 const error = document.getElementById('error')
 
+
+//get measurement unit data
+let measurementDropDownData = [];
+function getMeasurementUnitName() {
+    $.ajax({
+        url: "/Selling/GetMeasurementUnitNames",
+        success: function (response) {
+            measurementDropDownData = response;
+        },
+        error: function (error) { console.log(error) }
+    });
+}
+
+getMeasurementUnitName();
+
+
+//create unit dropdown
+function createUnitDropdown(selectedId) {
+    let html = `<select name="MeasurementUnitId" class="measurement-unit form-control"><option value="">[ Select ]</option>`
+    measurementDropDownData.forEach(item => {
+        if (item.value !== +selectedId)
+            html += `<option value="${item.value}">${item.label}</option>`
+        else
+            html += `<option selected value="${item.value}">${item.label}</option>`
+    });
+    html += ` </select>`;
+
+    return html;
+}
+
 //product autocomplete
 $("#inputProduct").typeahead({
     minLength: 1,
@@ -65,9 +95,12 @@ function appendDataTable() {
         html += `<tr>
             <td><strong class="SN">${i + 1}</strong></td>
             <td class="text-left">${data.ProductName}</td>
-            <td><input type="number" step="0.01" class="length form-control" value="${data.Length}" name="Length" placeholder="Length" required/></td>
-            <td><input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width" required/></td>
+            <td>
+                  <input type="number" step="0.01" class="length form-control" value="${data.Length}" name="Length" placeholder="Length"/>
+                  <input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width"/>
+                </td>
             <td><input type="number" step="0.01" class="quantity form-control" value="${data.SellingQuantity}" name="SellingQuantity" placeholder="Square Inch" disabled/></td>
+            <td>${createUnitDropdown(data.MeasurementUnitId)}</td>   
             <td><input type="number" step="0.01" class="unitPrice form-control" value="${data.SellingUnitPrice}" name="SellingUnitPrice" placeholder="Unit Price" required/></td>
             <td><input type="number" step="0.01" class="lineTotal form-control" value="${lineTotal}" name="LineTotal" placeholder="Line Total" disabled/></td>
             <td><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/${data.ProductID}"></a></td>
@@ -118,12 +151,12 @@ $tableBody.on('input', '.unitPrice, .length, .width', function () {
 });
 
 //update product info
-$tableBody.on('change', 'input', function (e) {
+$tableBody.on('change', 'input, select', function (e) {
     const row = $(this).closest('tr');
     const serialNumber = parseInt(row.find(".SN").text());
     const index = productsList.findIndex(p => p.SN === serialNumber);
 
-    row.find('input').each(function (i, element) {
+    row.find('input, select').each(function (i, element) {
         productsList[index][element.name] = element.type === 'number' ? parseNumber(element.value) : element.value;
     });
 
