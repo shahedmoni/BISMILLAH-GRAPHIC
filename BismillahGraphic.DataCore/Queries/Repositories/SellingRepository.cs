@@ -63,6 +63,7 @@ namespace BismillahGraphic.DataCore
             var receipt = new SellingReceipt
             {
                 SellingInfo = Context.Selling.Include(s => s.SellingList).ThenInclude(l => l.Product)
+                    .Include(s => s.SellingList).ThenInclude(l => l.MeasurementUnit)
                     .Include(s => s.SellingPaymentRecord).FirstOrDefault(s => s.SellingID == id)
             };
 

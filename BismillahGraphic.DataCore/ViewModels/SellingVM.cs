@@ -29,6 +29,7 @@ namespace BismillahGraphic.DataCore
     public class SellingCart
     {
         public int ProductID { get; set; }
+        public int MeasurementUnitId { get; set; }
         public double SellingQuantity { get; set; }
         public double SellingUnitPrice { get; set; }
         public double Length { get; set; }
