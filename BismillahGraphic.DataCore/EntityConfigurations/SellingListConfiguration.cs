@@ -25,6 +25,11 @@ namespace BismillahGraphic.DataCore
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_SellingList_Selling");
 
+            entity.HasOne(d => d.MeasurementUnit)
+                .WithMany(p => p.SellingLists)
+                .HasForeignKey(d => d.MeasurementUnitId)
+                .OnDelete(DeleteBehavior.NoAction)
+                .HasConstraintName("FK_SellingList_MeasurementUnit");
         }
     }
 }

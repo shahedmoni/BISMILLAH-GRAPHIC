@@ -8,6 +8,10 @@ namespace BismillahGraphic.DataCore
         public Registration()
         {
             PageLinkAssign = new HashSet<PageLinkAssign>();
+            SellingPaymentReceipt = new HashSet<SellingPaymentReceipt>();
+            SellingPaymentRecord = new HashSet<SellingPaymentRecord>();
+            PurchasePaymentReceipt = new HashSet<PurchasePaymentReceipt>();
+            PurchasePaymentRecord = new HashSet<PurchasePaymentRecord>();
         }
 
         public int RegistrationID { get; set; }
@@ -28,5 +32,7 @@ namespace BismillahGraphic.DataCore
         public virtual ICollection<PageLinkAssign> PageLinkAssign { get; set; }
         public virtual ICollection<SellingPaymentRecord> SellingPaymentRecord { get; set; }
         public virtual ICollection<SellingPaymentReceipt> SellingPaymentReceipt { get; set; }
+        public virtual ICollection<PurchasePaymentRecord> PurchasePaymentRecord { get; set; }
+        public virtual ICollection<PurchasePaymentReceipt> PurchasePaymentReceipt { get; set; }
     }
 }

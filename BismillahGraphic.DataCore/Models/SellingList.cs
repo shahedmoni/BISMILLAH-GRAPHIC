@@ -6,6 +6,7 @@
         public int SellingID { get; set; }
         public int ProductID { get; set; }
         public int RegistrationID { get; set; }
+        public int MeasurementUnitId { get; set; }
         public double SellingQuantity { get; set; }
         public double SellingUnitPrice { get; set; }
         public double SellingPrice { get; set; }
@@ -14,5 +15,6 @@
         public double Width { get; set; }
         public virtual Product Product { get; set; }
         public virtual Selling Selling { get; set; }
+        public virtual MeasurementUnit MeasurementUnit { get; set; }
     }
 }

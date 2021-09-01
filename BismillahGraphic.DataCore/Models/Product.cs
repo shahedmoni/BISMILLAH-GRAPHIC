@@ -8,6 +8,7 @@ namespace BismillahGraphic.DataCore
         public Product()
         {
             SellingList = new HashSet<SellingList>();
+            PurchaseList = new HashSet<PurchaseList>();
         }
 
         public int ProductID { get; set; }
@@ -19,5 +20,6 @@ namespace BismillahGraphic.DataCore
 
         public virtual ProductCategory ProductCategory { get; set; }
         public virtual ICollection<SellingList> SellingList { get; set; }
+        public virtual ICollection<PurchaseList> PurchaseList { get; set; }
     }
 }
