@@ -1,0 +1,250 @@
+﻿@model BismillahGraphic.DataCore.PurchaseReceipt
+@{
+    ViewBag.Title = "Receipt";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+@section Styles{
+    <link href="~/CSS/selling-receipt.css" rel="stylesheet" />
+}
+
+<section class="my-4 d-print-none">
+    <div class="d-flex justify-content-between">
+        <div>
+            <a class="btn btn-success btn-rounded" href="/Purchase/DueCollection/@Model.PurchaseInfo.PurchaseID"><i class="fas fa-money-bill-alt mr-1"></i>Pay Due</a>
+            <a class="btn btn-discord btn-rounded" href="/Purchase/Record"><i class="fas fa-shopping-bag mr-1"></i>Purchase Record</a>
+        </div>
+        <div>
+            <a class="btn btn-elegant btn-rounded" href="/Supplier/Purchase"><i class="fas fa-shopping-cart mr-1"></i>Purchase</a>
+            <button class="btn btn-default btn-rounded" onclick="print()"><i class="fas fa-print mr-1"></i>Print</button>
+        </div>
+    </div>
+</section>
+
+
+<div id="main-page">
+    <div class="shop-info">
+        <div class="name-logo">
+            <img src="data:image;base64,@Convert.ToBase64String(Model.InstitutionInfo.InstitutionLogo)" alt="" />
+            <h2>@Model.InstitutionInfo.InstitutionName</h2>
+        </div>
+
+        <div class="address-bar">
+            <p>
+                @Model.InstitutionInfo.Address
+            </p>
+            <p>
+                @Model.InstitutionInfo.Website
+                @Model.InstitutionInfo.Email
+                @Model.InstitutionInfo.Phone
+            </p>
+        </div>
+    </div>
+
+    <div class="row my-2 receipt-info align-items-center">
+        <div class="col">
+            <span>RECEIPT# @Model.PurchaseInfo.PurchaseSN</span>
+        </div>
+        <div class="col">
+            <div class="invice-title">BILL</div>
+        </div>
+        <div class="col text-right">
+            <span>Date: @Model.PurchaseInfo.PurchaseDate.ToString("d MMM yyyy")</span>
+        </div>
+    </div>
+
+    <div class="row mb-1" id="vendor-area">
+        <div class="col-7">
+            <h5><strong>@Model.SupplierInfo.SupplierCompanyName</strong></h5>
+            <h5><strong>@Model.SupplierInfo.SupplierName</strong></h5>
+        </div>
+        <div class="col text-right">
+            @if (!string.IsNullOrEmpty(Model.SupplierInfo.SupplierAddress))
+            {
+                <h5><strong>@Model.SupplierInfo.SupplierAddress</strong></h5>
+            }
+            <h5><strong>@Model.SupplierInfo.SupplierPhone</strong></h5>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center"><strong>No.</strong></th>
+                <th><strong>Product Name</strong></th>
+                <th class="text-center"><strong>Quantity</strong></th>
+                <th class="text-right"><strong>Unit&nbsp;Price</strong></th>
+                <th class="text-right"><strong>Line&nbsp;Total</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var index = 0;
+                foreach (var item in Model.PurchaseInfo.PurchaseList)
+                {
+                    index++;
+                    <tr>
+                        <td class="text-center">@index</td>
+                        <td>@item.Product.ProductName</td>
+                        <td class="text-center">
+                            @item.PurchaseQuantity
+                            @item.MeasurementUnit.MeasurementUnitName
+                        </td>
+                        <td class="text-right">@item.PurchaseUnitPrice/-</td>
+                        <td class="text-right">@item.PurchasePrice/-</td>
+                    </tr>
+                }
+            }
+            <tr>
+                <td colspan="4">
+                    <span id="amount-word"></span>
+                </td>
+                <td colspan="2">
+                    <div class="text-right">
+                        <h5>Total: <strong>@Model.PurchaseInfo.PurchaseTotalPrice/-</strong></h5>
+                        @{
+                            var discount = Model.PurchaseInfo.PurchaseDiscountAmount;
+
+                            if (discount > 0)
+                            {
+                                <h5>Discount: <strong>@Model.PurchaseInfo.PurchaseDiscountAmount/-</strong></h5>
+                            }
+                        }
+
+                        <h5>Paid: <strong> @Model.PurchaseInfo.PurchasePaidAmount/-</strong></h5>
+                        <h5>Due: <strong>@Model.PurchaseInfo.PurchaseDueAmount/-</strong></h5>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h4 class="mt-3">@Model.PurchaseInfo.Description</h4>
+
+    <div class="d-print-none">
+        @{
+            var paymentRecord = Model.PurchaseInfo.PurchasePaymentRecord;
+
+            if (paymentRecord.Count > 0)
+            {
+                <h5 class="mt-4">PAYMENT RECORD</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><strong>Paid Date</strong></th>
+                            <th><strong>Paid Amount</strong></th>
+                            <th><strong>Payment Method</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (var item in paymentRecord)
+                        {
+                            <tr>
+                                <td>@item.PurchasePaid_Date.ToString("d MMM yyyy")</td>
+                                <td class="text-right">@item.PurchasePaidAmount/-</td>
+                                <td class="text-center">@item.Payment_Situation</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            }
+        }
+    </div>
+
+    @* <div class="p-footer"> *@
+    @*     <div class="row"> *@
+    @*         <div class="col"> *@
+    @*             Received By *@
+    @*             <small class="d-block text-muted">@DateTime.Now.ToString("ddd, dd-MMM-yyyy (hh: mm tt)")</small> *@
+    @*         </div> *@
+    @* *@
+    @*         <div class="col text-right"> *@
+    @*             For: @Model.InstitutionInfo.InstitutionName *@
+    @*             <small class="d-block text-muted">Served By: <strong>@Model.SoldBy</strong></small> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </div> *@
+</div>
+
+
+@section scripts{
+    <script>
+        $(function() {
+            $("#amount-word").text(`Taka (in words): ${number2text(@Model.PurchaseInfo.PurchaseTotalPrice)}`);
+        });
+
+        //amount in word
+        function number2text(value) {
+            const fraction = Math.round((value % 1) * 100);
+            var fullText = "";
+
+            if (fraction > 0) {
+                fullText = `AND ${convertNumber(fraction)} PAISA`;
+            }
+
+            return convertNumber(value) + " TK " + fullText + " ONLY";
+        }
+
+        function convertNumber(number) {
+            if ((number < 0) || (number > 999999999)) return "NUMBER OUT OF RANGE!";
+
+            var coreAmount = Math.floor(number / 10000000);
+            number -= coreAmount * 10000000;
+
+            var lakhAmount = Math.floor(number / 100000);
+            number -= lakhAmount * 100000;
+
+            var thousandAmount = Math.floor(number / 1000);
+            number -= thousandAmount * 1000;
+
+            var hundredAmount = Math.floor(number / 100);
+            number = number % 100;
+
+            var tn = Math.floor(number / 10);
+            var one = Math.floor(number % 10);
+            var res = "";
+
+            if (coreAmount > 0) {
+                res += (convertNumber(coreAmount) + " CRORE");
+            }
+            if (lakhAmount > 0) {
+                res += (((res === "") ? "" : " ") + convertNumber(lakhAmount) + " LAKH");
+            }
+            if (thousandAmount > 0) {
+                res += (((res === "") ? "" : " ") + convertNumber(thousandAmount) + " THOUSAND");
+            }
+
+            if (hundredAmount) {
+                res += (((res === "") ? "" : " ") + convertNumber(hundredAmount) + " HUNDRED");
+            }
+
+
+            var ones = Array("", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN");
+            var tens = Array("", "", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY", "SEVENTY", "EIGHTY", "NINETY");
+
+            if (tn > 0 || one > 0) {
+                if (!(res === "")) {
+                    res += " AND ";
+                }
+
+                if (tn < 2) {
+                    res += ones[tn * 10 + one];
+                } else {
+                    res += tens[tn];
+                    if (one > 0) {
+                        res += (`-${ones[one]}`);
+                    }
+                }
+            }
+
+            if (res === "") {
+                res = "zero";
+            }
+            return res;
+        }
+    </script>
+}
+

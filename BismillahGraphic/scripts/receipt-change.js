@@ -48,7 +48,7 @@ getMeasurementUnitName();
 
 //create unit dropdown
 function createUnitDropdown(selectedId) {
-    let html = `<select name="MeasurementUnitId" class="measurement-unit form-control"><option value="">[ Select ]</option>`
+    let html = `<select name="MeasurementUnitId" class="measurement-unit form-control" required><option value="">[ Select ]</option>`
     measurementDropDownData.forEach(item => {
         if (item.value !== +selectedId)
             html += `<option value="${item.value}">${item.label}</option>`
@@ -96,8 +96,8 @@ function appendDataTable() {
             <td><strong class="SN">${i + 1}</strong></td>
             <td class="text-left">${data.ProductName}</td>
             <td>
-                  <input type="number" step="0.01" class="length form-control" value="${data.Length}" name="Length" placeholder="Length"/>
-                  <input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width"/>
+                  <input type="number" step="0.01" class="length form-control" value="${data.Length}" name="Length" placeholder="Length" required/>
+                  <input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width" required/>
                 </td>
             <td><input type="number" step="0.01" class="quantity form-control" value="${data.SellingQuantity}" name="SellingQuantity" placeholder="Square Inch" disabled/></td>
             <td>${createUnitDropdown(data.MeasurementUnitId)}</td>   

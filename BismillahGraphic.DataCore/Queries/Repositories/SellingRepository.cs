@@ -171,6 +171,7 @@ namespace BismillahGraphic.DataCore
                 SellingQuantity = c.SellingQuantity,
                 SellingUnitPrice = c.SellingUnitPrice,
                 Length = c.Length,
+                MeasurementUnitId = c.MeasurementUnitId,
                 Width = c.Width
             }).ToList();
 
