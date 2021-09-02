@@ -15,6 +15,13 @@ namespace BismillahGraphic.Controllers
             _db = new UnitOfWork(new DataContext());
         }
 
+        [Authorize(Roles = "Admin, Report_DailyCash")]
+        public ActionResult DailyCashReport()
+        {
+            return View();
+        }
+
+
         [Authorize(Roles = "Admin, Report_Income")]
         // GET: Income
         public ActionResult Income()

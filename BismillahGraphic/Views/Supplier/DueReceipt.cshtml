@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Due Receipt";
+    ViewBag.Title = "Supplier Due Receipt";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
@@ -60,7 +60,7 @@
                     <input id="inputPaid" required="" type="number" step="0.01" class="form-control" placeholder="Total paid amount" />
                 </div>
                 <div class="md-form mx-3">
-                    <input id="inputSellingDate" required="" placeholder="Paid Date" type="text" class="form-control datepicker" />
+                    <input id="inputPurchaseDate" required="" placeholder="Paid Date" type="text" class="form-control datepicker" />
                 </div>
                 <div class="md-form">
                     <select id="selectPaymentMethod" class="mdb-select mb-0 mt-1 mr-2">
@@ -79,6 +79,6 @@
 </div>
 
 @section scripts{
-    <script src="~/scripts/multiReceiptPaid.js"></script>
+    <script src="~/scripts/supplier-multi-receiptPaid.js"></script>
 }
 

@@ -1,6 +1,6 @@
 ﻿@model BismillahGraphic.DataCore.PurchasePaymentReceiptPrint
 @{
-    ViewBag.Title = "Paid Receipt";
+    ViewBag.Title = "Supplier Paid Receipt";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
@@ -11,7 +11,7 @@
 <section class="my-4 d-print-none">
     <div class="card">
         <div class="card-body d-flex justify-content-between">
-            <a class="btn btn-elegant btn-rounded" href="/Selling/Selling"><i class="fas fa-shopping-cart mr-1"></i>Sell</a>
+            <a class="btn btn-elegant btn-rounded" href="/Supplier/Purchase"><i class="fas fa-shopping-cart mr-1"></i>Purchase</a>
             <button class="btn btn-default btn-rounded" onclick="print()"><i class="fas fa-print mr-1"></i>Print</button>
         </div>
     </div>  
@@ -48,12 +48,12 @@
 
     <div id="vendor-area" class="row">
         <div class="col">
-            <h5>Company: <strong>@Model.VendorInfo.VendorCompanyName</strong></h5>
-            <h5>Name: <strong>@Model.VendorInfo.VendorName</strong></h5>
+            <h5>Company: <strong>@Model.SupplierInfo.SupplierCompanyName</strong></h5>
+            <h5>Name: <strong>@Model.SupplierInfo.SupplierName</strong></h5>
         </div>
         <div class="col text-right">
-            <h5>Phone: <strong>@Model.VendorInfo.VendorPhone</strong></h5>
-            <h5>Address: <strong>@Model.VendorInfo.VendorAddress</strong></h5>
+            <h5>Phone: <strong>@Model.SupplierInfo.SupplierPhone</strong></h5>
+            <h5>Address: <strong>@Model.SupplierInfo.SupplierAddress</strong></h5>
         </div>
     </div>
 
@@ -61,7 +61,7 @@
         <thead>
             <tr>
                 <th style="width: 30px"><strong>No.</strong></th>
-                <th><strong>Selling Date</strong></th>
+                <th><strong>Purchase Date</strong></th>
                 <th><strong>Bill No.</strong></th>
                 <th><strong>Amount</strong></th>
                 <th><strong>Paid</strong></th>
@@ -75,10 +75,10 @@
                     index++;
                     <tr>
                         <td>@index</td>
-                        <td>@item.SellingDate.ToString("d MMM yyyy")</td>
-                        <td><a href="/Selling/Receipt/@item.SellingID" target="_blank">@item.SellingSN</a></td>
-                        <td>@item.SellingAmount/-</td>
-                        <td>@item.SellingPaidAmount/-</td>
+                        <td>@item.PurchaseDate.ToString("d MMM yyyy")</td>
+                        <td><a href="/Supplier/Receipt/@item.PurchaseID" target="_blank">@item.PurchaseSN</a></td>
+                        <td>@item.PurchaseAmount/-</td>
+                        <td>@item.PurchasePaidAmount/-</td>
                     </tr>
                 }
             }

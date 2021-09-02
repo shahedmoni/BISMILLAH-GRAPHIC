@@ -313,6 +313,7 @@
     <Content Include="JS\sideManuLink.js" />
     <Content Include="MDB\css\mdb_core.css" />
     <Content Include="MDB\js\mdb_core.js" />
+    <Content Include="scripts\supplier-multi-receiptPaid.js" />
     <Content Include="scripts\multiReceiptPaid.js" />
     <Content Include="scripts\receipt-change.js" />
     <Content Include="scripts\purchase.js" />
@@ -418,6 +419,7 @@
     <Content Include="Views\MeasurementUnit\Index.cshtml" />
     <Content Include="Views\MeasurementUnit\_Create.cshtml" />
     <Content Include="Views\MeasurementUnit\_Edit.cshtml" />
+    <Content Include="Views\Report\DailyCashReport.cshtml" />
     <None Include="Views\Selling\ReceiptChange.cshtml" />
     <Content Include="Views\SMS\VendorSMS.cshtml" />
     <Content Include="Views\SMS\SingleSMS.cshtml" />

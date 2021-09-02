@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewBag.Title = "Daily Cash Report";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+
+
+<div class="container-fluid mt-2">
+    <div class="row mb-4">
+        <div class="col-lg-5">
+            <h3 class="h3-responsive">Daily Cash Report</h3>
+        </div>
+        <div class="col-lg-7 d-print-none">
+            <div class="form-inline justify-content-end">
+                <div class="md-form m-0">
+                    <input id="formDate" class="form-control datepicker" placeholder="Form Date" type="text"/>
+                    <button id="find" class="btn aqua-gradient btn-rounded btn-sm my-0" type="button">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card mt-3">
+                <div class="">
+                    <i class="far fa-money-bill-alt fa-lg primary-color z-depth-2 p-4 ml-3 mt-n3 rounded text-white"></i>
+                    <div class="float-right text-right p-3">
+                        <p class="text-uppercase text-muted mb-1"><small>INCOME</small></p>
+                        <h4 id="totalIncome" class="font-weight-bold mb-0">0</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card mt-3">
+                <div class="">
+                    <i class="fas fa-chart-line fa-lg teal z-depth-2 p-4 ml-3 mt-n3 rounded text-white"></i>
+                    <div class="float-right text-right p-3">
+                        <p class="text-uppercase text-muted mb-1"><small>EXPENSE</small></p>
+                        <h4 id="totalExpense" class="font-weight-bold mb-0">0</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card mt-3">
+                <div class="">
+                    <i class="fas fa-chart-pie fa-lg purple z-depth-2 p-4 ml-3 mt-n3 rounded text-white"></i>
+                    <div class="float-right text-right p-3">
+                        <p class="text-uppercase text-muted mb-1"><small>NET</small></p>
+                        <h4 id="totalNet" class="font-weight-bold mb-0">0</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="my-4 font-weight-bold">Income Details</h4>
+    <div class="card card-body">
+        <table id="DataTable" class="DataTable table table-bordered table-sm text-center">
+            <thead>
+            <tr>
+                <th><strong>Date</strong></th>
+                <th><strong>Bill No</strong></th>
+                <th><strong>Vendor</strong></th>
+                <th><strong>Received</strong></th>
+                <th><strong>P.Method</strong></th>
+                <th><strong>Received By</strong></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+
+    <h4 class="mb-4 mt-5 font-weight-bold">Expense Details</h4>
+    <div class="card card-body">
+        <table class="DataTable table table-bordered table-sm text-center">
+            <thead>
+            <tr>
+                <th><strong>Category</strong></th>
+                <th><strong>Expense For</strong></th>
+                <th class="text-right"><strong>Amount</strong></th>
+                <th><strong>Date</strong></th>
+                <th><strong>P.Method</strong></th>
+            </tr>
+            </thead>
+            <tbody id="expense-t-row"></tbody>
+        </table>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            $('.datepicker').pickadate().val(moment().format("D MMMM, YYYY"));
+
+            loadData();
+        });
+
+        function loadData() {
+            const date = $("#formDate").val();
+
+            dataTable.fromDate = date;
+            dataTable.toDate = date;
+            dataTable.getData();
+
+            getExpense(date);
+
+            setTimeout(function() {
+                setTotalAmount();
+            }, 100);
+        };
+
+        function setTotalAmount() {
+            const income = +document.getElementById("totalIncome").textContent;
+            const expense = +document.getElementById("totalExpense").textContent;
+            const net = (income - expense);
+
+            document.getElementById("totalNet").textContent = net.toFixed(2);
+            console.log({income, expense})
+        }
+
+        //income
+        var dataTable = {
+            table: null,
+            fromDate: "",
+            toDate: "",
+            totalIncome:0,
+            init: function() {
+                dataTable.table = $("#DataTable").DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url: "/Report/GetIncome",
+                        type: "POST",
+                        data: function(data) {
+                            data.sFromDate = dataTable.fromDate;
+                            data.sToDate = dataTable.toDate;
+                            data.GrandTotalProperty = "SellingPaidAmount";
+                        },
+                        dataSrc: function(data) {
+                            document.getElementById("totalIncome").textContent = data.GrandTotal.toFixed(2);
+                            return data.data;
+                        }
+                    },
+                    columns:
+                    [
+                        { data: "SellingPaid_Date", "render": function(data) { return moment(data).format('D MMM YYYY') } },
+                        { data: "SellingSN" },
+                        { data: "VendorCompanyName" },
+                        { data: "SellingPaidAmount", "render": function(data) { return `${data.toFixed(2)}/-` } },
+                        { data: "Payment_Situation" },
+                        { data: "ReceivedBy" }
+                    ],
+                    columnDefs:
+                    [
+                        { 'searchable': false, 'targets': [0, 3] },
+                        { 'className': "text-left", "targets": [2, 5] },
+                        { 'className': "text-right", "targets": [3] }
+                    ]
+                });
+            },
+            getData: function() {
+                dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
+            }
+        }
+
+        //expense
+        function getExpense(date) {
+            let expense = 0;
+            $.ajax({
+                url: "/Report/GetExpense",
+                type: "POST",
+                data: JSON.stringify({ fromDate: date, toDate: date }),
+                dataType: "json",
+                contentType: "application/json",
+                success: function(data) {
+                    buildExpenseTable(data);
+                    document.getElementById("totalExpense").textContent = data.TotalExpense.toFixed(2);
+                },
+                error: function(err) { console.log(err) }
+            });
+
+            return expense
+
+        }
+
+        function buildExpenseTable(data) {
+            var html = '';
+            const row = $("#expense-t-row");
+
+            if (row.children().length > 0) {
+                row.empty();
+            };
+
+            $.each(data.Expenses, function(i, item) {
+                html += `<tr>
+                    <td>${item.CategoryName}</td>
+                    <td>${item.ExpanseFor}</td>
+                    <td class="text-right">${item.ExpanseAmount}/-</td>
+                    <td>${moment(item.ExpanseDate).format('D MMM YYYY')}</td>
+                    <td>${item.Expense_Payment_Method}</td>
+                </tr>`;
+            });
+
+            row.append(html);
+        };
+
+        $("#find").on("click", function () {
+            loadData();
+        });
+
+    </script>
+}

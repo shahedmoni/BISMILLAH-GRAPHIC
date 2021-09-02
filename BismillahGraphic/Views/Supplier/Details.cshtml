@@ -15,7 +15,7 @@
                     <span id="addressPhone" class="text-muted"></span>
                 </div>
                 <div class="form-inline justify-content-end">
-                    <h4 class="m-0 font-weight-bold">Total Due: ৳<span id="totalDue"></span></h4>
+                    <h4 class="m-0 font-weight-bold">Total Due: <span id="totalDue"></span></h4>
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
             displayDates(from, to);
 
             const id = $("#Id").val();
-            const url = "/Suppliers/GetDetails";
+            const url = "/Supplier/GetDetails";
             $.get(url, { id: id, fromDate: from, toDate: to }, function (data) {
                 buildTable(data);
                 summeryInfo(data);
@@ -86,14 +86,14 @@
             if (row.children().length > 0)
                 row.empty();
 
-            $.each(data.Sales, function (i, item) {
+            $.each(data.Purchases, function (i, item) {
                 html += `<tr>
-                                <td>${moment(item.SellingDate).format('D MMM YYYY')}</td>
-                                <td>${item.SellingSN}</td>
-                                <td class="text-right">${item.SellingAmount}/-</td>
-                                <td class="text-right">${item.SellingPaidAmount}/-</td>
-                                <td class="text-right">${item.SellingDiscountAmount}/-</td>
-                                <td class="text-right">${item.SellingDueAmount}/-</td>
+                                <td>${moment(item.PurchaseDate).format('D MMM YYYY')}</td>
+                                <td>${item.PurchaseSN}</td>
+                                <td class="text-right">${item.PurchaseAmount}/-</td>
+                                <td class="text-right">${item.PurchasePaidAmount}/-</td>
+                                <td class="text-right">${item.PurchaseDiscountAmount}/-</td>
+                                <td class="text-right">${item.PurchaseDueAmount}/-</td>
                                 <td class="d-print-none">${createLink(item)}</td>
                             </tr>`;
             });
@@ -103,10 +103,10 @@
 
         function createLink(item) {
             var link = '';
-            if (item.SellingDueAmount)
-                link += `<a class="text-danger" href="/Selling/DueCollection/${item.SellingID}">Pay Due</a>`
+            if (item.PurchaseDueAmount)
+                link += `no receipt`
             else
-                link += `<a class="blue-text" href="/Selling/Receipt/${item.SellingID}">Receipt</a>`;
+                link += `<a class="blue-text" href="/Supplier/Receipt/${item.PurchaseID}">Receipt</a>`;
             return link;
         }
 
@@ -115,11 +115,16 @@
 
             $("#companyName").text(info.SupplierCompanyName);
             $("#addressPhone").text(`${info.SupplierAddress}, ${info.SupplierPhone}`);
-            $("#totalDue").text(info.SupplierDue);
+
+            const link = `<a title="click to paid" class="blue-text" href="/Supplier/DueReceipt/${info.SupplierID}">৳${info.SupplierDue	}<a/>`
+
+            $("#totalDue").html(link)
 
             $("#sales").text(`৳${data.DateToDateSale}`);
             $("#received").text(`৳${data.DateToDatePaid}`);
             $("#discount").text(`৳${data.DateToDateDiscount}`);
+
+
             $("#due").text(`৳${data.DateToDateDue}`);
         }
 

@@ -10,7 +10,7 @@ using BismillahGraphic.DataCore;
 namespace BismillahGraphic.Controllers
 {
    
-    [Authorize(Roles = "Admin, Vendor")]
+    [Authorize(Roles = "Admin, Supplier")]
     public class SupplierController : Controller
     {
         private readonly IUnitOfWork _db;
