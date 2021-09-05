@@ -15,6 +15,8 @@ namespace BismillahGraphic.DataCore
             entity.Property(e => e.Payment_Situation)
                 .HasMaxLength(50);
 
+            entity.Property(e => e.Description)
+                .HasMaxLength(500);
 
             entity.Property(e => e.PurchasePaid_Date)
                 .HasColumnType("date")

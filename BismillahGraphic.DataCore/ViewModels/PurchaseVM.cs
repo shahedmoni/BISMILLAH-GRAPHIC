@@ -60,6 +60,7 @@ namespace BismillahGraphic.DataCore
         public int ReceiptSN { get; set; }
         public double PaidAmount { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public string CollectBy { get; set; }
 
 
@@ -96,6 +97,7 @@ namespace BismillahGraphic.DataCore
         public int ReceiptSN { get; set; }
         public double PaidAmount { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public DateTime Paid_Date { get; set; }
         public ICollection<PurchaseInvoicePay> Invoices { get; set; }
     }
@@ -114,6 +116,7 @@ namespace BismillahGraphic.DataCore
         public int RegistrationID { get; set; }
         public int ReceiptSN { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public DateTime PurchasePaid_Date { get; set; }
     }
     public class PurchaseIncomeVM
@@ -124,6 +127,7 @@ namespace BismillahGraphic.DataCore
         public int PurchaseSN { get; set; }
         public double PurchasePaidAmount { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public DateTime PurchasePaid_Date { get; set; }
         public string ReceivedBy { get; set; }
     }

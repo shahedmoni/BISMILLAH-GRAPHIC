@@ -44,11 +44,13 @@ namespace BismillahGraphic.DataCore
                                     ReceiptSN = model.ReceiptSN,
                                     PaidAmount = model.PurchasePaidAmount,
                                     Payment_Situation = model.Payment_Situation,
+                                    Description = model.Description,
                                     Paid_Date = model.PurchaseDate,
                                 },
                             RegistrationID = model.RegistrationID,
                             PurchasePaidAmount = model.PurchasePaidAmount,
                             Payment_Situation = model.Payment_Situation,
+                            Description = model.Description,
                             PurchasePaid_Date = model.PurchaseDate
                         }
                     }
@@ -276,6 +278,7 @@ namespace BismillahGraphic.DataCore
                 ReceiptSN = model.ReceiptSN,
                 PaidAmount = model.PurchasePaidAmount,
                 Payment_Situation = model.Payment_Situation,
+                Description = model.Description,
                 Paid_Date = model.PurchasePaid_Date,
                 PurchasePaymentRecord = new List<PurchasePaymentRecord>
                 {
@@ -285,6 +288,7 @@ namespace BismillahGraphic.DataCore
                         RegistrationID = model.RegistrationID,
                         PurchasePaidAmount = model.PurchasePaidAmount,
                         Payment_Situation = model.Payment_Situation,
+                        Description = model.Description,
                         PurchasePaid_Date = model.PurchasePaid_Date
                     }
 
@@ -336,6 +340,7 @@ namespace BismillahGraphic.DataCore
                     PurchaseSN = r.Purchase.PurchaseSN,
                     PurchasePaidAmount = r.PurchasePaidAmount,
                     Payment_Situation = r.Payment_Situation,
+                    Description = r.Description,
                     PurchasePaid_Date = r.PurchasePaid_Date,
                     ReceivedBy = r.Registration.Name
                 });

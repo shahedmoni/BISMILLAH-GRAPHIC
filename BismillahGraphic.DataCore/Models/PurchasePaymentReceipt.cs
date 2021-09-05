@@ -15,6 +15,8 @@ namespace BismillahGraphic.DataCore
         public int ReceiptSN { get; set; }
         public double PaidAmount { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
+
         public DateTime Paid_Date { get; set; }
         public DateTime Insert_Date { get; set; }
         public virtual Supplier Supplier { get; set; }
