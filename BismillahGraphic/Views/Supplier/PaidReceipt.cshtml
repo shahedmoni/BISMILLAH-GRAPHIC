@@ -18,21 +18,7 @@
 </section>
 
 <div id="main-page">
-    <div id="institution-info" class="mb-4 text-center">
-        @{
-            var imgSrc = "";
-            var logo = Model.InstitutionInfo.InstitutionLogo;
-            imgSrc = logo != null ? $"data:image/gif;base64,{Convert.ToBase64String(logo)}" : "";
-        }
 
-        <h3 class="mb-2">
-            <img src="@imgSrc" class="rounded-circle" style="height: 35px; width: 35px" alt="" />
-            @Model.InstitutionInfo.InstitutionName
-        </h3>
-        <p><i class="fas fa-map-marker-alt mr-1"></i>@Model.InstitutionInfo.Address</p>
-        <p><i class="fas fa-globe mr-1"></i>@Model.InstitutionInfo.Website, <i class="fas fa-at mr-1"></i>@Model.InstitutionInfo.Email</p>
-        <p><i class="fas fa-phone mr-1"></i>@Model.InstitutionInfo.Phone</p>
-    </div>
 
     <div class="row mb-4 receipt-date">
         <div class="col pt-3">
@@ -59,42 +45,44 @@
 
     <table>
         <thead>
-            <tr>
-                <th style="width: 30px"><strong>No.</strong></th>
-                <th><strong>Purchase Date</strong></th>
-                <th><strong>Bill No.</strong></th>
-                <th><strong>Amount</strong></th>
-                <th><strong>Paid</strong></th>
-            </tr>
+        <tr>
+            <th style="width: 30px"><strong>No.</strong></th>
+            <th><strong>Purchase Date</strong></th>
+            <th><strong>Bill No.</strong></th>
+            <th><strong>Amount</strong></th>
+            <th><strong>Paid</strong></th>
+        </tr>
         </thead>
         <tbody>
-            @{
-                var index = 0;
-                foreach (var item in Model.Invoices)
-                {
-                    index++;
-                    <tr>
-                        <td>@index</td>
-                        <td>@item.PurchaseDate.ToString("d MMM yyyy")</td>
-                        <td><a href="/Supplier/Receipt/@item.PurchaseID" target="_blank">@item.PurchaseSN</a></td>
-                        <td>@item.PurchaseAmount/-</td>
-                        <td>@item.PurchasePaidAmount/-</td>
-                    </tr>
-                }
+        @{
+            var index = 0;
+            foreach (var item in Model.Invoices)
+            {
+                index++;
+                <tr>
+                    <td>@index</td>
+                    <td>@item.PurchaseDate.ToString("d MMM yyyy")</td>
+                    <td><a href="/Supplier/Receipt/@item.PurchaseID" target="_blank">@item.PurchaseSN</a></td>
+                    <td>@item.PurchaseAmount/-</td>
+                    <td>@item.PurchasePaidAmount/-</td>
+                </tr>
             }
-            <tr>
-                <td colspan="4">
-                    <span id="amount-word"></span>
-                </td>
-                <td>
-                    <div class="text-right">
-                        <h5>Total Paid: <strong>@Model.PaidAmount/-</strong></h5>
-                        <h5>Payment Method: <strong>@Model.Payment_Situation</strong></h5>
-                    </div>
-                </td>
-            </tr>
+        }
+        <tr>
+            <td colspan="4">
+                <span id="amount-word"></span>
+            </td>
+            <td>
+                <div class="text-right">
+                    <h5>Total Paid: <strong>@Model.PaidAmount/-</strong></h5>
+                    <h5>Payment Method: <strong>@Model.Payment_Situation</strong></h5>
+                </div>
+            </td>
+        </tr>
         </tbody>
     </table>
+
+    <h4 class="mt-3">@Model.Description</h4>
 
     <div class="p-footer mt-4">
         <div class="row">

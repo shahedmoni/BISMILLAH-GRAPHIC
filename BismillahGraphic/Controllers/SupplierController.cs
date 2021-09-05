@@ -227,7 +227,6 @@ namespace BismillahGraphic.Controllers
         }
 
 
-
         //GET: Change Receipt
         public ActionResult UpdatePurchaseBill(int? id)
         {

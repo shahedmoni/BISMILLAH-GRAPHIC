@@ -8,9 +8,7 @@
     <link href="~/CSS/selling-receipt.css" rel="stylesheet" />
     <style>
         .invice-title {
-           
             width: 150px;
-           
         }
     </style>
 }
@@ -160,7 +158,10 @@
                             <tr>
                                 <td>@item.PurchasePaid_Date.ToString("d MMM yyyy")</td>
                                 <td class="text-right">@item.PurchasePaidAmount/-</td>
-                                <td class="text-center">@item.Payment_Situation</td>
+                                <td class="text-center">
+                                    <strong>@item.Payment_Situation</strong>
+                                    <em class="text-dark">@item.Description</em>
+                                </td>
                             </tr>
                         }
 
