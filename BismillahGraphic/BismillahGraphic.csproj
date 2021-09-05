@@ -313,6 +313,7 @@
     <Content Include="JS\sideManuLink.js" />
     <Content Include="MDB\css\mdb_core.css" />
     <Content Include="MDB\js\mdb_core.js" />
+    <Content Include="scripts\receipt-purchase-change.js" />
     <Content Include="scripts\supplier-multi-receiptPaid.js" />
     <Content Include="scripts\multiReceiptPaid.js" />
     <Content Include="scripts\receipt-change.js" />
@@ -432,6 +433,8 @@
     <Content Include="Views\Supplier\_Edit.cshtml" />
     <Content Include="Views\Supplier\Purchase.cshtml" />
     <Content Include="Views\Supplier\Receipt.cshtml" />
+    <Content Include="Views\Supplier\PurchaseRecord.cshtml" />
+    <Content Include="Views\Supplier\UpdatePurchaseBill.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BismillahGraphic.DataCore\BismillahGraphic.DataCore.csproj">

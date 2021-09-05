@@ -90,10 +90,10 @@
                 html += `<tr>
                                 <td>${moment(item.PurchaseDate).format('D MMM YYYY')}</td>
                                 <td>${item.PurchaseSN}</td>
-                                <td class="text-right">${item.PurchaseAmount}/-</td>
-                                <td class="text-right">${item.PurchasePaidAmount}/-</td>
-                                <td class="text-right">${item.PurchaseDiscountAmount}/-</td>
-                                <td class="text-right">${item.PurchaseDueAmount}/-</td>
+                                <td class="text-right">${item.PurchaseAmount.toFixed(2)}/-</td>
+                                <td class="text-right">${item.PurchasePaidAmount.toFixed(2)}/-</td>
+                                <td class="text-right">${item.PurchaseDiscountAmount.toFixed(2)}/-</td>
+                                <td class="text-right">${item.PurchaseDueAmount.toFixed(2)}/-</td>
                                 <td class="d-print-none">${createLink(item)}</td>
                             </tr>`;
             });

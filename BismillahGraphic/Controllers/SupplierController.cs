@@ -212,6 +212,47 @@ namespace BismillahGraphic.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+
+        //GET: PurchaseRecord
+        [Authorize(Roles = "Admin, PurchaseRecord")]
+        public ActionResult PurchaseRecord()
+        {
+            return View();
+        }
+
+        public JsonResult PurchaseRecordData(DataRequest request)
+        {
+            var data = _db.Purchases.Records(request);
+            return Json(data);
+        }
+
+
+
+        //GET: Change Receipt
+        public ActionResult UpdatePurchaseBill(int? id)
+        {
+            if (id == null) return RedirectToAction("PurchaseRecord");
+            var data = _db.Purchases.FindUpdateBill(id.GetValueOrDefault());
+
+            ViewBag.MesurementUnit = _db.MeasurementUnits.ddl();
+
+            return View(data);
+        }
+
+
+        //Post: Change Receipt
+        [HttpPost]
+        public async Task<int> PurchaseReceiptChange(PurchaseBillChangeViewModel model)
+        {
+            if (model.PurchaseTotalPrice <= 0) return 0;
+
+            _db.Purchases.BillUpdated(model);
+            await _db.SaveChangesAsync();
+
+            return model.PurchaseID;
+        }
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

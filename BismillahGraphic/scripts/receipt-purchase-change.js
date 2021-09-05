@@ -1,8 +1,16 @@
 ﻿
-//global cart data
-var productsList = [];
+//global purchaseCart data
+var purchaseCart = [];
 
 $(function () {
+    $('.datepicker').pickadate().val(moment(new Date()).format('DD MMMM, YYYY'));
+
+    //clear id if refresh page
+    $("#SupplierId").val("");
+
+    // Material Select Initialization
+    $('.mdb-select').materialSelect();
+
     //input number only
     $('#table-row').on('input keypress', '.quantity, .unitPrice, .lineTotal', function (event) {
         if ((event.which !== 46 || $(this).val().indexOf('.') !== -1) &&
@@ -12,24 +20,13 @@ $(function () {
     });
 
     //input Paid, input Discount
-    $('#inputDiscount').on('input keypress', function (event) {
+    $('#inputPaid,#inputDiscount').on('input keypress', function (event) {
         if ((event.which !== 46 || $(this).val().indexOf('.') !== -1) &&
             (event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
     });
 });
-
-//selectors
-const $tableBody = $('#table-row');
-const formProduct = document.getElementById('formProduct')
-const totalPrice = document.getElementById('totalPrice')
-const inputDiscount = document.getElementById('inputDiscount')
-const totalPayable = document.getElementById('totalPayable')
-const paidAmount = document.getElementById('paidAmount')
-const totalDue = document.getElementById('totalDue')
-const error = document.getElementById('error')
-
 
 //get measurement unit data
 let measurementDropDownData = [];
@@ -48,7 +45,7 @@ getMeasurementUnitName();
 
 //create unit dropdown
 function createUnitDropdown(selectedId) {
-    let html = `<select name="MeasurementUnitId" class="measurement-unit form-control" required><option value="">[ Select ]</option>`
+    let html = `<select required name="MeasurementUnitId" class="measurement-unit form-control"><option value="">[ Select ]</option>`
     measurementDropDownData.forEach(item => {
         if (item.value !== +selectedId)
             html += `<option value="${item.value}">${item.label}</option>`
@@ -59,6 +56,7 @@ function createUnitDropdown(selectedId) {
 
     return html;
 }
+
 
 //product autocomplete
 $("#inputProduct").typeahead({
@@ -79,69 +77,60 @@ $("#inputProduct").typeahead({
         });
     },
     updater: function (item) {
-        item.SN = productsList.length + 1
-        productsList.push(item);
-        appendDataTable();
-  
+        item.SN = purchaseCart.length + 1
+        purchaseCart.push(item);
+        productTable();
+
         return item;
     }
 });
 
 //build table
-function appendDataTable() {
-    let html = '';
-    productsList.forEach(function (data, i) {
-        const lineTotal = (data.SellingQuantity * data.SellingUnitPrice).toFixed(2);
+function productTable() {
+    const row = $("#table-row");
+    var html = '';
+
+    purchaseCart.forEach(function (data) {
+        const lineTotal = (data.PurchaseQuantity * data.PurchaseUnitPrice).toFixed(2)
+
         html += `<tr>
-            <td><strong class="SN">${i + 1}</strong></td>
-            <td class="text-left">${data.ProductName}</td>
-            <td>
-                  <input type="number" step="0.01" class="length form-control" value="${data.Length}" name="Length" placeholder="Length" required/>
-                  <input type="number" step="0.01" class="width form-control" value="${data.Width}" name="Width" placeholder="Width" required/>
-                </td>
-            <td><input type="number" step="0.01" class="quantity form-control" value="${data.SellingQuantity}" name="SellingQuantity" placeholder="Square Inch" disabled/></td>
-            <td>${createUnitDropdown(data.MeasurementUnitId)}</td>   
-            <td><input type="number" step="0.01" class="unitPrice form-control" value="${data.SellingUnitPrice}" name="SellingUnitPrice" placeholder="Unit Price" required/></td>
-            <td><input type="number" step="0.01" class="lineTotal form-control" value="${lineTotal}" name="LineTotal" placeholder="Line Total" disabled/></td>
-            <td><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/${data.ProductID}"></a></td>
-        </tr>`;
+                <td><strong class="SN">${data.SN}</strong></td>
+                <td class="text-left">${data.ProductName}</td>
+                <td><input type="number" step="0.01" min="0" class="quantity form-control" value="${data.PurchaseQuantity}" name="PurchaseQuantity" placeholder="Quantity" required></td>
+                <td>${createUnitDropdown(data.MeasurementUnitId)}</td>
+                <td><input type="number" step="0.01" class="unitPrice form-control" value="${data.PurchaseUnitPrice}" name="PurchaseUnitPrice" placeholder="Unit Price" required></td>
+                <td><input type="number" step="0.01" class="lineTotal form-control" value="${lineTotal}" name="LineTotal" placeholder="Line Total" disabled/></td>
+                <td><a style="color:#ff0000" class="delete fas fa-trash-alt" href="/Products/Delete/${data.ProductID}"></a></td>
+            </tr>`;
     });
 
-    $tableBody.empty()
-    $tableBody.append(html);
+    row.empty();
+    row.append(html);
 };
+
+
+//find table
+var $tableBody = $('#table-row');
 
 //delete click
 $tableBody.on("click", ".delete", function (evt) {
     evt.preventDefault();
-
     const row = $(this).closest('tr');
-    const serialNumber = row.find('.SN').text();
+    var serialNumber = row.find('.SN').text();
 
-    productsList = productsList.filter(function (item) {
+    purchaseCart = purchaseCart.filter(function (item) {
         return item.SN !== parseInt(serialNumber);
     });
 
-    appendDataTable();
+
+    productTable();
     calculateTotal();
 });
 
-//input length, width
-$tableBody.on('input', '.length, .width', function () {
-    const row = $(this).closest('tr');
-
-    const quantity = row.find('.quantity');
-    const length = row.find('.length');
-    const width = row.find('.width');
-
-    const total = (parseNumber(length.val()) * parseNumber(width.val()));
-    quantity.val(total.toFixed(2));
-});
 
 //input unit Price
-$tableBody.on('input', '.unitPrice, .length, .width', function () {
+$tableBody.on('input', '.unitPrice, .quantity', function () {
     const row = $(this).closest('tr');
-
     const quantity = row.find('.quantity');
     const unitPrice = row.find('.unitPrice');
     const lineTotal = row.find('.lineTotal');
@@ -150,34 +139,31 @@ $tableBody.on('input', '.unitPrice, .length, .width', function () {
     lineTotal.val(total.toFixed(2));
 });
 
-//update product info
-$tableBody.on('change', 'input, select', function (e) {
-    const row = $(this).closest('tr');
-    const serialNumber = parseInt(row.find(".SN").text());
-    const index = productsList.findIndex(p => p.SN === serialNumber);
-
-    row.find('input, select').each(function (i, element) {
-        productsList[index][element.name] = element.type === 'number' ? parseNumber(element.value) : element.value;
-    });
-
-    calculateTotal();
-});
-
-//discount change
-$("#inputDiscount").on("change", function () {
-    calculateTotal(true);
-});
-
 //convert to float number
 function parseNumber(n) {
     const f = parseFloat(n);
     return isNaN(f) ? 0 : f;
 }
 
+//update inputted data in store
+$tableBody.on('change', 'input, select', function (e) {
+    const row = $(this).closest('tr');
+    const serialNumber = parseInt(row.find(".SN").text());
+    const index = purchaseCart.findIndex((p => p.SN === serialNumber));
+
+    row.find('input, select').each(function (i, element) {
+        purchaseCart[index][element.name] = element.type === 'number' ? parseNumber(element.value) : element.value;
+    });
+
+   
+    calculateTotal();
+    validation();
+});
+
 //sum table value
 function calculateTotal(isDiscount = false) {
-    const total = productsList.reduce(function (prev, cur) {
-        return prev + (cur.SellingQuantity * cur.SellingUnitPrice);
+    const total = purchaseCart.reduce(function (prev, cur) {
+        return prev + (cur.PurchaseQuantity * cur.PurchaseUnitPrice);
     }, 0);
 
     const discount = parseNumber(inputDiscount.value);
@@ -196,6 +182,51 @@ function calculateTotal(isDiscount = false) {
     inputDiscount.setAttribute('max', totalDue.textContent);
 };
 
+//discount change
+$("#inputDiscount").on("change", function () {
+    calculateTotal(true);
+});
+
+
+
+//reset discount/paid amount
+function resetPayment() {
+    $("#inputDiscount").val('').next('em').remove();
+}
+
+//input field validation
+function validation() {
+    const row = $('#table-row tr');
+    var isValid = true;
+
+    if (row.length > 0) {
+        row.find('input[type="number"], select').each(function () {
+            const input = $(this);
+
+            if (!input.val() || input.val() === '0' || input.val() === 0) {
+                input.addClass("has-error");
+                isValid = false;
+            } else {
+                input.removeClass("has-error");
+            }
+        });
+    }
+
+    return isValid;
+}
+
+//compare Validation
+function compareValidation(total, inputted) {
+    var isValid = true;
+
+    if (total < inputted) {
+        isValid = false;
+    }
+    return isValid;
+}
+
+
+
 //Submit Sell change
 formProduct.addEventListener('submit', function (evt) {
     evt.preventDefault()
@@ -205,22 +236,24 @@ formProduct.addEventListener('submit', function (evt) {
     const paid = +paidAmount.textContent;
 
     const data = {
-        SellingID: +document.getElementById('hiddenSellingId').value,
-        SellingTotalPrice: +totalPrice.textContent,
-        SellingDiscountAmount: +inputDiscount.value,
-        SellingCarts: productsList
+        PurchaseID: +document.getElementById('hiddenPurchaseId').value,
+        PurchaseTotalPrice: +totalPrice.textContent,
+        PurchaseDiscountAmount: +inputDiscount.value,
+        Description: inputDescription.value,
+        PurchaseCarts: purchaseCart
     };
 
-    const btn = formProduct.btnSelling;
+    const btn = formProduct.btnPurchase;
+
     if (payable >= paid) {
-        if (productsList.length) {
+        if (purchaseCart.length) {
             $.ajax({
-                url: "/Selling/ReceiptChange",
+                url: "/Supplier/PurchaseReceiptChange",
                 data: JSON.stringify({ model: data }),
                 type: "POST",
                 contentType: "application/json; charset=utf-8",
                 beforeSend: function () { btn.setAttribute('disabled', true) },
-                success: function (id) { window.location.href = `/Selling/Receipt/${id}` },
+                success: function (id) { window.location.href = `/Supplier/Receipt/${id}` },
                 error: function (error) { console.log(error) },
                 complete: function () { btn.removeAttribute('disabled') }
             });

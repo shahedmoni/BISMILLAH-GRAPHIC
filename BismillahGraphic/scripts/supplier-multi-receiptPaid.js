@@ -47,7 +47,7 @@ function buildTable(data) {
         <td>${item.PurchaseSN}</td>
         <td class="text-right">${item.PurchaseAmount}/-</td>
         <td class="text-right" style="max-width:100px"><input type="number" data-due="${item.PurchaseDueAmount}" class="form-control inputDiscount" min="0" max="${item.PurchaseDueAmount}" step="0.01" placeholder="Discount amount" value="${item.PurchaseDiscountAmount}" /></td>
-        <td class="text-right">${item.PurchasePaidAmount}/-</td> 
+        <td class="text-right">${item.PurchasePaidAmount.toFixed(2)}/-</td> 
         <td class="text-right dueAmount">${item.PurchaseDueAmount}</td>
         <td class="text-right paidAmount" data-id="${item.PurchaseID}">0</td></tr>`;
     });
@@ -148,6 +148,7 @@ formReceipt.addEventListener("submit", function(evt) {
         PaidAmount: +document.querySelector("#inputPaid").value,
         Payment_Situation: document.querySelector("#selectPaymentMethod").value,
         Paid_Date: document.querySelector("#inputPurchaseDate").value,
+        Description: document.querySelector("#inputDescription").value,
         Invoices: []
     };
 
