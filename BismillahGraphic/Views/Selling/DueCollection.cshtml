@@ -135,7 +135,10 @@
                                         <tr>
                                             <td>@item.SellingPaid_Date.ToString("d MMM yyyy")</td>
                                             <td class="text-right">@item.SellingPaidAmount/-</td>
-                                            <td class="text-center">@item.Payment_Situation</td>
+                                            <td class="text-center">
+                                                <strong>@item.Payment_Situation</strong>
+                                                <em class="text-dark">@item.Description</em>
+                                            </td>
                                         </tr>
                                     }
 
@@ -157,7 +160,6 @@
 
                             <label>Paid Date</label>
                             <div class="md-form mt-0">
-
                                 <input required="" id="inputPaidDate" type="text" class="form-control datepicker" />
                             </div>
                             <div class="md-form">
@@ -170,9 +172,15 @@
                                 </select>
                             </div>
 
+                            <div class="md-form mt-0">
+                                <div class="flex-1 ml-2">
+                                    <input placeholder="Description" id="inputDescription" type="text" class="form-control" />
+                                </div>
+                            </div>
+
                             <button type="submit" id="btnPaid" class="btn aqua-gradient btn-rounded d-block">Submit</button>
                         </form>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
@@ -233,7 +241,6 @@
                 res += (((res === "") ? "" : " ") + convertNumber(hundredAmount) + " HUNDRED");
             }
 
-
             var ones = Array("", "ONE", "TWO", "THREE", "FOUR", "FIVE", "SIX", "SEVEN", "EIGHT", "NINE", "TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN");
             var tens = Array("", "", "TWENTY", "THIRTY", "FORTY", "FIFTY", "SIXTY", "SEVENTY", "EIGHTY", "NINETY");
 
@@ -271,6 +278,7 @@
             const paidAmount = parseNumber($("#inputPaid").val());
             const paymentMethod = $("#selectPaymentMethod").children("option:selected").val();
             const paidDate = $("#inputPaidDate").val();
+            const inputDescription = $("#inputDescription").val();
             const dueAmount = parseNumber($("#dueAmount").text());
 
             if (dueAmount < paidAmount) {
@@ -283,7 +291,8 @@
                 VendorID: vendorId,
                 SellingPaidAmount: paidAmount,
                 Payment_Situation: paymentMethod,
-                SellingPaid_Date: paidDate
+                SellingPaid_Date: paidDate,
+                Description: inputDescription
             };
 
             if (isValid) {
@@ -295,7 +304,7 @@
                     beforeSend: function() { that.prop('disabled', true).val('Submitting..') },
                     success: function(response) {
                         if (response === "success")
-                            location.href="/Selling/Receipt/@Model.SellingInfo.SellingID";
+                            location.href = "/Selling/Receipt/@Model.SellingInfo.SellingID";
                     },
                     error: function(error) { console.log(error) },
                     complete: function() { that.prop('disabled', false).val('Submit') }

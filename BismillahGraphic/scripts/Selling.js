@@ -369,6 +369,7 @@ $("#btnSelling").on("click", function (evt) {
     const paidAmount = parseNumber($("#inputPaid").val());
     const date = $("#inputSellingDate").val();
     const paymentMethod = $("#selectPaymentMethod").children("option:selected").val();
+    const inputDescription = $("#inputDescription").val();
     const vendorInfo = $("#vendor-info");
 
 
@@ -391,6 +392,7 @@ $("#btnSelling").on("click", function (evt) {
         SellingPaidAmount: paidAmount,
         SellingDate: date,
         Payment_Situation: paymentMethod,
+        Description: inputDescription,
         SellingCarts: cart
     };
 

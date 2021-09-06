@@ -147,6 +147,7 @@ formReceipt.addEventListener("submit", function(evt) {
         VendorID: salesData.VendorInfo.VendorID,
         PaidAmount: +document.querySelector("#inputPaid").value,
         Payment_Situation: document.querySelector("#selectPaymentMethod").value,
+        Description: document.querySelector("#inputDescription").value,
         Paid_Date: document.querySelector("#inputSellingDate").value,
         Invoices: []
     };
