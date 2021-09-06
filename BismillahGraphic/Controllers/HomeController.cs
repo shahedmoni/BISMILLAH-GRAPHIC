@@ -13,11 +13,11 @@ namespace BismillahGraphic.Controllers
             _db = new UnitOfWork(new DataContext());
         }
 
-        [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
+        // [OutputCache(Duration = 3600, VaryByParam = "none", Location = OutputCacheLocation.Client)]
         public ActionResult Index()
         {
-            var model = _db.Institutions.HomeInfo();
-            return View(model);
+            //var model = _db.Institutions.HomeInfo();
+            return View();
         }
     }
 }

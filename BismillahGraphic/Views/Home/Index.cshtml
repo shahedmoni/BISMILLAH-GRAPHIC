@@ -1,4 +1,4 @@
-﻿@model BismillahGraphic.DataCore.HomeVM
+﻿
 @{
     ViewBag.Title = "Home";
 }
@@ -6,11 +6,8 @@
 @section Styles{
 <style>
     .navbar { position: fixed; top: 0; right: 0; left: 0; z-index: 1030; }
-
-    #carousel-home img { max-height: 600px }
-
+    #carousel-home img { max-height: 600px;object-fit: cover }
     .map-container-section { overflow: hidden; padding-bottom: 56.25%; position: relative; height: 0; }
-
     .map-container-section iframe { left: 0; top: 0; height: 100%; width: 100%; position: absolute; }
 </style>
 }
@@ -54,35 +51,24 @@
             <h2 class="font-weight-bold mb-4 pb-2">What We Make</h2>
 
             <p class="lead grey-text mx-auto mb-5">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-            </p>
+                Flexo Block, Nylo Block, Block Tape, Flexo Ink, Flexo Thiner,
+                Manufacture & Supply. All Graphics Design Solutions.</p>
 
 
             <div class="row">
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-th-large fa-3x red-text"></i>
                     <h5 class="font-weight-bold my-4">Flexo Block</h5>
-                    <p class="grey-text mb-md-0">
-                        Flexography Press is a Global Manufacturer & Exporter of flexo photo polymer plate making machine, Rubber stamp making machine.
-                    </p>
-
                 </div>
 
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-shapes fa-3x cyan-text"></i>
                     <h5 class="font-weight-bold my-4">Nylon Blocks</h5>
-                    <p class="grey-text mb-md-0">
-                        Nylon blocks possesses the following advantages : high Crystallinity, excellent dimensional stability, low water absorption,high hardness,high temperature resistance, self-lubrication,good anti-fatigue performance and etc.
-                    </p>
                 </div>
 
                 <div class="col-md-4 mb-4">
                     <i class="fas fa-palette fa-3x orange-text"></i>
                     <h5 class="font-weight-bold my-4">Graphic Design</h5>
-                    <p class="grey-text mb-0">
-                        From highly interactive design contests to all-inclusive, end-to-end design gigs to artificial intelligent design tools, Design hill has a service to fulfill all your design needs.
-                    </p>
                 </div>
             </div>
         </section>
@@ -92,50 +78,58 @@
 <section id="Portfolio" class="rgba-blue-grey-slight py-5 wow fadeIn">
     <div class="container my-5">
         <section class="dark-grey-text text-center">
-            <h3 class="font-weight-bold mb-4 pb-2">Our best works</h3>
-            <p class="text-muted w-responsive mx-auto mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit, error amet numquam iure provident voluptate esse quasi, veritatis totam voluptas nostrum quisquam eum porro a pariatur veniam.</p>
-
+            <h3 class="font-weight-bold mb-4 pb-2">Our Best Works</h3>
+      
             <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="view overlay rounded z-depth-1">
-                        <img src="/CSS/images/works/flexo.jpg" class="img-fluid" alt="">
-                        <a>
-                            <div class="mask rgba-white-slight"></div>
-                        </a>
+                <div class="col-md-6">
+                    <div class="card card-body mb-4">
+                        <div class="view overlay">
+                            <img src="/CSS/images/works/flexo-block.png" class="img-fluid" alt="">
+                            <a><div class="mask rgba-white-slight"></div></a>
+                        </div>
+
+                        <div class="px-3 mx-1 mt-2">
+                            <h4 class="font-weight-bold mt-1 mb-1">Flexo Block</h4>
+                            <p class="text-muted">Flexo Block, Nylo Block</p>
+                        </div>
                     </div>
 
-                    <div class="px-3 pt-3 mx-1 mt-1 pb-0">
-                        <h4 class="font-weight-bold mt-1 mb-3">Flexo Block</h4>
-                        <p class="text-muted">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae.</p>
+                    <div class="card card-body mb-4">
+                        <div class="view overlay">
+                            <img src="/CSS/images/works/graments-accessories.png" class="img-fluid" alt="">
+                            <a><div class="mask rgba-white-slight"></div></a>
+                        </div>
+
+                        <div class="px-3 mx-1 mt-1">
+                            <h4 class="font-weight-bold mt-1 mb-1">Graments Accessories</h4>
+                            <p class="text-muted">100% All Kinds Of We Manufacture & Supply</p>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="card card-body mb-4">
+                        <div class="view overlay">
+                            <img src="/CSS/images/works/pp-woven-bag.png" class="img-fluid" alt="">
+                            <a><div class="mask rgba-white-slight"></div></a>
+                        </div>
 
-                <div class="col-md-4 mb-4">
-                    <div class="view overlay rounded z-depth-1">
-                        <img src="/CSS/images/works/graphic.png" class="img-fluid" alt="">
-                        <a>
-                            <div class="mask rgba-white-slight"></div>
-                        </a>
-                    </div>
-
-                    <div class="px-3 pt-3 mx-1 mt-1 pb-0">
-                        <h4 class="font-weight-bold mt-1 mb-3">Bismillah Graphic</h4>
-                        <p class="text-muted">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae.</p>
+                        <div class="px-3 pt-3 mx-1 mt-1 pb-0">
+                            <h4 class="font-weight-bold mt-1 mb-3">PP Woven Bag & Poly Bag</h4>
+                            <p class="text-muted">PP Woven Bag, Non-Woven Bag, Poly Bag, Cartoon Block</p>
+                        </div>
                     </div>
                 </div>
+            </div>
+            
+            <div class="card card-body mb-4">
+                <div class="view overlay">
+                    <img src="/CSS/images/works/flexo-ink.png" class="img-fluid" alt="">
+                    <a><div class="mask rgba-white-slight"></div></a>
+                </div>
 
-                <div class="col-md-4 mb-4">
-                    <div class="view overlay rounded z-depth-1">
-                        <img src="/CSS/images/works/nylo.jpg" class="img-fluid" alt="">
-                        <a>
-                            <div class="mask rgba-white-slight"></div>
-                        </a>
-                    </div>
-
-                    <div class="px-3 pt-3 mx-1 mt-1 pb-0">
-                        <h4 class="font-weight-bold mt-1 mb-3">Nylo Block</h4>
-                        <p class="text-muted">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae.</p>
-                    </div>
+                <div class="px-3 mx-1">
+                    <h4 class="font-weight-bold mt-1 mb-1">Block Tape, Flexo Inks, Flexo Thinner</h4>
+                    <p class="text-muted">Block Tape, Flexo Inks, Flexo Thinner</p>
                 </div>
             </div>
         </section>
@@ -148,19 +142,20 @@
             <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
                 <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
                 <p class="font-weight-bold my-3">Address</p>
-                <p class="text-muted">@Model.Address</p>
+                <p class="text-muted">Zirabo Bus stand,(Opposite of NRB Bank)
+                    Ashulia, Savar, Dhaka</p>
             </div>
 
             <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
                 <i class="fas fa-phone fa-2x text-primary"></i>
                 <p class="font-weight-bold my-3">Phone number</p>
-                <p class="text-muted">@Model.Phone</p>
+                <p class="text-muted">01712-676781</p>
             </div>
 
             <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
                 <i class="fas fa-envelope fa-2x text-primary"></i>
                 <p class="font-weight-bold my-3">E-mail</p>
-                <p class="text-muted">@Model.Email</p>
+                <p class="text-muted">bismillahgraphics16@gmail.com</p>
             </div>
         </div>
     </div>

@@ -293,9 +293,10 @@
     <Content Include="CSS\images\slider\2.jpg" />
     <Content Include="CSS\images\slider\3.jpg" />
     <Content Include="CSS\images\slider\4.jpg" />
-    <Content Include="CSS\images\works\flexo.jpg" />
-    <Content Include="CSS\images\works\graphic.png" />
-    <Content Include="CSS\images\works\nylo.jpg" />
+    <Content Include="CSS\images\works\flexo-block.png" />
+    <Content Include="CSS\images\works\flexo-ink.png" />
+    <Content Include="CSS\images\works\graments-accessories.png" />
+    <Content Include="CSS\images\works\pp-woven-bag.png" />
     <Content Include="CSS\Login.css" />
     <Content Include="CSS\multiReceipt.css" />
     <Content Include="CSS\selling-receipt.css" />
