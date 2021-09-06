@@ -10,6 +10,7 @@ namespace BismillahGraphic.DataCore
         public int RegistrationID { get; set; }
         public double SellingPaidAmount { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public DateTime SellingPaid_Date { get; set; }
         public DateTime Insert_Date { get; set; }
 

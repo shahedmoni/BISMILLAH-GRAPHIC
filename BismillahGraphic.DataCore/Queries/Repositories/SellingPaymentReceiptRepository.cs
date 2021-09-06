@@ -49,6 +49,7 @@ namespace BismillahGraphic.DataCore
                 ReceiptSN = r.ReceiptSN,
                 PaidAmount = r.PaidAmount,
                 Payment_Situation = r.Payment_Situation,
+                Description = r.Description,
                 CollectBy = r.Registration.Name
             }).FirstOrDefault();
 
@@ -93,6 +94,7 @@ namespace BismillahGraphic.DataCore
                 ReceiptSN = model.ReceiptSN,
                 PaidAmount = model.PaidAmount,
                 Payment_Situation = model.Payment_Situation,
+                Description = model.Description,
                 Paid_Date = model.Paid_Date,
                 SellingPaymentRecord = model.Invoices.Select(i => new SellingPaymentRecord
                 {
@@ -100,6 +102,7 @@ namespace BismillahGraphic.DataCore
                     RegistrationID = model.RegistrationID,
                     SellingPaidAmount = i.SellingPaidAmount,
                     Payment_Situation = model.Payment_Situation,
+                    Description = model.Description,
                     SellingPaid_Date = model.Paid_Date
                 }).ToList()
             };
