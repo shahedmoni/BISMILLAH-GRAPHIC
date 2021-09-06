@@ -23,6 +23,7 @@ namespace BismillahGraphic.DataCore
         public double SellingPaidAmount { get; set; }
         public DateTime SellingDate { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public ICollection<SellingCart> SellingCarts { get; set; }
     }
 
@@ -59,6 +60,7 @@ namespace BismillahGraphic.DataCore
         public int ReceiptSN { get; set; }
         public double PaidAmount { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public string CollectBy { get; set; }
 
 
@@ -95,6 +97,7 @@ namespace BismillahGraphic.DataCore
         public int ReceiptSN { get; set; }
         public double PaidAmount { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public DateTime Paid_Date { get; set; }
         public ICollection<InvoicePay> Invoices { get; set; }
     }
@@ -113,6 +116,7 @@ namespace BismillahGraphic.DataCore
         public int RegistrationID { get; set; }
         public int ReceiptSN { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public DateTime SellingPaid_Date { get; set; }
     }
     public class IncomeVM
@@ -123,6 +127,7 @@ namespace BismillahGraphic.DataCore
         public int SellingSN { get; set; }
         public double SellingPaidAmount { get; set; }
         public string Payment_Situation { get; set; }
+        public string Description { get; set; }
         public DateTime SellingPaid_Date { get; set; }
         public string ReceivedBy { get; set; }
     }

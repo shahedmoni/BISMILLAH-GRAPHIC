@@ -45,11 +45,13 @@ namespace BismillahGraphic.DataCore
                                     ReceiptSN = model.ReceiptSN,
                                     PaidAmount = model.SellingPaidAmount,
                                     Payment_Situation = model.Payment_Situation,
+                                    Description = model.Description,
                                     Paid_Date = model.SellingDate,
                                 },
                             RegistrationID = model.RegistrationID,
                             SellingPaidAmount = model.SellingPaidAmount,
                             Payment_Situation = model.Payment_Situation,
+                            Description = model.Description,
                             SellingPaid_Date = model.SellingDate
                         }
                     }
@@ -278,6 +280,7 @@ namespace BismillahGraphic.DataCore
                 ReceiptSN = model.ReceiptSN,
                 PaidAmount = model.SellingPaidAmount,
                 Payment_Situation = model.Payment_Situation,
+                Description = model.Description,
                 Paid_Date = model.SellingPaid_Date,
                 SellingPaymentRecord = new List<SellingPaymentRecord>
                 {
@@ -287,6 +290,7 @@ namespace BismillahGraphic.DataCore
                         RegistrationID = model.RegistrationID,
                         SellingPaidAmount = model.SellingPaidAmount,
                         Payment_Situation = model.Payment_Situation,
+                        Description = model.Description,
                         SellingPaid_Date = model.SellingPaid_Date
                     }
 
@@ -338,6 +342,7 @@ namespace BismillahGraphic.DataCore
                     SellingSN = r.Selling.SellingSN,
                     SellingPaidAmount = r.SellingPaidAmount,
                     Payment_Situation = r.Payment_Situation,
+                    Description = r.Description,
                     SellingPaid_Date = r.SellingPaid_Date,
                     ReceivedBy = r.Registration.Name
                 });
