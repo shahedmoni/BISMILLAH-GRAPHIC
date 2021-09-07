@@ -104,11 +104,12 @@
         function createLink(item) {
             var link = '';
             if (item.PurchaseDueAmount)
-                link += `no receipt`
+                link += `<a class="text-danger" href="/Supplier/PayDueSingle/${item.PurchaseID}">Pay Due</a>`
             else
                 link += `<a class="blue-text" href="/Supplier/Receipt/${item.PurchaseID}">Receipt</a>`;
             return link;
         }
+
 
         function summeryInfo(data) {
             const info = data.SupplierInfo;

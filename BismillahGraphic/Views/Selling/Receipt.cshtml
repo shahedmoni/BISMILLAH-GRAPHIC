@@ -11,7 +11,14 @@
 <section class="my-4 d-print-none">
     <div class="d-flex justify-content-between">
         <div>
-            <a class="btn btn-success btn-rounded" href="/Selling/DueCollection/@Model.SellingInfo.SellingID"><i class="fas fa-money-bill-alt mr-1"></i>Pay Due</a>
+            @if (Model.SellingInfo.SellingDueAmount > 0)
+            {
+                <a class="btn btn-success btn-rounded" href="/Selling/DueCollection/@Model.SellingInfo.SellingID"><i class="fas fa-money-bill-alt mr-1"></i>Pay Due</a>
+            }
+            else
+            {
+                <button disabled="" class="btn btn-success btn-rounded"><i class="fas fa-money-bill-alt mr-1"></i>No Due</button>
+            }
             <a class="btn btn-discord btn-rounded" href="/Selling/Record"><i class="fas fa-shopping-bag mr-1"></i>Selling Record</a>
         </div>
         <div>
@@ -20,7 +27,6 @@
         </div>
     </div>
 </section>
-
 
 <div id="main-page">
     <div class="shop-info">

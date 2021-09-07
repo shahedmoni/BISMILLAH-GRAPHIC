@@ -436,6 +436,7 @@
     <Content Include="Views\Supplier\Receipt.cshtml" />
     <Content Include="Views\Supplier\PurchaseRecord.cshtml" />
     <Content Include="Views\Supplier\UpdatePurchaseBill.cshtml" />
+    <Content Include="Views\Supplier\PayDueSingle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BismillahGraphic.DataCore\BismillahGraphic.DataCore.csproj">

@@ -119,7 +119,7 @@ namespace BismillahGraphic.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
-        //GET: PayDue Receipt
+        //GET: Pay Due multiple Receipt
         public ActionResult DueReceipt(int? id, DateTime? fromDate, DateTime? toDate)
         {
             if (id == null) return RedirectToAction("Index");
@@ -160,7 +160,38 @@ namespace BismillahGraphic.Controllers
 
 
 
-        /***** Purchase *****/
+        //GET:Single pay Due
+        public ActionResult PayDueSingle(int? id)
+        {
+            if (id == null) return RedirectToAction($"PurchaseRecord");
+            var model = _db.Purchases.Sold(id.GetValueOrDefault());
+
+            return View(model);
+        }
+
+        //POST: Single pay Due
+        [HttpPost]
+        public ActionResult PayDueSingle(PurchaseInvoicePaySingle model)
+        {
+            model.RegistrationID = _db.Registrations.GetRegID_ByUserName(User.Identity.Name);
+            if (!ModelState.IsValid) return RedirectToAction($"PayDueSingle");
+
+            model.ReceiptSN = _db.PurchasePaymentReceipts.GetReceiptSN();
+
+            if (!_db.Purchases.dueCollection(model)) return RedirectToAction($"PayDueSingle");
+
+            _db.SaveChanges();
+
+
+            _db.Suppliers.UpdatePaidDue(model.SupplierID);
+            _db.SaveChanges();
+
+            return Content("success");
+        }
+
+
+
+        /***** PURCHASE *****/
         public ActionResult Purchase()
         {
             return View();
