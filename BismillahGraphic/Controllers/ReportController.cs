@@ -22,18 +22,19 @@ namespace BismillahGraphic.Controllers
         {
             var date = DateTime.Now;
             var model = new DailyCashClass(_db, date);
+
+            ViewBag.date = date.ToString("d MMMM, yyyy");
             return View(model);
-            ViewBag.date = DateTime.Now.ToString("d MMMM, yyyy");
-            return View();
         }
 
         //get report by date
         [Authorize(Roles = "Admin, Report_DailyCash")]
         [HttpPost]
-        public ActionResult DailyCashReport(string date)
+        public ActionResult DailyCashReport(DateTime date)
         {
-            ViewBag.date = date;
-            return View();
+            ViewBag.date = date.ToString("d MMMM, yyyy");
+            var model = new DailyCashClass(_db, date);
+            return View(model);
         }
 
 

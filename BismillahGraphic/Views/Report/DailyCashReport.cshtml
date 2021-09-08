@@ -1,4 +1,4 @@
-﻿
+﻿@model BismillahGraphic.DataCore.DailyCashClass
 @{
     ViewBag.Title = "Daily Cash Report";
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
@@ -29,7 +29,7 @@
                     <i class="far fa-money-bill-alt fa-lg primary-color z-depth-2 p-4 ml-3 mt-n3 rounded text-white"></i>
                     <div class="float-right text-right p-3">
                         <p class="text-uppercase text-muted mb-1"><small>INCOME</small></p>
-                        <h4 id="totalIncome" class="font-weight-bold mb-0">0</h4>
+                        <h4 class="font-weight-bold mb-0">@Model.Income.ToString("N")</h4>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     <i class="fas fa-chart-line fa-lg teal z-depth-2 p-4 ml-3 mt-n3 rounded text-white"></i>
                     <div class="float-right text-right p-3">
                         <p class="text-uppercase text-muted mb-1"><small>EXPENSE</small></p>
-                        <h4 id="totalExpense" class="font-weight-bold mb-0">0</h4>
+                        <h4 class="font-weight-bold mb-0">@Model.Expense.ToString("N")</h4>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                     <i class="fas fa-chart-pie fa-lg purple z-depth-2 p-4 ml-3 mt-n3 rounded text-white"></i>
                     <div class="float-right text-right p-3">
                         <p class="text-uppercase text-muted mb-1"><small>NET</small></p>
-                        <h4 id="totalNet" class="font-weight-bold mb-0">0</h4>
+                        <h4 class="font-weight-bold mb-0 @(@Model.Net < 0 ?"text-danger":"")">@Model.Net.ToString("N")</h4>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
 
     <h4 class="my-4 font-weight-bold">Income Details</h4>
     <div class="card card-body">
-        <table id="DataTable" class="DataTable table table-bordered table-sm text-center">
+        <table class="DataTable table table-bordered table-sm text-center">
             <thead>
             <tr>
                 <th><strong>Date</strong></th>
@@ -73,6 +73,21 @@
                 <th><strong>Received By</strong></th>
             </tr>
             </thead>
+            <tbody>
+                @foreach (var income in Model.IncomeRecords)
+                {
+                    <tr>
+                        <td>@income.SellingPaid_Date.ToString("d MMM yyyy")</td>
+                        <td>
+                            <a target="_blank" class="blue-text" href="/Selling/Receipt/@income.SellingID">@income.SellingSN</a>
+                        </td>
+                        <td>@income.VendorCompanyName</td>
+                        <td class="text-right">@income.SellingPaidAmount.ToString("N")</td>
+                        <td>@income.Payment_Situation</td>
+                        <td>@income.ReceivedBy</td>
+                    </tr>
+                }
+            </tbody>
         </table>
     </div>
 
@@ -80,16 +95,25 @@
     <div class="card card-body">
         <table class="DataTable table table-bordered table-sm text-center">
             <thead>
-            <tr>
-                <th><strong>Category</strong></th>
-                <th><strong>Expense For</strong></th>
-                <th class="text-right"><strong>Amount</strong></th>
-                <th><strong>Date</strong></th>
-                <th><strong>P.Method</strong></th>
-            </tr>
+                <tr>
+                    <th><strong>Category</strong></th>
+                    <th><strong>Expense For</strong></th>
+                    <th class="text-right"><strong>Amount</strong></th>
+                    <th><strong>Date</strong></th>
+                    <th><strong>P.Method</strong></th>
+                </tr>
             </thead>
-            <tbody id="expense-t-row"></tbody>
-        </table>
+            @foreach (var expense in Model.ExpanseRecords)
+            {
+                <tr>
+                    <td>@expense.CategoryName</td>
+                    <td>@expense.ExpanseFor</td>
+                    <td class="text-right">@expense.ExpanseAmount.ToString("N")</td>
+                    <td>@expense.ExpanseDate.ToString("d MMM yyyy")</td>
+                    <td>@expense.Expense_Payment_Method</td>
+                </tr>
+            }
+        </table>  
     </div>
 </div>
 
@@ -97,125 +121,7 @@
 @section scripts{
     <script>
         $(function () {
-            //$('.datepicker').pickadate().val(moment().format("D MMMM, YYYY"));
             $('.datepicker').pickadate();
-
-
-            loadData();
         });
-
-        function loadData() {
-            const date = $("#formDate").val();
-
-            dataTable.fromDate = date;
-            dataTable.toDate = date;
-            dataTable.getData();
-
-            getExpense(date);
-
-            setTimeout(function() {
-                setTotalAmount();
-            }, 100);
-        };
-
-        function setTotalAmount() {
-            const income = +document.getElementById("totalIncome").textContent;
-            const expense = +document.getElementById("totalExpense").textContent;
-            const net = (income - expense);
-
-            document.getElementById("totalNet").textContent = net.toFixed(2);
-            console.log({income, expense})
-        }
-
-        //income
-        var dataTable = {
-            table: null,
-            fromDate: "",
-            toDate: "",
-            totalIncome:0,
-            init: function() {
-                dataTable.table = $("#DataTable").DataTable({
-                    processing: true,
-                    serverSide: true,
-                    ajax: {
-                        url: "/Report/GetIncome",
-                        type: "POST",
-                        data: function(data) {
-                            data.sFromDate = dataTable.fromDate;
-                            data.sToDate = dataTable.toDate;
-                            data.GrandTotalProperty = "SellingPaidAmount";
-                        },
-                        dataSrc: function(data) {
-                            document.getElementById("totalIncome").textContent = data.GrandTotal.toFixed(2);
-                            return data.data;
-                        }
-                    },
-                    columns:
-                    [
-                        { data: "SellingPaid_Date", "render": function(data) { return moment(data).format('D MMM YYYY') } },
-                        { data: "SellingSN" },
-                        { data: "VendorCompanyName" },
-                        { data: "SellingPaidAmount", "render": function(data) { return `${data.toFixed(2)}/-` } },
-                        { data: "Payment_Situation" },
-                        { data: "ReceivedBy" }
-                    ],
-                    columnDefs:
-                    [
-                        { 'searchable': false, 'targets': [0, 3] },
-                        { 'className': "text-left", "targets": [2, 5] },
-                        { 'className': "text-right", "targets": [3] }
-                    ]
-                });
-            },
-            getData: function() {
-                dataTable.table ? dataTable.table.ajax.reload() : dataTable.init();
-            }
-        }
-
-        //expense
-        function getExpense(date) {
-            let expense = 0;
-            $.ajax({
-                url: "/Report/GetExpense",
-                type: "POST",
-                data: JSON.stringify({ fromDate: date, toDate: date }),
-                dataType: "json",
-                contentType: "application/json",
-                success: function(data) {
-                    buildExpenseTable(data);
-                    document.getElementById("totalExpense").textContent = data.TotalExpense.toFixed(2);
-                },
-                error: function(err) { console.log(err) }
-            });
-
-            return expense
-
-        }
-
-        function buildExpenseTable(data) {
-            var html = '';
-            const row = $("#expense-t-row");
-
-            if (row.children().length > 0) {
-                row.empty();
-            };
-
-            $.each(data.Expenses, function(i, item) {
-                html += `<tr>
-                    <td>${item.CategoryName}</td>
-                    <td>${item.ExpanseFor}</td>
-                    <td class="text-right">${item.ExpanseAmount}/-</td>
-                    <td>${moment(item.ExpanseDate).format('D MMM YYYY')}</td>
-                    <td>${item.Expense_Payment_Method}</td>
-                </tr>`;
-            });
-
-            row.append(html);
-        };
-
-        $("#find").on("click", function () {
-            loadData();
-        });
-
     </script>
 }
