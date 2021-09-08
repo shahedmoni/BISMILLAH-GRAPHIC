@@ -15,9 +15,21 @@ namespace BismillahGraphic.Controllers
             _db = new UnitOfWork(new DataContext());
         }
 
+
+        //daily cash report
         [Authorize(Roles = "Admin, Report_DailyCash")]
         public ActionResult DailyCashReport()
         {
+            ViewBag.date = DateTime.Now.ToString("d MMMM, yyyy");
+            return View();
+        }
+
+        //get report by date
+        [Authorize(Roles = "Admin, Report_DailyCash")]
+        [HttpPost]
+        public ActionResult DailyCashReport(string date)
+        {
+            ViewBag.date = date;
             return View();
         }
 

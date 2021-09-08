@@ -4,17 +4,19 @@
     Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
 }
 
-
 <div class="container-fluid mt-2">
     <div class="row mb-4">
         <div class="col-lg-5">
             <h3 class="h3-responsive">Daily Cash Report</h3>
         </div>
+        
         <div class="col-lg-7 d-print-none">
             <div class="form-inline justify-content-end">
                 <div class="md-form m-0">
-                    <input id="formDate" class="form-control datepicker" placeholder="Form Date" type="text"/>
-                    <button id="find" class="btn aqua-gradient btn-rounded btn-sm my-0" type="button">Search</button>
+                    <form action="/Report/DailyCashReport" method="post">
+                        <input id="formDate" name="date" value="@ViewBag.date" class="form-control datepicker" placeholder="Form Date" type="text" />
+                        <button id="find" class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -95,7 +97,9 @@
 @section scripts{
     <script>
         $(function () {
-            $('.datepicker').pickadate().val(moment().format("D MMMM, YYYY"));
+            //$('.datepicker').pickadate().val(moment().format("D MMMM, YYYY"));
+            $('.datepicker').pickadate();
+
 
             loadData();
         });
