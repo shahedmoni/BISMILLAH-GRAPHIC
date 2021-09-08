@@ -134,6 +134,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\DailyCashClass.cs" />
     <Compile Include="BusinessLogic\Dashboard.cs" />
     <Compile Include="BusinessLogic\ExpenseReport.cs" />
     <Compile Include="BusinessLogic\NetReport.cs" />

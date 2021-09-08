@@ -17,7 +17,8 @@ namespace BismillahGraphic.DataCore
         ICollection<ExpanseVM> DateToDate(DateTime? sDateTime, DateTime? eDateTime);
 
         ICollection<ExpanseCategoryWise> CategoryWistDateToDate(DateTime? sDateTime, DateTime? eDateTime);
-
+        ICollection<ExpanseVM> DailyRecord(DateTime date);
+        double DailyAmount(DateTime date);
 
     }
 }

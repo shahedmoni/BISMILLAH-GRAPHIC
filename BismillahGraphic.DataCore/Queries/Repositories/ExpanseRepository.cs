@@ -156,5 +156,30 @@ namespace BismillahGraphic.DataCore
 
             return ex;
         }
+
+        public ICollection<ExpanseVM> DailyRecord(DateTime date)
+        {
+            return Context.Expanse
+                .Include(e => e.ExpanseCategory)
+                .Where(e => e.ExpanseDate == date)
+                .Select(e => new ExpanseVM
+                {
+                    ExpanseID = e.ExpanseID,
+                    RegistrationID = e.RegistrationID,
+                    ExpanseCategoryID = e.ExpanseCategoryID,
+                    CategoryName = e.ExpanseCategory.CategoryName,
+                    ExpanseAmount = e.ExpanseAmount,
+                    ExpanseFor = e.ExpanseFor,
+                    Expense_Payment_Method = e.Expense_Payment_Method,
+                    ExpanseDate = e.ExpanseDate
+                }).ToList();
+        }
+
+        public double DailyAmount(DateTime date)
+        {
+            return Context.Expanse
+                  .Where(e => e.ExpanseDate == date)
+                  .Sum(e => e.ExpanseAmount);
+        }
     }
 }
