@@ -18,7 +18,9 @@ namespace BismillahGraphic.Controllers
         [Authorize(Roles = "Admin, Report_DailyCash")]
         public ActionResult DailyCashReport()
         {
-            return View();
+            var date = DateTime.Now;
+            var model = new DailyCashClass(_db, date);
+            return View(model);
         }
 
 

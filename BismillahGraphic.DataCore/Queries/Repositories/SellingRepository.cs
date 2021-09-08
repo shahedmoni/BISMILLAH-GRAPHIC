@@ -348,5 +348,33 @@ namespace BismillahGraphic.DataCore
                 });
             return income.ToDataResultCustom(request);
         }
+
+        public ICollection<IncomeVM> IncomeDailyRecord(DateTime date)
+        {
+            var income = Context.SellingPaymentRecord
+                .Include(r => r.Selling).ThenInclude(s => s.Vendor)
+                .Include(r => r.Registration)
+                .Where(r => r.SellingPaid_Date == date)
+                .Select(r => new IncomeVM
+                {
+                    SellingID = r.SellingID,
+                    VendorID = r.Selling.VendorID,
+                    VendorCompanyName = r.Selling.Vendor.VendorCompanyName,
+                    SellingSN = r.Selling.SellingSN,
+                    SellingPaidAmount = r.SellingPaidAmount,
+                    Payment_Situation = r.Payment_Situation,
+                    Description = r.Description,
+                    SellingPaid_Date = r.SellingPaid_Date,
+                    ReceivedBy = r.Registration.Name
+                });
+            return income.ToList();
+        }
+
+        public double IncomeDailyAmount(DateTime date)
+        {
+            return Context.SellingPaymentRecord
+                .Where(r => r.SellingPaid_Date == date)
+                .Sum(s => s.SellingPaidAmount);
+        }
     }
 }

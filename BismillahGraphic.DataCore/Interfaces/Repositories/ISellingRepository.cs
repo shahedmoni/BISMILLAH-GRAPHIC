@@ -19,5 +19,7 @@ namespace BismillahGraphic.DataCore
         bool dueCollection(InvoicePaySingle model);
         CustomDataResult<SellingRecord> SellDateToDate(CustomDataRequest request, DateTime? sDateTime, DateTime? eDateTime);
         CustomDataResult<IncomeVM> IncomeDateToDate(CustomDataRequest request, DateTime? sDateTime, DateTime? eDateTime);
+        ICollection<IncomeVM> IncomeDailyRecord(DateTime date);
+        double IncomeDailyAmount(DateTime date);
     }
 }
