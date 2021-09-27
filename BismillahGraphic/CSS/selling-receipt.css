@@ -21,7 +21,7 @@
 #amount-word { text-transform: lowercase; font-style: italic; font-size: 12px; color: #000 }
 .p-footer { width: 100%; border-top: 1px solid #333; padding-top: 5px; margin-top: 20px; font-size: 13px; color: #000; }
 
-@page { margin: 4cm 0 0 0; }
+@page { margin: 3cm 0 0 0; }
 
 @media print {
     #header { display: none !important }
